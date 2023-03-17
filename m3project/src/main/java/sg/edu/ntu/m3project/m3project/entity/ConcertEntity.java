@@ -1,6 +1,7 @@
 package sg.edu.ntu.m3project.m3project.entity;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,6 +21,9 @@ public class ConcertEntity {
 
     String artist;
 
+    @Column(name = "concert_date")
+    Timestamp concertDate;
+
     @Column(name = "tickets_available")
     Integer ticketsAvailable;
 
@@ -28,6 +32,14 @@ public class ConcertEntity {
 
     @Column(name = "created_at", updatable = false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
+
+    public Timestamp getConcertDate() {
+        return concertDate;
+    }
+
+    public void setConcertDate(Timestamp concertDate) {
+        this.concertDate = concertDate;
+    }
 
     public Integer getId() {
         return id;
