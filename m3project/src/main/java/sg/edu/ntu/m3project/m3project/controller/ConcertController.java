@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import main.java.sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
 
@@ -50,7 +51,7 @@ public class ConcertController {
     }
 
     @RequestMapping(value = "/{concertId}", method = RequestMethod.GET)
-    public ResponseEntity<ConcertEntity> findById(@PathVariable int concertId) {
+    public ResponseEntity findById(@PathVariable int concertId) {
 
         Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
 
@@ -59,7 +60,7 @@ public class ConcertController {
             return new ResponseEntity<ConcertEntity>(selectedConcert, HttpStatus.OK);
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Invalid concert id"));
     }
 
 }
