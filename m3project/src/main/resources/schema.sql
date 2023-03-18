@@ -4,13 +4,13 @@ create table public.concerts (
     concert_date datetime,  
     tickets_available int,
     ticket_price float, 
-    created_at timestamp default current_timestamp,
+    created_at timestamp not null default current_timestamp,
     primary key (id)
 );
 
 create table public.tickets (
     id int auto_increment,
-    created_at timestamp default current_timestamp,
+    created_at timestamp not null default current_timestamp,
     submission_status boolean default false,
     concert_id int,
     user_id int,
