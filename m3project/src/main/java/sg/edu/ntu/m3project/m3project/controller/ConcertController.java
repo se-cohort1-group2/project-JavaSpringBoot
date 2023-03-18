@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,41 +27,87 @@ public class ConcertController {
     ConcertRepository concertRepo;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<ConcertEntity>> findAllAvailable() {
+    public ResponseEntity findAllAvailable() {
 
-        Timestamp currentDatenTime = new Timestamp(new Date().getTime());
-        List<ConcertEntity> currentConcertList = (List<ConcertEntity>) concertRepo
-                .findByConcertDateAfter(currentDatenTime);
-        if (currentConcertList.size() > 0) {
+        try {
 
-            return ResponseEntity.ok().body(currentConcertList);
+            Timestamp currentDatenTime = new Timestamp(new Date().getTime());
+            List<ConcertEntity> currentConcertList = (List<ConcertEntity>) concertRepo
+                    .findByConcertDateAfter(currentDatenTime);
+            if (currentConcertList.size() > 0) {
+
+                return ResponseEntity.ok().body(currentConcertList);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("No upcoming concerts"));
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
         }
-        return ResponseEntity.notFound().build();
+
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
-    public ResponseEntity<List<ConcertEntity>> findAll() {
+    public ResponseEntity findAll() {
 
-        List<ConcertEntity> currentConcertList = (List<ConcertEntity>) concertRepo.findAll();
+        try {
 
-        if (currentConcertList.size() > 0) {
+            List<ConcertEntity> currentConcertList = (List<ConcertEntity>) concertRepo.findAll();
 
-            return ResponseEntity.ok().body(currentConcertList);
+            if (currentConcertList.size() > 0) {
+
+                return ResponseEntity.ok().body(currentConcertList);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("No concert history"));
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
         }
-        return ResponseEntity.notFound().build();
+
     }
 
     @RequestMapping(value = "/{concertId}", method = RequestMethod.GET)
     public ResponseEntity findById(@PathVariable int concertId) {
 
-        Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
+        try {
+            Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
 
-        if (optionalConcert.isPresent()) {
-            ConcertEntity selectedConcert = optionalConcert.get();
-            return new ResponseEntity<ConcertEntity>(selectedConcert, HttpStatus.OK);
+            if (optionalConcert.isPresent()) {
+                ConcertEntity selectedConcert = optionalConcert.get();
+                return new ResponseEntity<ConcertEntity>(selectedConcert, HttpStatus.OK);
+            }
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Invalid concert id."));
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
         }
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage("Invalid concert id"));
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity update(@RequestBody ConcertEntity concert) {
+        try {
+            ConcertEntity newConcert = concertRepo.save(concert);
+            return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.OK);
+        } catch (IllegalArgumentException iae) {
+            iae.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseMessage("Invalid inputs received from user."));
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
+        }
     }
 
 }
