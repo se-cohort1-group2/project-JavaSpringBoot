@@ -1,6 +1,7 @@
 insert into concerts (artist, concert_date, tickets_available, ticket_price) values 
-('May Day', '2023-05-05 19:30:00', 100, 188),
-('Blackpink', '2023-05-13 19:30:00', 120, 388);
+('G.E.M', '2023-03-01 20:30', 90, 288.99),
+('May Day', '2023-05-05 19:30:00', 100, 188.99),
+('Blackpink', '2023-05-13 19:30:00', 120, 388.99);
 
 insert into tickets (submission_status, concert_id, user_id, seat_id)
 values (true, 1, 1, 'A1');
