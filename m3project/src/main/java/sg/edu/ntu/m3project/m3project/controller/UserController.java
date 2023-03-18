@@ -30,8 +30,8 @@ public class UserController {
     public ResponseEntity<UserEntity> findById(@PathVariable int id) {
         Optional<UserEntity> optional = userRepo.findById(id);
         if (optional.isPresent()) {
-            UserEntity product = optional.get();
-            return ResponseEntity.ok().body(product);
+            UserEntity user = optional.get();
+            return ResponseEntity.ok().body(user);
         }
         return ResponseEntity.notFound().build();
     }
