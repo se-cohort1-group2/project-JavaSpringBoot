@@ -1,7 +1,6 @@
 package sg.edu.ntu.m3project.m3project.controller;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import main.java.sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
+import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
 
@@ -42,7 +41,7 @@ public class ConcertController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("No upcoming concerts"));
 
         } catch (Exception e) {
-            // TODO: handle exception
+
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseMessage("Something went wrong. Please try again later."));
@@ -64,7 +63,7 @@ public class ConcertController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("No concert history"));
 
         } catch (Exception e) {
-            // TODO: handle exception
+
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseMessage("Something went wrong. Please try again later."));
@@ -85,7 +84,7 @@ public class ConcertController {
 
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Invalid concert id."));
         } catch (Exception e) {
-            // TODO: handle exception
+
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseMessage("Something went wrong. Please try again later."));
@@ -94,20 +93,56 @@ public class ConcertController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity update(@RequestBody ConcertEntity concert) {
+    public ResponseEntity create(@RequestBody ConcertEntity concert) {
         try {
             ConcertEntity newConcert = concertRepo.save(concert);
-            return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.OK);
+            return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
         } catch (IllegalArgumentException iae) {
             iae.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseMessage("Invalid inputs received from user."));
         } catch (Exception e) {
-            // TODO: handle exception
+
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(new ResponseMessage("Something went wrong. Please try again later."));
         }
+    }
+
+    @RequestMapping(value = "/{concertId}", method = RequestMethod.PUT)
+    public ResponseEntity update(@RequestBody ConcertEntity concert, @PathVariable int concertId) {
+
+        try {
+            Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
+
+            if (optionalConcert.isPresent()) {
+                ConcertEntity selectedConcert = optionalConcert.get();
+
+                Timestamp updatedAt = new Timestamp(new Date().getTime());
+
+                selectedConcert.setArtist(concert.getArtist());
+                selectedConcert.setConcertDate(concert.getConcertDate());
+                selectedConcert.setTicketPrice(concert.getTicketPrice());
+                selectedConcert.setTicketsAvailable(concert.getTicketsAvailable());
+                selectedConcert.setUpdatedAt(updatedAt);
+
+                concertRepo.save(selectedConcert);
+                return ResponseEntity.ok().body(selectedConcert);
+            }
+
+            return ResponseEntity.notFound().build();
+
+        } catch (IllegalArgumentException iae) {
+            iae.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseMessage("Invalid inputs received from user."));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
+        }
+
     }
 
 }

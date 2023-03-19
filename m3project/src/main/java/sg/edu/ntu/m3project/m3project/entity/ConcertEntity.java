@@ -30,6 +30,17 @@ public class ConcertEntity {
     @Column(name = "ticket_price")
     float ticketPrice;
 
+    @Column(name = "updated_at")
+    Timestamp updatedAt = new Timestamp(new Date().getTime());
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Column(name = "created_at", updatable = false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
 
