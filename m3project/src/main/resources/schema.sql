@@ -4,6 +4,7 @@ create table public.concerts (
     concert_date datetime,  
     tickets_available int,
     ticket_price float, 
+    updated_at timestamp not null default current_timestamp,
     created_at timestamp not null default current_timestamp,
     primary key (id)
 );
