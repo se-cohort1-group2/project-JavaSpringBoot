@@ -1,3 +1,5 @@
+import style from "./Page.module.css"; 
+
 // import { Link } from "react-router-dom"; 
 
 import localAPI from "../api/localAPI"; 
@@ -25,7 +27,7 @@ function PageConcerts() {
 
     return (
         <>
-            <div style={{textAlign: "center", backgroundColor: "#f4f4f4", height: "100%"}}>
+            <div className={style.page}>
                 <h3>View all Concerts</h3>
                 {ConcertsList && <TableConcerts list={ConcertsList}/>}
             </div>
