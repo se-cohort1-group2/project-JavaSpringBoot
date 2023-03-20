@@ -18,8 +18,13 @@ public class UserEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     Integer id;
 
+    @Column(name = "name")
     String name;
+
+    @Column(name = "email")
     String email;
+
+    @Column(name = "phone")
     String phone;
 
     @Column(name="created_at", updatable= false)
