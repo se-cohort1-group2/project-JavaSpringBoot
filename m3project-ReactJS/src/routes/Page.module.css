@@ -1,0 +1,11 @@
+.page {
+    text-align: center; 
+    background-color: #f4f4f4; 
+    height: 100%; 
+    padding: 10px 0 0 0; 
+}
+
+h3 {
+    font-size: 1.25em; 
+    padding: 0 0 10px 0; 
+}
