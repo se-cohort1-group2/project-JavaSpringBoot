@@ -13,7 +13,7 @@ import java.util.Optional;
 
 import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
-import main.java.sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
+import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
 @RestController
 @RequestMapping("/users")

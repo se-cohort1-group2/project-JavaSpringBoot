@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,50 +18,30 @@ public class TicketEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-
-    @Column(name = "submission_status")
-    boolean submissionStatus;
-
-    @Column(name = "concert_id")
-    Integer concertId;
-
-    @Column(name = "user_id")
-    Integer userId;
+    Integer ticketId;
 
     @Column(name = "seat_id")
     String seatId;
 
-    public Integer getId() {
-        return id;
+    @ManyToOne
+    @JoinColumn(name = "concert_id")
+    private ConcertEntity concertEntity;
+
+    @Column(name = "submission_status")
+    boolean submissionStatus;
+
+    @Column(name = "created_at", updatable = false)
+    Timestamp createdAt = new Timestamp(new Date().getTime());
+
+    @Column(name = "user_id")
+    Integer userId;
+
+    public Integer getTicketId() {
+        return ticketId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public boolean isSubmissionStatus() {
-        return submissionStatus;
-    }
-
-    public void setSubmissionStatus(boolean submissionStatus) {
-        this.submissionStatus = submissionStatus;
-    }
-
-    public Integer getConcertId() {
-        return concertId;
-    }
-
-    public void setConcertId(Integer concertId) {
-        this.concertId = concertId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setTicketId(Integer ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getSeatId() {
@@ -70,6 +52,22 @@ public class TicketEntity {
         this.seatId = seatId;
     }
 
+    public ConcertEntity getConcertEntity() {
+        return concertEntity;
+    }
+
+    public void setConcertEntity(ConcertEntity concertEntity) {
+        this.concertEntity = concertEntity;
+    }
+
+    public boolean isSubmissionStatus() {
+        return submissionStatus;
+    }
+
+    public void setSubmissionStatus(boolean submissionStatus) {
+        this.submissionStatus = submissionStatus;
+    }
+
     public Timestamp getCreatedAt() {
         return createdAt;
     }
@@ -78,7 +76,12 @@ public class TicketEntity {
         this.createdAt = createdAt;
     }
 
-    @Column(name = "created_at", updatable = false)
-    Timestamp createdAt = new Timestamp(new Date().getTime());
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
 }

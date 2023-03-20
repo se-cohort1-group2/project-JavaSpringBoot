@@ -10,13 +10,13 @@ create table public.concerts (
 );
 
 create table public.tickets (
-    id int auto_increment,
+    ticket_id int auto_increment,
     submission_status boolean default false,
     concert_id int,
     user_id int,
     seat_id varchar(255),
     created_at timestamp not null default current_timestamp,
-    primary key (id)
+    primary key (ticket_id)
 );
 
 create table public.users (
