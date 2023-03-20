@@ -28,6 +28,7 @@ public class TicketService {
     @Autowired
     ConcertRepository concertRepo;
 
+    // add check for concert quantity
     public ResponseEntity<?> add(Integer userId, NewTicket newTicket) {
 
         Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
@@ -38,7 +39,10 @@ public class TicketService {
             if (selectedConcert.isPresent()) {
                 String selectedSeatId = newTicket.getSeatId();
                 Optional<TicketEntity> selectedSeat = (Optional<TicketEntity>) ticketRepo
-                        .findBySeatIdAndConcertEntityId(selectedSeatId, selectedConcertId);
+                        .findBySeatIdAndConcertEntityIdAndSubmissionStatus(
+                                selectedSeatId,
+                                selectedConcertId,
+                                true);
                 if (!selectedSeat.isPresent()) {
                     TicketEntity newTicketEntity = new TicketEntity();
                     newTicketEntity.setSubmissionStatus(true);

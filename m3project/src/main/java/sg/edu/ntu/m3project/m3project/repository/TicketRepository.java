@@ -12,7 +12,5 @@ import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
 public interface TicketRepository extends CrudRepository<TicketEntity, Integer> {
     List<TicketEntity> findByUserId(Integer userId);
 
-    Optional<TicketEntity> findBySeatIdAndConcertEntityId(String seatId, Integer concertId);
-
-    // Optional<TicketEntity> findBySeatId(String seatId);
+    Optional<TicketEntity> findBySeatIdAndConcertEntityIdAndSubmissionStatus(String seatId, Integer concertId, boolean submissionStatus);
 }

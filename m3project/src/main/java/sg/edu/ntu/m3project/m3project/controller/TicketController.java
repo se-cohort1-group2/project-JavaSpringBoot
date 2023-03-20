@@ -69,7 +69,7 @@ public class TicketController {
         }
     }
 
-    // Create Tickets
+    // Create Tickets (to update to array input)
     @PostMapping
     public ResponseEntity<?> createTicket(
             @RequestHeader(value = "user_id") Integer userId,
@@ -82,4 +82,6 @@ public class TicketController {
                     .body(new ResponseMessage("Something went wrong. Please try again later."));
         }
     }
+
+
 }
