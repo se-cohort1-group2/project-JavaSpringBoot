@@ -1,4 +1,4 @@
-package main.java.sg.edu.ntu.m3project.m3project.helper;
+package sg.edu.ntu.m3project.m3project.helper;
 
 public class ResponseMessage {
     String message;
