@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
@@ -72,7 +75,7 @@ public class TicketController {
     // Create Tickets (to update to array input)
     @PostMapping
     public ResponseEntity<?> createTicket(
-            @RequestHeader(value = "user_id") Integer userId,
+            @RequestHeader(value = "user_id") int userId,
             @RequestBody NewTicket newTicket) {
         try {
             return ticketService.add(userId, newTicket);
@@ -83,5 +86,18 @@ public class TicketController {
         }
     }
 
+    @PutMapping("/{ticket_id}") // change selectedSeatId to RequestParam?
+    public ResponseEntity<?> changeSeat(
+            @RequestHeader(value = "user_id") int userId,
+            @PathVariable int ticket_id,
+            @RequestBody String selectedSeatId) {
+        try {
+            return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
+        }
+    }
 
 }

@@ -28,8 +28,8 @@ public class TicketService {
     @Autowired
     ConcertRepository concertRepo;
 
-    // add check for concert quantity
-    public ResponseEntity<?> add(Integer userId, NewTicket newTicket) {
+    // add check for concert ticket quantity
+    public ResponseEntity<?> add(int userId, NewTicket newTicket) {
 
         Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
         if (user.isPresent()) {
@@ -59,6 +59,34 @@ public class TicketService {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(new ResponseMessage("Concert not found."));
 
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseMessage("User not found."));
+    }
+
+    public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
+
+        Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
+        if (user.isPresent()) {
+
+            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserId(ticketId,
+                    userId);
+            if (ticket.isPresent()) {
+                int concertId = ticket.get().getConcertEntity().getId();
+                Optional<TicketEntity> selectedSeat = (Optional<TicketEntity>) ticketRepo
+                        .findBySeatIdAndConcertEntityIdAndSubmissionStatus(
+                                selectedSeatId,
+                                concertId,
+                                true);
+                if (!selectedSeat.isPresent()) {
+                    ticket.get().setSeatId(selectedSeatId);
+                    ticketRepo.save(ticket.get());
+                    return ResponseEntity.ok().body(ticket.get());
+                } else
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ResponseMessage("Seat is unavailable"));
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
         } else
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseMessage("User not found."));
