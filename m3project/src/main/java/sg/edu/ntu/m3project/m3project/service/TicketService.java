@@ -1,5 +1,6 @@
 package sg.edu.ntu.m3project.m3project.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,29 @@ public class TicketService {
 
     @Autowired
     ConcertRepository concertRepo;
+
+    public ResponseEntity<?> find(Integer userId) {
+        if (userId == null) {
+            List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
+            if (tickets.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseMessage("No ticket history."));
+            } else
+                return ResponseEntity.ok().body(tickets);
+        } else {
+            Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
+            if (user.isPresent()) {
+                List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserId(userId);
+                if (tickets.isEmpty()) {
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                            .body(new ResponseMessage("No ticket history for user: " + userId));
+                } else
+                    return ResponseEntity.ok().body(tickets);
+            } else
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body(new ResponseMessage("User not found."));
+        }
+    }
 
     // add check for concert ticket quantity
     public ResponseEntity<?> add(int userId, NewTicket newTicket) {
