@@ -45,7 +45,7 @@
     border-bottom: 2px solid #f4f4f4; 
 }
 
-.selected-tab {
+.link-tab.selected-tab {
     border: solid #c8c6c2; 
     border-width: 2px 2px 0 2px; 
     border-bottom: 2px solid #f4f4f4; 
