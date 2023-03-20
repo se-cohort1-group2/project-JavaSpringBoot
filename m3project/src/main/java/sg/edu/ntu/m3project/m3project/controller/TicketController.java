@@ -72,7 +72,7 @@ public class TicketController {
         }
     }
 
-    // Create Tickets (to update to array input)
+    // Create Ticket (to update to array input for multiple tickets)
     @PostMapping
     public ResponseEntity<?> createTicket(
             @RequestHeader(value = "user_id") int userId,
@@ -93,6 +93,19 @@ public class TicketController {
             @RequestBody String selectedSeatId) {
         try {
             return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ResponseMessage("Something went wrong. Please try again later."));
+        }
+    }
+
+    @PostMapping("/{ticket_id}/delete")
+    public ResponseEntity<?> deleteTicket(
+            @RequestHeader(value = "user_id") int userId,
+            @PathVariable int ticket_id) {
+        try {
+            return ticketService.delete(userId, ticket_id);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

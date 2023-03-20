@@ -85,11 +85,30 @@ public class TicketService {
                 } else
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                             .body(new ResponseMessage("Seat is unavailable"));
-            }
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
+            } else
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
         } else
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(new ResponseMessage("User not found."));
     }
 
+    public ResponseEntity<?> delete(int userId, int ticketId) {
+        Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
+        if (user.isPresent()) {
+            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserId(ticketId,
+                    userId);
+            if (ticket.isPresent()) {
+                if (ticket.get().isSubmissionStatus()) {
+                    ticket.get().setSubmissionStatus(false);
+                    ticketRepo.save(ticket.get());
+                    return ResponseEntity.ok().body(new ResponseMessage("Ticket deleted."));
+                } else
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(new ResponseMessage("Ticket is already deleted."));
+            } else
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
+        } else
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseMessage("User not found."));
+    }
 }
