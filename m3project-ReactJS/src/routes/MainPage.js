@@ -18,6 +18,7 @@ function MainPage() {
                     <nav className="nav-tabs">
                         <Link className="home-tab" to="/" onClick={switchTab}>Home</Link>
                         <Link className="link-tab" to="/concerts" onClick={switchTab}>Concerts</Link>
+                        <Link className="link-tab" to="/seats" onClick={switchTab}>Seats</Link>
                         <Link className="link-tab" to="/tickets" onClick={switchTab}>Tickets</Link>
                         <Link className="link-tab" to="/users" onClick={switchTab}>Users</Link>
                     </nav>
