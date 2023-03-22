@@ -1,8 +1,11 @@
 package sg.edu.ntu.m3project.m3project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,19 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
-import sg.edu.ntu.m3project.m3project.repository.TicketRepository;
-import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 import sg.edu.ntu.m3project.m3project.service.TicketService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/tickets")
 public class TicketController {
-
-    @Autowired
-    TicketRepository ticketRepo;
-
-    @Autowired
-    UserRepository userRepo;
 
     @Autowired
     TicketService ticketService;
@@ -51,9 +47,9 @@ public class TicketController {
     @PostMapping
     public ResponseEntity<?> createTicket(
             @RequestHeader(value = "user_id") int userId,
-            @RequestBody NewTicket newTicket) {
+            @RequestBody List<NewTicket> newTickets) {
         try {
-            return ticketService.add(userId, newTicket);
+            return ticketService.add(userId, newTickets);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

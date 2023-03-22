@@ -21,11 +21,17 @@ public class UserEntity {
     @Column(name = "name")
     String name;
 
+    @Column(name = "phone")
+    String phone;
+
     @Column(name = "email")
     String email;
 
-    @Column(name = "phone")
-    String phone;
+    @Column(name = "password")
+    String password;
+
+    @Column(name = "admin_status")
+    boolean adminStatus;
 
     @Column(name="created_at", updatable= false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
