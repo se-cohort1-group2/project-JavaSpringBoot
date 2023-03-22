@@ -21,9 +21,11 @@ create table public.tickets (
 
 create table public.users (
     id int auto_increment,
-    name varchar(100) not null,
-    email varchar(255) not null,
+    name varchar(100),
     phone varchar(30),
+    email varchar(255) not null,
+    password varchar(255) not null,
+    admin_status boolean default false,
     created_at timestamp not null default current_timestamp,
     primary key (id)
 );
