@@ -1,6 +1,7 @@
 package sg.edu.ntu.m3project.m3project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
