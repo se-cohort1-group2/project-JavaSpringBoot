@@ -8,8 +8,10 @@ function TableUsers({ list }) {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone</th>
+                        <th>Email</th>
+                        <th>Password</th>
+                        <th>Admin?</th>
                         <th>Created Timestamp</th>
                     </tr>
                 </thead>
@@ -17,9 +19,11 @@ function TableUsers({ list }) {
                     {list && list.map((item) => (
                     <tr key={item.id}>
                         <td>{item.id}</td>
-                        <td>{item.name}</td>
+                        <td>{String(item.name)}</td>
+                        <td>{String(item.phone)}</td>
                         <td>{item.email}</td>
-                        <td>{item.phone}</td>
+                        <td>{item.password}</td>
+                        <td>{String(item.adminStatus)}</td>
                         <td>{item.createdAt}</td>
                     </tr>
                     ))}
