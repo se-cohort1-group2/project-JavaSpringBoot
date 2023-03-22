@@ -14,3 +14,15 @@ insert into users (name, email) values
 ('Phoebe Yong', 'phoebeykq@gmail.com'),
 ('Lye Yong Xin', 'lye.yong.xin.9660@gmail.com'),
 ('Ong Xin Zhi', 'xong002@gmail.com');
+
+insert into seats (seat_id, seat_category, venue_hall, ticket_price, concert_type) values
+('A1', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A2', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A3', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A4', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A5', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A6', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A7', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A8', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A9', 'A', 'Hall 1', 299.99, 'concert_type'),
+('A10', 'A', 'Hall 1', 299.99, 'concert_type');

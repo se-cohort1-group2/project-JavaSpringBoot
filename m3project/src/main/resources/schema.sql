@@ -27,3 +27,12 @@ create table public.users (
     created_at timestamp not null default current_timestamp,
     primary key (id)
 );
+
+create table public.seats (
+    seat_id varchar(255) not null,
+    seat_category varchar(255),
+    venue_hall varchar(255),
+    ticket_price float,
+    concert_type varchar(255),
+    primary key (seat_id)
+);

@@ -20,8 +20,9 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer ticketId;
 
-    @Column(name = "seat_id")
-    String seatId;
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    private SeatEntity seatEntity;
 
     @ManyToOne
     @JoinColumn(name = "concert_id")
@@ -44,12 +45,12 @@ public class TicketEntity {
         this.ticketId = ticketId;
     }
 
-    public String getSeatId() {
-        return seatId;
+    public SeatEntity getSeatEntity() {
+        return seatEntity;
     }
 
-    public void setSeatId(String seatId) {
-        this.seatId = seatId;
+    public void setSeatEntity(SeatEntity seatEntity) {
+        this.seatEntity = seatEntity;
     }
 
     public ConcertEntity getConcertEntity() {
