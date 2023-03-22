@@ -50,6 +50,13 @@ public class UserEntity {
         this.name = name;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -57,11 +64,18 @@ public class UserEntity {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPassword() {
+        return password;
     }
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdminStatus() {
+        return adminStatus;
+    }
+    public void setAdminStatus(boolean adminStatus) {
+        this.adminStatus = adminStatus;
     }
 
     public Timestamp getCreatedAt() {
