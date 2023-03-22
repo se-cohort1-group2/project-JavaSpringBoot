@@ -73,8 +73,10 @@ public class UserController {
             if (currentUser.isPresent()) {
                 UserEntity editedUser = currentUser.get();
                 editedUser.setName(user.getName());
-                editedUser.setEmail(user.getEmail());
                 editedUser.setPhone(user.getPhone());
+                editedUser.setEmail(user.getEmail());
+                editedUser.setPassword(user.getPassword());
+                editedUser.setAdminStatus(user.isAdminStatus());
                 editedUser = userRepo.save(editedUser);
                 return ResponseEntity.ok().body(editedUser);
             }
