@@ -115,8 +115,9 @@ public class ConcertService {
         }
     }
 
-    public ResponseEntity<?> update(ConcertEntity concert, int concertId) {
+    public ResponseEntity<?> update(int userId, ConcertEntity concert, int concertId) {
         try {
+            userValidation.checkUser(userId);
             Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
 
             if (optionalConcert.isPresent()) {
@@ -135,6 +136,11 @@ public class ConcertService {
             }
 
             return ResponseEntity.notFound().build();
+
+        } catch (AccessDeniedException ade) {
+            ade.printStackTrace();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ResponseMessage(ade.getMessage()));
 
         } catch (IllegalArgumentException iae) {
             iae.printStackTrace();

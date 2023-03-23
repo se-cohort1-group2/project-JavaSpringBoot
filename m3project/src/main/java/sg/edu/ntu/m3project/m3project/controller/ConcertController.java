@@ -50,8 +50,9 @@ public class ConcertController {
     }
 
     @RequestMapping(value = "/{concertId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@RequestBody ConcertEntity concert, @PathVariable int concertId) {
-        return concertService.update(concert, concertId);
+    public ResponseEntity<?> update(@RequestHeader("user-id") int userId, @RequestBody ConcertEntity concert,
+            @PathVariable int concertId) {
+        return concertService.update(userId, concert, concertId);
     }
 
 }
