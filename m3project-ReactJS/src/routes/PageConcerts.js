@@ -1,17 +1,12 @@
 import style from "./Page.module.css"; 
 
-// import { Link } from "react-router-dom"; 
-
-import localAPI from "../api/localAPI"; 
 import TableConcerts from "../components/TableConcerts"; 
 
-import { useState, useEffect } from "react"; 
+function PageConcerts({ ConcertsList }) {
 
-function PageConcerts() {
+    // const [ConcertsList, setConcertsList] = useState([]); 
 
-    const [ConcertsList, setConcertsList] = useState([]); 
-
-    const getConcerts = async() => {
+    /* const getConcerts = async() => {
         try {
             const response = await localAPI.get("/concerts")
             setConcertsList(response.data)
@@ -19,16 +14,17 @@ function PageConcerts() {
         } catch (error) {
             console.log(error.message)
         }
-    }
+    } */
 
-    useEffect(() => {
+    /* useEffect(() => {
         getConcerts(); 
-    }, [])
+        // eslint-disable-next-line
+    }, []) */
 
     return (
         <>
             <div className={style.page}>
-                <h3>View all Concerts</h3>
+                <div className={style.title}>View all Concerts</div>
                 {ConcertsList && <TableConcerts list={ConcertsList}/>}
             </div>
         </>

@@ -1,17 +1,12 @@
 import style from "./Page.module.css"; 
 
-// import { Link } from "react-router-dom"; 
-
-import localAPI from "../api/localAPI"; 
 import TableUsers from "../components/TableUsers"; 
 
-import { useState, useEffect } from "react"; 
+function PageUsers({ UsersList }) {
 
-function PageUsers() {
+    // const [UsersList, setUsersList] = useState([]); 
 
-    const [UsersList, setUsersList] = useState([]); 
-
-    const getUsers = async() => {
+    /* const getUsers = async() => {
         try {
             const response = await localAPI.get("/users")
             setUsersList(response.data)
@@ -19,16 +14,17 @@ function PageUsers() {
         } catch (error) {
             console.log(error.message)
         }
-    }
+    } */
 
-    useEffect(() => {
+    /* useEffect(() => {
         getUsers(); 
-    }, [])
+        // eslint-disable-next-line
+    }, []) */
 
     return (
         <>
             <div className={style.page}>
-                <h3>View all Users</h3>
+                <div className={style.title}>View all Users</div>
                 {UsersList && <TableUsers list={UsersList}/>}
             </div>
         </>

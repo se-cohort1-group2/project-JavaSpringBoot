@@ -1,5 +1,7 @@
 import style from "./Table.module.css"; 
 
+import { NavLink } from "react-router-dom"; 
+
 function formatDate(x) {
     return new Date(x).toLocaleString("en-SG", {
         weekday: "short", 
@@ -29,7 +31,7 @@ function TableConcerts({ list }) {
                 <tbody>
                     {list && list.map((item) => (
                     <tr key={item.id}>
-                        <td>{item.id}</td>
+                        <td><NavLink to={`/concerts/${item.id}`}>{item.id}</NavLink></td>
                         <td>{item.artist}</td>
                         <td>{formatDate(item.concertDate)}</td>
                         <td>{item.ticketsAvailable}</td>

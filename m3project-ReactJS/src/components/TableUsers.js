@@ -1,5 +1,7 @@
 import style from "./Table.module.css"; 
 
+import { NavLink } from "react-router-dom"; 
+
 function TableUsers({ list }) {
     return (
         <>
@@ -18,7 +20,7 @@ function TableUsers({ list }) {
                 <tbody>
                     {list && list.map((item) => (
                     <tr key={item.id}>
-                        <td>{item.id}</td>
+                        <td><NavLink to={`/users/${item.id}`}>{item.id}</NavLink></td>
                         <td>{String(item.name)}</td>
                         <td>{String(item.phone)}</td>
                         <td>{item.email}</td>
