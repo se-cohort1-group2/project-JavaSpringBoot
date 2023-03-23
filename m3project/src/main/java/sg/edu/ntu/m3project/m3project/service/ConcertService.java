@@ -1,5 +1,6 @@
 package sg.edu.ntu.m3project.m3project.service;
 
+import java.nio.file.AccessDeniedException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -11,14 +12,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
+import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
+import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 
 @Service
 public class ConcertService {
 
     @Autowired
     ConcertRepository concertRepo;
+
+    @Autowired
+    UserRepository userRepo;
+
+    @Autowired
+    UserValidation userValidation;
 
     public ResponseEntity<?> find(String caseDesc, String searchParam) {
         try {
@@ -84,10 +93,16 @@ public class ConcertService {
         }
     }
 
-    public ResponseEntity<?> create(ConcertEntity concert) {
+    public ResponseEntity<?> create(int userId, ConcertEntity concert) {
         try {
+            userValidation.checkUser(userId);
             ConcertEntity newConcert = concertRepo.save(concert);
             return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
+        } catch (AccessDeniedException ade) {
+            ade.printStackTrace();
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(new ResponseMessage(ade.getMessage()));
+
         } catch (IllegalArgumentException iae) {
             iae.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -133,4 +148,17 @@ public class ConcertService {
         }
 
     }
+
+    // public void userValidation(int userId) throws AccessDeniedException {
+
+    // Optional<UserEntity> optionalUser = userRepo.findById(userId);
+    // if (optionalUser.isPresent()) {
+    // UserEntity user = optionalUser.get();
+    // if (!user.isAdminStatus())
+    // throw new AccessDeniedException("User is not an administrator");
+    // } else {
+    // throw new AccessDeniedException("Please login to continue.");
+    // }
+    // }
+
 }
