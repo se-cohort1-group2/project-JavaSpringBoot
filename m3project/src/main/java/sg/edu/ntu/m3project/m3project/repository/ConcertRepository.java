@@ -9,4 +9,8 @@ import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 
 public interface ConcertRepository extends CrudRepository<ConcertEntity, Integer> {
     List<ConcertEntity> findByConcertDateAfter(Timestamp concertDate);
+
+    List<ConcertEntity> findByArtist(String artist);
+
+    List<ConcertEntity> findByArtistContaining(String artist);
 }
