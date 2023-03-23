@@ -8,6 +8,7 @@ function TableTickets({ list }) {
                     <tr>
                         <th>ID</th>
                         <th>Concert</th>
+                        <th>Venue</th>
                         <th>Seat No.</th>
                         <th>User</th>
                         <th>Submitted?</th>
@@ -16,12 +17,13 @@ function TableTickets({ list }) {
                 </thead>
                 <tbody>
                     {list && list.map((item) => (
-                    <tr key={item.id}>
+                    <tr key={item.ticketId}>
                         <td>{item.ticketId}</td>
                         <td>{item.concertEntity.artist}</td>
-                        <td>{item.seatId}</td>
+                        <td>{item.seatEntity.venueHall}</td>
+                        <td>{item.seatEntity.seatId}</td>
                         <td>{item.userId}</td>
-                        <td>{item.submissionStatus}</td>
+                        <td>{String(item.submissionStatus)}</td>
                         <td>{item.createdAt}</td>
                     </tr>
                     ))}

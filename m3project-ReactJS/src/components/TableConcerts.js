@@ -19,7 +19,7 @@ function TableConcerts({ list }) {
                     <tr>
                         <th>ID</th>
                         <th>Artist</th>
-                        <th>Concert Date</th>
+                        <th>Concert Date & Time</th>
                         <th>Tickets Available</th>
                         <th>Ticket Price</th>
                         <th>Updated Timestamp</th>
