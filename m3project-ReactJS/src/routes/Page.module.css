@@ -1,11 +1,36 @@
 .page {
     text-align: center; 
-    background-color: #f4f4f4; 
     height: 100%; 
-    padding: 10px 0 0 0; 
 }
 
-h3 {
-    font-size: 1.25em; 
-    padding: 0 0 10px 0; 
+.title {
+    font-size: 1.5rem; 
+    font-weight: bold; 
+    margin: 1.2em 0 1.2em 0; 
+}
+
+.MiniTable {
+    margin: 0 auto 1.2em auto; 
+}
+
+.MiniTable th {
+    text-align: right; 
+    padding: 2px 5px; 
+}
+
+.MiniTable td {
+    text-align: left; 
+    padding: 2px 5px; 
+}
+
+.BackLink {
+    text-decoration: none; 
+}
+
+.BackArrow {
+    font-size: 2em; 
+}
+
+.BackText {
+    vertical-align: 35%; 
 }

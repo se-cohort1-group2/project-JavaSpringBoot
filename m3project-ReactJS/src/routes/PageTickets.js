@@ -1,17 +1,12 @@
 import style from "./Page.module.css"; 
 
-// import { Link } from "react-router-dom"; 
-
-import localAPI from "../api/localAPI"; 
 import TableTickets from "../components/TableTickets"; 
 
-import { useState, useEffect } from "react"; 
+function PageTickets({ TicketsList }) {
 
-function PageTickets() {
+    // const [TicketsList, setTicketsList] = useState([]); 
 
-    const [TicketsList, setTicketsList] = useState([]); 
-
-    const getTickets = async() => {
+    /* const getTickets = async() => {
         try {
             const response = await localAPI.get("/tickets")
             setTicketsList(response.data)
@@ -19,16 +14,17 @@ function PageTickets() {
         } catch (error) {
             console.log(error.message)
         }
-    }
+    } */
 
-    useEffect(() => {
+    /* useEffect(() => {
         getTickets(); 
-    }, [])
+        // eslint-disable-next-line
+    }, []) */
 
     return (
         <>
             <div className={style.page}>
-                <h3>View all Tickets</h3>
+                <div className={style.title}>View all Tickets</div>
                 {TicketsList && <TableTickets list={TicketsList}/>}
             </div>
         </>
