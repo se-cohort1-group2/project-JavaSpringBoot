@@ -28,14 +28,15 @@ public class TicketEntity {
     @JoinColumn(name = "concert_id")
     private ConcertEntity concertEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
     @Column(name = "submission_status")
     boolean submissionStatus;
 
     @Column(name = "created_at", updatable = false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
-
-    @Column(name = "user_id")
-    Integer userId;
 
     public Integer getTicketId() {
         return ticketId;
@@ -77,12 +78,12 @@ public class TicketEntity {
         this.createdAt = createdAt;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
 }
