@@ -29,12 +29,15 @@ public class ConcertService {
     @Autowired
     UserValidation userValidation;
 
-    public ResponseEntity<?> find(String caseDesc, String searchParam) {
+    @Autowired
+    UserService userService;
+
+    public ResponseEntity<?> find(String findBy, String searchParam) {
         try {
 
             List<ConcertEntity> currentConcertList;
 
-            switch (caseDesc) {
+            switch (findBy) {
                 case "upcoming":
                     // find all upcoming
 
@@ -93,9 +96,10 @@ public class ConcertService {
         }
     }
 
-    public ResponseEntity<?> create(int userId, ConcertEntity concert) {
+    public ResponseEntity<?> create(String token, ConcertEntity concert) {
         try {
-            userValidation.checkUser(userId);
+            // userValidation.checkUser(userId);
+            userService.checkToken(token);
             ConcertEntity newConcert = concertRepo.save(concert);
             return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
         } catch (AccessDeniedException ade) {
