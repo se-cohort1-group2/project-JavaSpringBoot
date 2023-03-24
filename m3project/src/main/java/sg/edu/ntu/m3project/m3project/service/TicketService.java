@@ -46,7 +46,7 @@ public class TicketService {
         } else {
             Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
             if (user.isPresent()) {
-                List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserId(userId);
+                List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserEntityId(userId);
                 if (tickets.isEmpty()) {
                     return ResponseEntity.status(HttpStatus.NOT_FOUND)
                             .body(new ResponseMessage("No ticket history for user: " + userId));
@@ -95,7 +95,7 @@ public class TicketService {
                     TicketEntity newTicketEntity = new TicketEntity();
                     newTicketEntity.setSubmissionStatus(true);
                     newTicketEntity.setConcertEntity(concertRepo.findById(selectedConcertId).get());
-                    newTicketEntity.setUserId(userId);
+                    newTicketEntity.setUserEntity(userRepo.findById(userId).get());
                     newTicketEntity.setSeatEntity(seatRepo.findById(selectedSeatId).get());
                     ticketRepo.save(newTicketEntity);
                     createdTickets.add(ticketRepo.findById(newTicketEntity.getTicketId()).get());
@@ -115,7 +115,7 @@ public class TicketService {
         Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
         if (user.isPresent()) {
 
-            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserId(ticketId,
+            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
                     userId);
             if (ticket.isPresent()) {
                 int concertId = ticket.get().getConcertEntity().getId();
@@ -145,7 +145,7 @@ public class TicketService {
     public ResponseEntity<?> delete(int userId, int ticketId) {
         Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
         if (user.isPresent()) {
-            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserId(ticketId,
+            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
                     userId);
             if (ticket.isPresent()) {
                 if (ticket.get().isSubmissionStatus()) {
