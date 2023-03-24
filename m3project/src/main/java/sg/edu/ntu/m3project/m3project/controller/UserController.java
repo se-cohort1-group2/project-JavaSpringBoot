@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import sg.edu.ntu.m3project.m3project.repository.UserRepository;
+import sg.edu.ntu.m3project.m3project.service.UserService;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
@@ -26,10 +27,13 @@ public class UserController {
     @Autowired
     UserRepository userRepo;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity findAll() {
+    public ResponseEntity<?> findAll() {
         try {
-            List<UserEntity> users = (List<UserEntity>)userRepo.findAll();
+            List<UserEntity> users = (List<UserEntity>) userRepo.findAll();
             return ResponseEntity.ok().body(users);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,8 +42,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.GET)
-    public ResponseEntity findById(@PathVariable int id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> findById(@PathVariable int id) {
         try {
             Optional<UserEntity> optional = userRepo.findById(id);
             if (optional.isPresent()) {
@@ -55,8 +59,13 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<?> login(@RequestBody UserEntity user) {
+        return userService.login(user);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody UserEntity user) {
+    public ResponseEntity<?> create(@RequestBody UserEntity user) {
         try {
             UserEntity createNewUser = userRepo.save(user);
             return new ResponseEntity(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
@@ -67,9 +76,9 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@RequestHeader(name = "user-id", required = true) int userID, 
-                                    @RequestBody UserEntity user, @PathVariable int id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> update(@RequestHeader(name = "user-id", required = true) int userID,
+            @RequestBody UserEntity user, @PathVariable int id) {
         try {
             Optional<UserEntity> userToBeUpdated = userRepo.findById(id);
             if (userToBeUpdated.isPresent()) {
