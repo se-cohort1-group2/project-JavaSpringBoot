@@ -45,8 +45,8 @@ public class ConcertController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestHeader("user-id") int userId, @RequestBody ConcertEntity concert) {
-        return concertService.create(userId, concert);
+    public ResponseEntity<?> create(@RequestHeader("token") String token, @RequestBody ConcertEntity concert) {
+        return concertService.create(token, concert);
     }
 
     @RequestMapping(value = "/{concertId}", method = RequestMethod.PUT)
