@@ -17,6 +17,10 @@ import PageTickets from "./routes/PageTickets";
 import PageUsers from "./routes/PageUsers"; 
 import PageUserByID from "./routes/PageUserByID"; 
 
+import { LoginContextProvider } from "./context/LoginContext"; 
+
+import LoginPage from "./routes/LoginPage"; 
+
 function App() {
 
     const [ConcertsHistoryList, setConcertsHistoryList] = useState([]); 
@@ -86,6 +90,7 @@ function App() {
 
     return (
         <>
+        <LoginContextProvider>
             <BrowserRouter>
                 <Routes>
 
@@ -93,21 +98,28 @@ function App() {
 
                     <Route path="/" element={<MainPage/>}>
                         <Route index element={<HomePage/>}/>
+
                         <Route path="/concerts" element={<BlankPage/>}>
                             <Route index element={<PageConcerts ConcertsList={ConcertsList}/>}/>
                             <Route path="history" element={<PageConcerts ConcertsList={ConcertsHistoryList}/>}/>
                             <Route path=":ConcertID" element={<PageConcertByID ConcertsList={ConcertsHistoryList}/>}/>
                         </Route>
+
                         <Route path="/seats" element={<PageSeats SeatsList={SeatsList}/>}/>
+
                         <Route path="/tickets" element={<PageTickets TicketsList={TicketsList}/>}/>
+
                         <Route path="/users" element={<BlankPage/>}>
                             <Route index element={<PageUsers UsersList={UsersList}/>}/>
                             <Route path=":UserID" element={<PageUserByID UsersList={UsersList}/>}/>
                         </Route>
+
+                        <Route path="/login" element={<LoginPage UsersList={UsersList}/>}/>
                     </Route>
 
                 </Routes>
             </BrowserRouter>
+        </LoginContextProvider>
         </>
     )
 }

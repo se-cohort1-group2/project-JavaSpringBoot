@@ -1,11 +1,17 @@
 import style from "./MainPage.module.css"; 
 
 import { Link, Outlet } from "react-router-dom"; 
+import { useContext } from "react"; 
+
+import LoginContext from "../context/LoginContext"; 
 
 import HomeIcon from "../images/icon-home.svg"; 
 import UserIcon from "../images/icon-user.svg"; 
 
 function MainPage() {
+
+    const LoginCtx = useContext(LoginContext); 
+
     return (
         <>
             <div className={style.MainContainer}>
@@ -14,6 +20,7 @@ function MainPage() {
                     <Link className={`${style.NavBtn} ${style.HomeBtn}`} to="/">
                         <img className={style.HomeIcon} alt="HomeIcon" src={HomeIcon}/>
                     </Link>
+
                     <div className={style.Dropdown}>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/concerts">Concerts</Link>
                         <div className={style.DropdownMenu}>
@@ -21,13 +28,17 @@ function MainPage() {
                         <Link className={style.DropdownLink} to="/concerts/history">Past Concerts</Link>
                         </div>
                     </div>
+
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/seats">Seats</Link>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/tickets">Tickets</Link>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/users">Users</Link>
 
-                    <Link className={`${style.NavBtn} ${style.LoginBtn}`} to="/login">
+                    <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
-                        Login
+                        <span className={style.LoginText}>
+                            {!LoginCtx.isLoggedIn && <>Login</>}
+                            {LoginCtx.isLoggedIn && <>Account</>}
+                        </span>
                     </Link>
                 </nav>
 
