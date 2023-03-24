@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
@@ -46,7 +47,7 @@ public class UserController {
                 return ResponseEntity.ok().body(user);
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseMessage("Invalid User ID. Please try a different User ID."));
+                    .body(new ResponseMessage("User " + id + " not found. Please try a different User ID."));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -67,21 +68,37 @@ public class UserController {
     }
 
     @RequestMapping(value="/{id}", method = RequestMethod.PUT)
-    public ResponseEntity update(@RequestBody UserEntity user, @PathVariable int id) {
+    public ResponseEntity<?> update(@RequestHeader(name = "user-id", required = true) int userID, 
+                                    @RequestBody UserEntity user, @PathVariable int id) {
         try {
-            Optional<UserEntity> currentUser = userRepo.findById(id);
-            if (currentUser.isPresent()) {
-                UserEntity editedUser = currentUser.get();
-                editedUser.setName(user.getName());
-                editedUser.setPhone(user.getPhone());
-                editedUser.setEmail(user.getEmail());
-                editedUser.setPassword(user.getPassword());
-                editedUser.setAdminStatus(user.isAdminStatus());
-                editedUser = userRepo.save(editedUser);
-                return ResponseEntity.ok().body(editedUser);
+            Optional<UserEntity> userToBeUpdated = userRepo.findById(id);
+            if (userToBeUpdated.isPresent()) {
+                UserEntity editedUser = userToBeUpdated.get();
+
+                // check if userInHeader exists
+                Optional<UserEntity> userInHeader = userRepo.findById(userID);
+                if (userInHeader.isPresent()) {
+                    UserEntity headerUser = userInHeader.get();
+
+                    // check if match - editedUser.getId() == userID
+                    // check if admin - headerUser.isAdminStatus()
+                    if (userID == editedUser.getId() || headerUser.isAdminStatus()) {
+                        editedUser.setName(user.getName());
+                        editedUser.setPhone(user.getPhone());
+                        editedUser.setEmail(user.getEmail());
+                        editedUser.setPassword(user.getPassword());
+                        editedUser.setAdminStatus(user.isAdminStatus());
+                        editedUser = userRepo.save(editedUser);
+                        return ResponseEntity.ok().body(editedUser);
+                    }
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                            .body(new ResponseMessage("Sorry, you are not allowed to update this user."));
+                }
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(new ResponseMessage("Invalid credentials."));
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseMessage("Invalid User ID. Please try a different User ID."));
+                    .body(new ResponseMessage("User " + id + " not found. Please try a different User ID."));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
