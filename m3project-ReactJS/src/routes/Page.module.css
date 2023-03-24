@@ -34,3 +34,17 @@
 .BackText {
     vertical-align: 35%; 
 }
+
+.FormTable {
+    margin: 2.2em auto 0 auto; 
+}
+
+.FormTable th {
+    text-align: right; 
+    padding: 2px 5px; 
+}
+
+.FormTable td {
+    text-align: left; 
+    padding: 2px 5px; 
+}
