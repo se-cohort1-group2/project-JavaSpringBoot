@@ -19,7 +19,7 @@ function TableSeats({ list }) {
                         <td>{item.seatId}</td>
                         <td>{item.seatCategory}</td>
                         <td>{item.venueHall}</td>
-                        <td>{item.ticketPrice}</td>
+                        <td>S${item.ticketPrice}</td>
                         <td>{item.concertType}</td>
                     </tr>
                     ))}

@@ -2,6 +2,10 @@ import style from "./Table.module.css";
 
 import { NavLink } from "react-router-dom"; 
 
+function formatTimestamp(x) {
+    return new Date(x).toLocaleString("en-SG")
+}
+
 function TableUsers({ list }) {
     return (
         <>
@@ -14,6 +18,7 @@ function TableUsers({ list }) {
                         <th>Email</th>
                         <th>Password</th>
                         <th>Admin?</th>
+                        <th>Updated Timestamp</th>
                         <th>Created Timestamp</th>
                     </tr>
                 </thead>
@@ -26,7 +31,8 @@ function TableUsers({ list }) {
                         <td>{item.email}</td>
                         <td>{item.password}</td>
                         <td>{String(item.adminStatus)}</td>
-                        <td>{item.createdAt}</td>
+                        <td>{formatTimestamp(item.updatedAt)}</td>
+                        <td>{formatTimestamp(item.createdAt)}</td>
                     </tr>
                     ))}
                 </tbody>

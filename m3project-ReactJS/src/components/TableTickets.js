@@ -1,5 +1,9 @@
 import style from "./Table.module.css"; 
 
+function formatTimestamp(x) {
+    return new Date(x).toLocaleString("en-SG")
+}
+
 function TableTickets({ list }) {
     return (
         <>
@@ -10,7 +14,8 @@ function TableTickets({ list }) {
                         <th>Concert</th>
                         <th>Venue</th>
                         <th>Seat No.</th>
-                        <th>User</th>
+                        <th>Category Price</th>
+                        <th>Purchased by User</th>
                         <th>Submitted?</th>
                         <th>Created Timestamp</th>
                     </tr>
@@ -22,9 +27,10 @@ function TableTickets({ list }) {
                         <td>{item.concertEntity.artist}</td>
                         <td>{item.seatEntity.venueHall}</td>
                         <td>{item.seatEntity.seatId}</td>
-                        <td>{item.userId}</td>
+                        <td>S${item.seatEntity.ticketPrice}</td>
+                        <td>{item.userEntity.email}</td>
                         <td>{String(item.submissionStatus)}</td>
-                        <td>{item.createdAt}</td>
+                        <td>{formatTimestamp(item.createdAt)}</td>
                     </tr>
                     ))}
                 </tbody>
