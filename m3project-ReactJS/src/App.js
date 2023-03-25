@@ -1,6 +1,6 @@
 import "./App.css"; 
 
-import { useState, useEffect } from "react"; 
+import { useContext, useState, useEffect } from "react"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 
 import localAPI from "./api/localAPI"; 
@@ -18,10 +18,13 @@ import PageUsers from "./routes/PageUsers";
 import PageUserByID from "./routes/PageUserByID"; 
 
 import { LoginContextProvider } from "./context/LoginContext"; 
+import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
 
 function App() {
+
+    const LoginCtx = useContext(LoginContext); 
 
     const [ConcertsHistoryList, setConcertsHistoryList] = useState([]); 
     const [ConcertsList, setConcertsList] = useState([]); 
@@ -71,7 +74,10 @@ function App() {
 
     const getUsers = async() => {
         try {
-            const response = await localAPI.get("/users")
+            const config = {
+                headers: {"user-id": LoginCtx.userID}
+            }
+            const response = await localAPI.get("/users", config)
             setUsersList(response.data)
             console.log("Users", response.data)
         } catch (error) {
@@ -111,7 +117,7 @@ function App() {
 
                         <Route path="/users" element={<BlankPage/>}>
                             <Route index element={<PageUsers UsersList={UsersList}/>}/>
-                            <Route path=":UserID" element={<PageUserByID UsersList={UsersList}/>}/>
+                            <Route path=":UserID" element={<PageUserByID UsersList={UsersList} getUsers={getUsers}/>}/>
                         </Route>
 
                         <Route path="/login" element={<LoginPage UsersList={UsersList}/>}/>

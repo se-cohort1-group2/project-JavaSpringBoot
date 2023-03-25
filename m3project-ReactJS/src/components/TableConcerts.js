@@ -2,6 +2,10 @@ import style from "./Table.module.css";
 
 import { NavLink } from "react-router-dom"; 
 
+function formatTimestamp(x) {
+    return new Date(x).toLocaleString("en-SG")
+}
+
 function formatDate(x) {
     return new Date(x).toLocaleString("en-SG", {
         weekday: "short", 
@@ -36,8 +40,8 @@ function TableConcerts({ list }) {
                         <td>{formatDate(item.concertDate)}</td>
                         <td>{item.ticketsAvailable}</td>
                         <td>{item.ticketPrice}</td>
-                        <td>{item.updatedAt}</td>
-                        <td>{item.createdAt}</td>
+                        <td>{formatTimestamp(item.updatedAt)}</td>
+                        <td>{formatTimestamp(item.createdAt)}</td>
                     </tr>
                     ))}
                 </tbody>

@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
+import java.sql.Timestamp;
 
 import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 import sg.edu.ntu.m3project.m3project.service.UserService;
@@ -92,11 +94,13 @@ public class UserController {
                     // check if match - editedUser.getId() == userID
                     // check if admin - headerUser.isAdminStatus()
                     if (userID == editedUser.getId() || headerUser.isAdminStatus()) {
+                        Timestamp updatedAt = new Timestamp(new Date().getTime());
                         editedUser.setName(user.getName());
                         editedUser.setPhone(user.getPhone());
                         editedUser.setEmail(user.getEmail());
                         editedUser.setPassword(user.getPassword());
                         editedUser.setAdminStatus(user.isAdminStatus());
+                        editedUser.setUpdatedAt(updatedAt);
                         editedUser = userRepo.save(editedUser);
                         return ResponseEntity.ok().body(editedUser);
                     }
