@@ -33,6 +33,9 @@ public class UserEntity {
     @Column(name = "admin_status")
     boolean adminStatus;
 
+    @Column(name = "updated_at")
+    Timestamp updatedAt = new Timestamp(new Date().getTime());
+
     @Column(name="created_at", updatable= false)
     Timestamp createdAt = new Timestamp(new Date().getTime());
 
@@ -76,6 +79,13 @@ public class UserEntity {
     }
     public void setAdminStatus(boolean adminStatus) {
         this.adminStatus = adminStatus;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public Timestamp getCreatedAt() {
