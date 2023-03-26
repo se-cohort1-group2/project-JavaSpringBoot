@@ -5,8 +5,8 @@ import { useContext } from "react";
 
 import LoginContext from "../context/LoginContext"; 
 
-import HomeIcon from "../images/icon-home.svg"; 
-import UserIcon from "../images/icon-user.svg"; 
+import HomeIcon from "../images/OutlinedHomeIcon.svg"; 
+import UserIcon from "../images/OutlinedUserIcon.svg"; 
 
 function MainPage() {
 
