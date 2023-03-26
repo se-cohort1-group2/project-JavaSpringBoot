@@ -69,6 +69,10 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody UserEntity user) {
         try {
+            if (userRepo.existsByEmail(user.getEmail())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ResponseMessage("Sorry, a user with this email already exists."));
+            }
             UserEntity createNewUser = userRepo.save(user);
             return new ResponseEntity(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
         } catch (Exception e) {
