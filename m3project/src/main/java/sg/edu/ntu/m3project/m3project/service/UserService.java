@@ -96,7 +96,7 @@ public class UserService {
             return new ResponseEntity<>(this.generateToken(selectedUser), HttpStatus.OK);
         } catch (AccessDeniedException ade) {
             ade.printStackTrace();
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ade.getMessage());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage(ade.getMessage()));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
