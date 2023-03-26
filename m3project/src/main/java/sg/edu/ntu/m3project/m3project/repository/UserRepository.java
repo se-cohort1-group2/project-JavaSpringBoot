@@ -11,6 +11,6 @@ import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 @Repository
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
-    Optional<UserEntity> findByEmailAndPassword(String email, String password);
+    Optional<UserEntity> findByEmail(String email);
 
 }
