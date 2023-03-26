@@ -103,7 +103,7 @@ public class UserController {
                         editedUser.setPhone(user.getPhone());
                         editedUser.setEmail(user.getEmail());
                         editedUser.setPassword(user.getPassword());
-                        editedUser.setAdminStatus(user.isAdminStatus());
+                        /* editedUser.setAdminStatus(user.isAdminStatus()); */
                         editedUser.setUpdatedAt(updatedAt);
                         editedUser = userRepo.save(editedUser);
                         return ResponseEntity.ok().body(editedUser);
