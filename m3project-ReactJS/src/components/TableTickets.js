@@ -35,6 +35,7 @@ function TableTickets({ list }) {
                     ))}
                 </tbody>
             </table>
+            <br/><br/>
         </>
     )
 }

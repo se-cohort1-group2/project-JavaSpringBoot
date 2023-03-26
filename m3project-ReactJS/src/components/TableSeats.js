@@ -25,6 +25,7 @@ function TableSeats({ list }) {
                     ))}
                 </tbody>
             </table>
+            <br/><br/>
         </>
     )
 }
