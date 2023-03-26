@@ -154,7 +154,7 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                 </tbody>
             </table>
             </form>)}
-            {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button><br/><br/></>}
+            {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button></>}
             </>
             }
         </div>

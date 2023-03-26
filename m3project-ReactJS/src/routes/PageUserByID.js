@@ -13,6 +13,7 @@ function PageUserByID({ UsersList, getUsers }) {
         <div className={style.page}>
             <div className={style.title}>View User by ID</div>
             <DisplayUser UsersList={UsersList} getUsers={getUsers} displayID={UserID}/>
+            <br/>
             <Link to="/users" className={style.BackLink}>
                 <span className={style.BackArrow}>🡄</span>
                 <span className={style.BackText}>&nbsp;Back</span>
