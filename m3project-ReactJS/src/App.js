@@ -21,6 +21,8 @@ import { LoginContextProvider } from "./context/LoginContext";
 import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
+import LoginRegisterPage from "./routes/LoginRegisterPage"; 
+import LoginAccountPage from "./routes/LoginAccountPage"; 
 
 function App() {
 
@@ -36,7 +38,7 @@ function App() {
         try {
             const response = await localAPI.get("/concerts/history")
             setConcertsHistoryList(response.data)
-            console.log("ConcertsHistory", response.data)
+            console.log("ConcertsHistoryList", response.data)
         } catch (error) {
             console.log(error.message)
         }
@@ -46,7 +48,7 @@ function App() {
         try {
             const response = await localAPI.get("/concerts")
             setConcertsList(response.data)
-            console.log("Concerts", response.data)
+            console.log("ConcertsList", response.data)
         } catch (error) {
             console.log(error.message)
         }
@@ -56,7 +58,7 @@ function App() {
         try {
             const response = await localAPI.get("/seats")
             setSeatsList(response.data)
-            console.log("Seats", response.data)
+            console.log("SeatsList", response.data)
         } catch (error) {
             console.log(error.message)
         }
@@ -66,7 +68,7 @@ function App() {
         try {
             const response = await localAPI.get("/tickets")
             setTicketsList(response.data)
-            console.log("Tickets", response.data)
+            console.log("TicketsList", response.data)
         } catch (error) {
             console.log(error.message)
         }
@@ -79,7 +81,7 @@ function App() {
             }
             const response = await localAPI.get("/users", config)
             setUsersList(response.data)
-            console.log("Users", response.data)
+            console.log("UsersList", response.data)
         } catch (error) {
             console.log(error.message)
         }
@@ -120,7 +122,12 @@ function App() {
                             <Route path=":UserID" element={<PageUserByID UsersList={UsersList} getUsers={getUsers}/>}/>
                         </Route>
 
-                        <Route path="/login" element={<LoginPage UsersList={UsersList}/>}/>
+                        <Route path="/login" element={<BlankPage/>}>
+                            <Route index element={<LoginPage UsersList={UsersList}/>}/>
+                            <Route path="register" element={<LoginRegisterPage/>}/>
+                        </Route>
+
+                        <Route path="/account" element={<LoginAccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>
                     </Route>
 
                 </Routes>
