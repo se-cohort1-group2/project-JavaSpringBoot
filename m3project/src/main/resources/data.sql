@@ -2,7 +2,7 @@ insert into users (name, phone, email, password, admin_status) values
 ('Administrator', '+65 8123 4567', 'admin@mail.com', 'admin', true);
 insert into users (name, email, password) values
 ('Phoebe Yong', 'phoebeykq@gmail.com', 'phoebe'),
-('Lye Yong Xin', 'lye.yong.xin.9660@gmail.com', 'yongxin'),
+('Lye Yong Xin', 'yx@gmail.com', 'yongxin'),
 ('Ong Xin Zhi', 'xong002@gmail.com', 'xinzhi'),
 ('Edison Zhuang', 'edison@skillsunion.com', 'edison'),
 ('Wong Chen Pang', 'cpwong@skillsunion.com', 'cpwong'),
