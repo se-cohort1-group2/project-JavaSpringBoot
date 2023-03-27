@@ -6,14 +6,6 @@ function formatTimestamp(x) {
     return new Date(x).toLocaleString("en-SG")
 }
 
-function formatPassword(x) {
-    let maskedPassword = ""; 
-    for (let i = 0; i < x.length; i++) {
-        maskedPassword += "*"; 
-    }
-    return maskedPassword; 
-}
-
 function TableUsers({ list }) {
     return (
         <>
@@ -24,7 +16,6 @@ function TableUsers({ list }) {
                         <th>Name</th>
                         <th>Phone</th>
                         <th>Email</th>
-                        <th>Password</th>
                         <th>Admin?</th>
                         <th>Updated Timestamp</th>
                         <th>Created Timestamp</th>
@@ -37,7 +28,6 @@ function TableUsers({ list }) {
                         <td>{String(item.name)}</td>
                         <td>{String(item.phone)}</td>
                         <td>{item.email}</td>
-                        <td>{formatPassword(item.password)}</td>
                         <td>{String(item.adminStatus)}</td>
                         <td>{formatTimestamp(item.updatedAt)}</td>
                         <td>{formatTimestamp(item.createdAt)}</td>

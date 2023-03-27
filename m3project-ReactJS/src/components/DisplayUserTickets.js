@@ -7,7 +7,8 @@ function DisplayUserTickets({ TicketsList, displayID }) {
 
     return (
         <>
-            {filteredTickets && <TableTickets list={filteredTickets}/>}
+            {filteredTickets.length > 0 && <TableTickets list={filteredTickets}/>}
+            {filteredTickets.length < 1 && <>You have not purchased any tickets.</>}
         </>
     )
 }
