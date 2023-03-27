@@ -65,3 +65,14 @@ public class SeatEntity {
     }
 
 }
+
+// @Entity
+// class SeatEntity(
+    
+//     var seatCategory: String,
+//     var venueHall: String,
+//     var ticketPrice: Float,
+//     var concertType: String,
+//     @Id var id: String
+    
+// )
