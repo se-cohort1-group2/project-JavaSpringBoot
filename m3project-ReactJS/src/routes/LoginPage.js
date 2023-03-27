@@ -1,9 +1,12 @@
 import style from "./Page.module.css"; 
 
 import { useContext, useState } from "react"; 
-import { Navigate } from "react-router-dom"; 
+import { Link, Navigate } from "react-router-dom"; 
 
 import LoginContext from "../context/LoginContext"; 
+
+import VisibilityOn from "../images/VisibilityOn.svg"; 
+import VisibilityOff from "../images/VisibilityOff.svg"; 
 
 const blankLoginForm = {
     email: "",
@@ -15,6 +18,11 @@ function LoginPage({ UsersList }) {
     const LoginCtx = useContext(LoginContext); 
 
     const [LoginForm, setLoginForm] = useState(blankLoginForm); 
+    const [ShowPassword, setShowPassword] = useState(false); 
+
+    const toggleVisibility = () => {
+        ShowPassword ? setShowPassword(false) : setShowPassword(true)
+    }
 
     const handleInput = (e) => {
         setLoginForm((prevState) => {
@@ -45,19 +53,25 @@ function LoginPage({ UsersList }) {
     if (!LoginCtx.isLoggedIn) {
     return (
         <>
+        <div className={style.subtitle}>Sign in with an existing account</div>
         <form onSubmit={handleSubmit}>
         <table className={style.FormTable}>
             <tbody>
                 <tr>
                     <th>Email:</th>
                     <td>
-                        <input value={LoginForm.email} name="email" type="email" required onChange={(e) => handleInput(e, "email")}/>
+                        <input value={LoginForm.email} name="email" type="email" required placeholder="johndoe@example.com" onChange={(e) => handleInput(e, "email")}/>
                     </td>
                 </tr>
                 <tr>
                     <th>Password:</th>
                     <td>
-                        <input value={LoginForm.password} name="password" type="password" required onChange={(e) => handleInput(e, "password")}/>
+                        <input value={LoginForm.password} name="password" type={ShowPassword ? "text" : "password"} required placeholder="********" onChange={(e) => handleInput(e, "password")}/>
+                        {ShowPassword ?
+                        <img onClick={toggleVisibility} className={style.VisibilityOnOff} alt="VisibilityOn" src={VisibilityOn}/>
+                        :
+                        <img onClick={toggleVisibility} className={style.VisibilityOnOff} alt="VisibilityOff" src={VisibilityOff}/>
+                        }
                     </td>
                 </tr>
                 <tr>
@@ -69,6 +83,7 @@ function LoginPage({ UsersList }) {
             </tbody>
         </table>
         </form>
+        <p>Don't have an account yet? <Link to="/login/register">Sign up here</Link></p>
         </>
     )
     }
@@ -76,7 +91,7 @@ function LoginPage({ UsersList }) {
     if (LoginCtx.isLoggedIn) {
     return (
         <>
-        <Navigate to={`/users/${LoginCtx.userID}`} replace={true}/>
+        <Navigate to={`/account`} replace={true}/>
         </>
     )
     }
