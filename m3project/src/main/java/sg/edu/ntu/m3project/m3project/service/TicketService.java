@@ -13,6 +13,7 @@ import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 import sg.edu.ntu.m3project.m3project.entity.SeatEntity;
 import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
+import sg.edu.ntu.m3project.m3project.exceptions.UserNotFoundException;
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
@@ -35,7 +36,7 @@ public class TicketService {
     @Autowired
     SeatRepository seatRepo;
 
-    public ResponseEntity<?> find(Integer userId) {
+    public ResponseEntity<?> find(Integer userId){
         if (userId == null) {
             List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
             if (tickets.isEmpty()) {
@@ -52,9 +53,7 @@ public class TicketService {
                             .body(new ResponseMessage("No ticket history for user: " + userId));
                 } else
                     return ResponseEntity.ok().body(tickets);
-            } else
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ResponseMessage("User not found."));
+            } else throw new UserNotFoundException();
         }
     }
 
@@ -105,9 +104,7 @@ public class TicketService {
             } else
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ResponseMessage("Selected concert/seat(s) not available. Please try again."));
-        } else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseMessage("User not found."));
+        } else throw new UserNotFoundException();
     }
 
     public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
@@ -137,9 +134,7 @@ public class TicketService {
                             .body(new ResponseMessage("Seat is unavailable"));
             } else
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-        } else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseMessage("User not found."));
+        } else throw new UserNotFoundException();
     }
 
     public ResponseEntity<?> delete(int userId, int ticketId) {
@@ -157,8 +152,6 @@ public class TicketService {
                             .body(new ResponseMessage("Ticket is already deleted."));
             } else
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-        } else
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(new ResponseMessage("User not found."));
+        } else throw new UserNotFoundException();
     }
 }
