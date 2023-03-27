@@ -9,6 +9,11 @@
     margin: 1.2em 0 1.2em 0; 
 }
 
+.subtitle {
+    font-size: 1.2rem; 
+    margin: 2.2em 0 0 0; 
+}
+
 .MiniTable {
     margin: 0 auto 1.2em auto; 
 }
@@ -47,4 +52,15 @@
 .FormTable td {
     text-align: left; 
     padding: 2px 5px; 
+}
+
+.VisibilityOnOff {
+    height: 20px; 
+    vertical-align: bottom; 
+}
+
+hr {
+    width: 80%; 
+    border: 0; 
+    border-top: 1px dashed #aaa; 
 }

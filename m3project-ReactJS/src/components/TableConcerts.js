@@ -46,6 +46,7 @@ function TableConcerts({ list }) {
                     ))}
                 </tbody>
             </table>
+            <br/><br/>
         </>
     )
 }
