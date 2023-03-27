@@ -1,9 +1,9 @@
 insert into users (name, phone, email, password, admin_status) values
-('Administrator', '+65 8123 4567', 'admin@mail.com', 'admin', true);
+('Administrator', '+65 8123 4567', 'admin@mail.com', '$2a$10$Uh1wSkhDdD3dIPTY/15jJ.WOyfIHGrPECbnDKzt3bGSMdR0dc541C', true);
 insert into users (name, email, password) values
-('Phoebe Yong', 'phoebeykq@gmail.com', 'phoebe'),
-('Lye Yong Xin', 'yx@gmail.com', 'yongxin'),
-('Ong Xin Zhi', 'xong002@gmail.com', 'xinzhi'),
+('Phoebe Yong', 'phoebeykq@gmail.com', '$2a$10$fIUuek32p3f4nJJB0St37OsroKLvlul3WB/OCXPdhM.hckV/RkU7m'),
+('Lye Yong Xin', 'yx@gmail.com', '$2a$10$Mosuxgwl.7EDMn466soSROkSaDnTtDXngDEFK0P4QmC6.HCRdw5iG'),
+('Ong Xin Zhi', 'xong002@gmail.com', '$2a$10$6WyisGYRUslEB7EXdPlZUea2A045gcg3Wz8sDPm6GID.eofYoWjba'),
 ('Edison Zhuang', 'edison@skillsunion.com', 'edison'),
 ('Wong Chen Pang', 'cpwong@skillsunion.com', 'cpwong'),
 ('Terence Gaffud', 'terence.gaffud@skillsunion.com', 'terence'),

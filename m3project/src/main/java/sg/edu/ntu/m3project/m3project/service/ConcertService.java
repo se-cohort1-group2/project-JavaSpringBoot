@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
-import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
 import sg.edu.ntu.m3project.m3project.repository.UserRepository;

@@ -61,11 +61,6 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody UserEntity user) {
-        return userService.login(user);
-    }
-
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestBody UserEntity user) {
         try {
@@ -74,7 +69,7 @@ public class UserController {
                         .body(new ResponseMessage("Sorry, a user with this email already exists."));
             }
             UserEntity createNewUser = userRepo.save(user);
-            return new ResponseEntity(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
+            return new ResponseEntity<>(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
