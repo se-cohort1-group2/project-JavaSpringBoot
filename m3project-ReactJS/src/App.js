@@ -124,7 +124,7 @@ function App() {
 
                         <Route path="/login" element={<BlankPage/>}>
                             <Route index element={<LoginPage UsersList={UsersList}/>}/>
-                            <Route path="register" element={<LoginRegisterPage/>}/>
+                            <Route path="register" element={<LoginRegisterPage UsersList={UsersList} getUsers={getUsers}/>}/>
                         </Route>
 
                         <Route path="/account" element={<LoginAccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>

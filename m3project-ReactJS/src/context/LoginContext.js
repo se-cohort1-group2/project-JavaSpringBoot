@@ -5,21 +5,26 @@ const LoginContext = createContext({
     setIsLoggedIn: () => {}, 
     userID: "", 
     setUserID: () => {}, 
+    token: "", 
+    setToken: () => {}, 
 })
 
 export function LoginContextProvider({ children }) {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
     const [userID, setUserID] = useState(""); 
+    const [token, setToken] = useState(""); 
 
-    const handleLogin = (status, userID) => {
+    const handleLogin = (status, userID, token) => {
         setIsLoggedIn(status); 
         setUserID(userID); 
+        setToken(token)
     }
 
     const context = {
         isLoggedIn: isLoggedIn, 
         userID: userID, 
+        token: token, 
         handleLogin: handleLogin, 
     }
 
