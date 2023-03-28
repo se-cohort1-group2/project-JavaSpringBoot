@@ -12,9 +12,7 @@ function TableTickets({ list }) {
                     <tr>
                         <th>ID</th>
                         <th>Concert</th>
-                        <th>Venue</th>
                         <th>Seat No.</th>
-                        <th>Category Price</th>
                         <th>Purchased by User</th>
                         <th>Submitted?</th>
                         <th>Created Timestamp</th>
@@ -25,9 +23,7 @@ function TableTickets({ list }) {
                     <tr key={item.ticketId}>
                         <td>{item.ticketId}</td>
                         <td>{item.concertEntity.artist}</td>
-                        <td>{item.seatEntity.venueHall}</td>
                         <td>{item.seatEntity.seatId}</td>
-                        <td>S${item.seatEntity.ticketPrice}</td>
                         <td>{item.userEntity.email}</td>
                         <td>{String(item.submissionStatus)}</td>
                         <td>{formatTimestamp(item.createdAt)}</td>

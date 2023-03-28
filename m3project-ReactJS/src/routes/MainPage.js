@@ -32,6 +32,7 @@ function MainPage() {
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/seats">Seats</Link>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/tickets">Tickets</Link>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/users">Users</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/concerts">Concerts</Link>
 
                     <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
