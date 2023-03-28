@@ -4,23 +4,6 @@ import TableUsers from "../components/TableUsers";
 
 function PageUsers({ UsersList }) {
 
-    // const [UsersList, setUsersList] = useState([]); 
-
-    /* const getUsers = async() => {
-        try {
-            const response = await localAPI.get("/users")
-            setUsersList(response.data)
-            console.log(response.data)
-        } catch (error) {
-            console.log(error.message)
-        }
-    } */
-
-    /* useEffect(() => {
-        getUsers(); 
-        // eslint-disable-next-line
-    }, []) */
-
     return (
         <>
             <div className={style.page}>
