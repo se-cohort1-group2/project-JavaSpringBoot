@@ -24,7 +24,7 @@ function TableUsers({ list }) {
                 <tbody>
                     {list && list.map((item) => (
                     <tr key={item.id}>
-                        <td><NavLink to={`/users/${item.id}`}>{item.id}</NavLink></td>
+                        <td><NavLink to={`/admin/users/${item.id}`}>{item.id}</NavLink></td>
                         <td>{String(item.name)}</td>
                         <td>{String(item.phone)}</td>
                         <td>{item.email}</td>

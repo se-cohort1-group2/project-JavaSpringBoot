@@ -14,7 +14,7 @@ function ViewUserByID({ UsersList, getUsers }) {
             <div className={style.title}>View User by ID</div>
             <DisplayUser UsersList={UsersList} getUsers={getUsers} displayID={UserID}/>
             <br/>
-            <Link to="/users" className={style.BackLink}>
+            <Link to="/admin/users" className={style.BackLink}>
                 <span className={style.BackArrow}>🡄</span>
                 <span className={style.BackText}>&nbsp;Back</span>
             </Link>
