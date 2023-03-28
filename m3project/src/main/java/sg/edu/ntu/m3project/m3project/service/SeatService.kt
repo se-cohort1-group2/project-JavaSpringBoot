@@ -10,12 +10,12 @@ import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 @Service
 class SeatService(val seatRepo:SeatRepository){
 
-    fun findAll(): List<SeatEntity> = seatRepo.findAll().toList()
+    fun findAll(): List<SeatEntity?> = seatRepo.findAll().toList()
 
     fun findById(seatId:String): SeatEntity = seatRepo.findById(seatId).get()
 
     fun create(seatEntity:SeatEntity): ResponseEntity<Any> {
-        if(!seatRepo.findById(seatEntity.seatId).isPresent()) {
+        if(!seatRepo.findById(seatEntity.seatId.toString()).isPresent()) {
         seatRepo.save(seatEntity)
         return ResponseEntity.status(HttpStatus.CREATED)
                     .body(seatEntity)
@@ -24,7 +24,7 @@ class SeatService(val seatRepo:SeatRepository){
     }
 
     fun update(seatEntity:SeatEntity): SeatEntity {
-        val existingSeat:SeatEntity = seatRepo.findById(seatEntity.seatId).get()
+        val existingSeat:SeatEntity = seatRepo.findById(seatEntity.seatId.toString()).get()
         existingSeat.seatCategory = seatEntity.seatCategory
         existingSeat.venueHall = seatEntity.venueHall
         existingSeat.ticketPrice = seatEntity.ticketPrice

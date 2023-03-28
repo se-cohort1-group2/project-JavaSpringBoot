@@ -18,7 +18,7 @@ import sg.edu.ntu.m3project.m3project.entity.SeatEntity;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
 @RestController
-@RequestMapping("test")
+@RequestMapping("seats")
 class TestController (val seatService: SeatService){
     
     @ExceptionHandler
@@ -50,7 +50,7 @@ class TestController (val seatService: SeatService){
     }
 
     @GetMapping
-    fun findAll(): List<SeatEntity> = seatService.findAll()
+    fun findAll(): List<SeatEntity?> = seatService.findAll()
 
     @GetMapping("/{seatId}")
     fun findById(@PathVariable seatId:String) = seatService.findById(seatId)
