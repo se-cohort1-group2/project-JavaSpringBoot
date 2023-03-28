@@ -11,17 +11,17 @@ insert into users (name, email, password) values
 ('Jennifer Du', 'jennifer.du@ntu.edu.sg', 'jennifer'),
 ('Jaedon Kwan', 'jaedon.kwan@ntu.edu.sg', 'jaedon');
 
-insert into concerts (artist, concert_date, tickets_available, ticket_price) values
-('WESTLIFE', '2023-02-16 20:00', 100, 288.99),
-('BACKSTREET BOYS', '2023-02-22 20:00', 100, 288.99),
-('PENTATONIX', '2023-03-06 20:00', 80, 188.99),
-('BLACKPINK', '2023-05-13 19:30', 120, 388.99),
-('NE-YO', '2023-05-22 20:00', 100, 288.99),
-('SHILA AMZAH', '2023-06-03 20:00', 80, 188.99),
-('THE 1975', '2023-07-18 20:00', 100, 288.99),
-('G.E.M.', '2023-08-12 19:00', 90, 288.99),
-('MAYDAY', '2023-12-03 19:30', 100, 188.99),
-('JAY CHOU', '2023-12-17 20:00', 120, 388.99);
+insert into concerts (artist, concert_date, concert_venue, tickets_available, ticket_price) values
+('WESTLIFE', '2023-02-16 20:00', 'Singapore Indoor Stadium', 100, 288.99),
+('BACKSTREET BOYS', '2023-02-22 20:00', 'Singapore Indoor Stadium', 100, 288.99),
+('PENTATONIX', '2023-03-06 20:00', 'The Star Theatre', 80, 188.99),
+('BLACKPINK', '2023-05-13 19:30', 'National Stadium', 120, 388.99),
+('NE-YO', '2023-05-22 20:00', 'The Star Theatre', 100, 288.99),
+('SHILA AMZAH', '2023-06-03 20:00', 'Capitol Theatre', 80, 188.99),
+('THE 1975', '2023-07-18 20:00', 'Capitol Theatre', 100, 288.99),
+('G.E.M.', '2023-08-12 19:00', 'Singapore Indoor Stadium', 90, 288.99),
+('MAYDAY', '2023-12-03 19:30', 'National Stadium', 100, 188.99),
+('JAY CHOU', '2023-12-17 20:00', 'National Stadium', 120, 388.99);
 
 insert into tickets (concert_id, seat_id, user_id, submission_status) values
 (3, 'C1', 2, true),
