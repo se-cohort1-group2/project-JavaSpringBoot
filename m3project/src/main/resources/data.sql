@@ -24,21 +24,27 @@ insert into concerts (artist, concert_date, concert_venue, tickets_available, ti
 ('JAY CHOU', '2023-12-17 20:00', 'National Stadium', 120, 388.99);
 
 insert into tickets (concert_id, seat_id, user_id, submission_status) values
-(3, 'C1', 2, true),
-(3, 'B1', 7, true),
-(3, 'B2', 8, true),
-(4, 'A1', 2, true),
-(4, 'A2', 2, true),
-(7, 'B1', 4, true),
-(7, 'B2', 4, true),
-(8, 'A1', 3, true),
-(8, 'A2', 3, true),
-(9, 'B1', 9, true),
-(9, 'A1', 3, true),
-(9, 'A2', 3, true),
-(10, 'B1', 5, true),
-(10, 'B2', 6, true),
-(10, 'B3', 10, true);
+(3, 'B5', 2, true),
+(3, 'B6', 2, true),
+(8, 'A5', 3, true),
+(8, 'A6', 3, true),
+(4, 'A5', 2, true),
+(4, 'A6', 2, true),
+(9, 'A5', 3, true),
+(9, 'A6', 3, true),
+(7, 'B5', 4, true),
+(7, 'B6', 4, true),
+(7, 'A6', 8, true),
+(7, 'C5', 7, true),
+(10, 'A5', 10, true),
+(10, 'A6', 10, true),
+(10, 'A3', 9, true),
+(10, 'A4', 9, true),
+(10, 'A7', 6, true),
+(10, 'A8', 6, true),
+(10, 'B5', 5, true),
+(10, 'B6', 5, true),
+(10, 'B7', 5, true);
 
 insert into seats (seat_id, seat_category, venue_hall, ticket_price, concert_type) values
 ('A1', 'A', 'Hall 1', 398, 'concert_type'),
