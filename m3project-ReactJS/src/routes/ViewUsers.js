@@ -2,7 +2,7 @@ import style from "./Page.module.css";
 
 import TableUsers from "../components/TableUsers"; 
 
-function PageUsers({ UsersList }) {
+function ViewUsers({ UsersList }) {
 
     return (
         <>
@@ -14,4 +14,4 @@ function PageUsers({ UsersList }) {
     )
 }
 
-export default PageUsers; 
+export default ViewUsers; 

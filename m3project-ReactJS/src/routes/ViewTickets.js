@@ -2,7 +2,7 @@ import style from "./Page.module.css";
 
 import TableTickets from "../components/TableTickets"; 
 
-function PageTickets({ TicketsList }) {
+function ViewTickets({ TicketsList }) {
 
     return (
         <>
@@ -14,4 +14,4 @@ function PageTickets({ TicketsList }) {
     )
 }
 
-export default PageTickets; 
+export default ViewTickets; 

@@ -2,7 +2,7 @@ import style from "./Page.module.css";
 
 import TableSeats from "../components/TableSeats"; 
 
-function PageSeats({ SeatsList }) {
+function ViewSeats({ SeatsList }) {
 
     return (
         <>
@@ -14,4 +14,4 @@ function PageSeats({ SeatsList }) {
     )
 }
 
-export default PageSeats; 
+export default ViewSeats; 
