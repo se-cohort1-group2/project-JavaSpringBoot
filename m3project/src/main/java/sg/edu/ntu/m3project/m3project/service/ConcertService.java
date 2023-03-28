@@ -95,12 +95,12 @@ public class ConcertService {
         }
     }
 
-    public ResponseEntity<?> create(String token, ConcertEntity concert) {
+    public ResponseEntity<?> create(String token, int userId, ConcertEntity concert) {
         try {
             // userValidation.checkUser(userId);
-            userService.checkToken(token);
+            userService.checkToken(token, userId);
             ConcertEntity newConcert = concertRepo.save(concert);
-            return new ResponseEntity(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
+            return new ResponseEntity<>(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
         } catch (AccessDeniedException ade) {
             ade.printStackTrace();
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
