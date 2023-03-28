@@ -20,11 +20,6 @@ function PageConcertByID({ ConcertsList }) {
     // eslint-disable-next-line
     const concert = ConcertsList.find(({ id }) => id == ConcertID); 
 
-    /* console.log("-----", concert)
-    if (typeof concert === "object") {
-        console.log("-----", concert.id)
-    } */
-
     return (
         <>
             <div className={style.page}>
@@ -46,6 +41,10 @@ function PageConcertByID({ ConcertsList }) {
                                 <td>{formatDate(concert.concertDate)}</td>
                             </tr>
                             <tr>
+                                <th>Concert Venue:</th>
+                                <td>{concert.concertVenue}</td>
+                            </tr>
+                            <tr>
                                 <th>Tickets Available:</th>
                                 <td>{concert.ticketsAvailable}</td>
                             </tr>
@@ -53,7 +52,6 @@ function PageConcertByID({ ConcertsList }) {
                                 <th>Ticket Price:</th>
                                 <td>{concert.ticketPrice}</td>
                             </tr>
-                            
                         </tbody>
                     </table>
                     </>

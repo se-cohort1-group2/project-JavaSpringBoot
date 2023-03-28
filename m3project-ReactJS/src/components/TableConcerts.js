@@ -26,6 +26,7 @@ function TableConcerts({ list }) {
                         <th>ID</th>
                         <th>Artist</th>
                         <th>Concert Date & Time</th>
+                        <th>Concert Venue</th>
                         <th>Tickets Available</th>
                         <th>Ticket Price</th>
                         <th>Updated Timestamp</th>
@@ -38,6 +39,7 @@ function TableConcerts({ list }) {
                         <td><NavLink to={`/concerts/${item.id}`}>{item.id}</NavLink></td>
                         <td>{item.artist}</td>
                         <td>{formatDate(item.concertDate)}</td>
+                        <td>{item.concertVenue}</td>
                         <td>{item.ticketsAvailable}</td>
                         <td>{item.ticketPrice}</td>
                         <td>{formatTimestamp(item.updatedAt)}</td>
