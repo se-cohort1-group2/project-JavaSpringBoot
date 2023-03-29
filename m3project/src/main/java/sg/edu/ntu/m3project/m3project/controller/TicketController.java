@@ -22,37 +22,36 @@ import sg.edu.ntu.m3project.m3project.service.TicketService;
 @RequestMapping("/tickets")
 public class TicketController {
 
-    @Autowired
-    TicketService ticketService;
+        @Autowired
+        TicketService ticketService;
 
-    
-    // Get Tickets by All/User ID
-    @GetMapping
-    public ResponseEntity<?> findAllById(@RequestHeader(value = "user_id", required = false) Integer userId) {
-        return ticketService.find(userId);
-    }
+        // Get Tickets by All/User ID
+        @GetMapping
+        public ResponseEntity<?> findAllById(@RequestHeader(value = "user-id", required = false) Integer userId) {
+                return ticketService.find(userId);
+        }
 
-    // Create Ticket (to update to array input for multiple tickets)
-    @PostMapping
-    public ResponseEntity<?> createTicket(
-            @RequestHeader(value = "user_id") int userId,
-            @RequestBody List<NewTicket> newTickets) {
-            return ticketService.add(userId, newTickets);
-    }
+        // Create Ticket (to update to array input for multiple tickets)
+        @PostMapping
+        public ResponseEntity<?> createTicket(
+                        @RequestHeader(value = "user-id") int userId,
+                        @RequestBody List<NewTicket> newTickets) {
+                return ticketService.add(userId, newTickets);
+        }
 
-    @PutMapping("/{ticket_id}") // change selectedSeatId to RequestParam?
-    public ResponseEntity<?> changeSeat(
-            @RequestHeader(value = "user_id") int userId,
-            @PathVariable int ticket_id,
-            @RequestBody String selectedSeatId) {
-            return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
-    }
+        @PutMapping("/{ticket_id}") // change selectedSeatId to RequestParam?
+        public ResponseEntity<?> changeSeat(
+                        @RequestHeader(value = "user-id") int userId,
+                        @PathVariable int ticket_id,
+                        @RequestBody String selectedSeatId) {
+                return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
+        }
 
-    @PostMapping("/{ticket_id}/delete")
-    public ResponseEntity<?> deleteTicket(
-            @RequestHeader(value = "user_id") int userId,
-            @PathVariable int ticket_id) {
-            return ticketService.delete(userId, ticket_id);
-    }
+        @PostMapping("/{ticket_id}/delete")
+        public ResponseEntity<?> deleteTicket(
+                        @RequestHeader(value = "user-id") int userId,
+                        @PathVariable int ticket_id) {
+                return ticketService.delete(userId, ticket_id);
+        }
 
 }

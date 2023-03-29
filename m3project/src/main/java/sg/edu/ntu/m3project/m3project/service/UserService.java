@@ -44,6 +44,7 @@ public class UserService {
                 .compact();
         Map<String, String> jwtTokenGen = new HashMap<>();
         jwtTokenGen.put("token", jwtToken);
+        jwtTokenGen.put("user-id", user.getId().toString());
         return jwtTokenGen;
     }
 
@@ -55,8 +56,6 @@ public class UserService {
                 .getBody()
                 .getSubject();
 
-        System.out.print(id);
-        System.out.print(userId);
         if (userId != Integer.parseInt(id)) {
             throw new AccessDeniedException("Userid and token does not match");
         }
