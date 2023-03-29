@@ -30,6 +30,11 @@
 
 .BackLink {
     text-decoration: none; 
+    color: #222; 
+}
+
+.BackLink:hover {
+    color: #555; 
 }
 
 .BackArrow {
@@ -37,7 +42,7 @@
 }
 
 .BackText {
-    vertical-align: 35%; 
+    vertical-align: 25%; 
 }
 
 .FormTable {
