@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 
 import DisplayUser from "../components/DisplayUser"; 
 
-function ViewUserByID({ UsersList, getUsers }) {
+function ViewByIDUser({ UsersList, getUsers }) {
 
     const {UserID} = useParams(); 
 
@@ -23,4 +23,4 @@ function ViewUserByID({ UsersList, getUsers }) {
     )
 }
 
-export default ViewUserByID; 
+export default ViewByIDUser; 

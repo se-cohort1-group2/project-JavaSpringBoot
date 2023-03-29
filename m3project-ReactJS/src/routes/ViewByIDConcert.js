@@ -13,7 +13,7 @@ function formatDate(x) {
     })
 }
 
-function ViewConcertByID({ ConcertsList }) {
+function ViewByIDConcert({ ConcertsList }) {
 
     const {ConcertID} = useParams(); 
 
@@ -57,4 +57,4 @@ function ViewConcertByID({ ConcertsList }) {
     )
 }
 
-export default ViewConcertByID; 
+export default ViewByIDConcert; 
