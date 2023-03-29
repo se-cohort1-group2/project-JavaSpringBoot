@@ -148,10 +148,7 @@ public class UserService {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ResponseMessage("Sorry, a user with this email already exists."));
             }
-            // UserEntity hashedUser = hashPassword(user);
-            // yongxin comment - u can nest the hashPassword in save
             UserEntity createNewUser = userRepo.save(hashPassword(user));
-
             return new ResponseEntity<>(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -164,11 +161,11 @@ public class UserService {
     public UserEntity getUserForAuth(String email, String password) throws AccessDeniedException {
         Optional<UserEntity> optionalUser = userRepo.findByEmail(email);
         if (!optionalUser.isPresent()) {
-            throw new AccessDeniedException("User not found, please try a different email.");
+            throw new AccessDeniedException("User account not found, please try a different email.");
         }
         UserEntity foundUser = optionalUser.get();
         if (!bCryptPasswordEncoder.matches(password, foundUser.getPassword())) {
-            throw new AccessDeniedException("Wrong password for '" + email + "'. Please try again.");
+            throw new AccessDeniedException("Incorrect password for '" + email + "'. Please try again.");
         }
         return foundUser;
     }
