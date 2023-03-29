@@ -16,7 +16,7 @@ function TableSeats({ list }) {
                     <tr key={item.seatId}>
                         <td>{item.seatId}</td>
                         <td>{item.seatCategory}</td>
-                        <td>S${item.ticketPrice}</td>
+                        <td>${item.ticketPrice}</td>
                     </tr>
                     ))}
                 </tbody>
