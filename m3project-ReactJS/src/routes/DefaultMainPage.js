@@ -1,4 +1,4 @@
-import style from "./MainPage.module.css"; 
+import style from "./DefaultMainPage.module.css"; 
 
 import { Link, Outlet } from "react-router-dom"; 
 import { useContext } from "react"; 
@@ -8,7 +8,7 @@ import LoginContext from "../context/LoginContext";
 import HomeIcon from "../images/OutlinedHomeIcon.svg"; 
 import UserIcon from "../images/OutlinedUserIcon.svg"; 
 
-function MainPage() {
+function DefaultMainPage() {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -65,4 +65,4 @@ function MainPage() {
     )
 }
 
-export default MainPage; 
+export default DefaultMainPage; 

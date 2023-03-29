@@ -9,7 +9,7 @@ import LoginContext from "../context/LoginContext";
 import DisplayUser from "../components/DisplayUser"; 
 import DisplayUserTickets from "../components/DisplayUserTickets"; 
 
-function LoginAccountPage({ UsersList, getUsers, TicketsList }) {
+function AccountPage({ UsersList, getUsers, TicketsList }) {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -42,4 +42,4 @@ function LoginAccountPage({ UsersList, getUsers, TicketsList }) {
     }
 }
 
-export default LoginAccountPage; 
+export default AccountPage; 
