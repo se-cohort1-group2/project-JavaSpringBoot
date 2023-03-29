@@ -12,6 +12,7 @@ import sg.edu.ntu.m3project.m3project.entity.SeatEntity;
 import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.exceptions.UserNotFoundException;
+import sg.edu.ntu.m3project.m3project.exceptions.TicketNotFoundException;
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
@@ -41,6 +42,11 @@ class TicketService {
         if (!user.isPresent()) throw UserNotFoundException()
     }
     
+    fun checkTicketExists(userId : Int, ticketId : Int): TicketEntity {
+        var ticket = ticketRepo?.findByTicketIdAndUserEntityId(ticketId, userId)
+        if (ticket == null) throw TicketNotFoundException() else return ticket
+    }
+
     //Find all or find all by user_id
     fun find(userId : Int?): ResponseEntity<*> {
         if (userId == null) {
@@ -97,8 +103,7 @@ class TicketService {
     //Change seat of specified ticket
     fun changeSeat(userId : Int, ticketId : Int, selectedSeatId : String): ResponseEntity<*> {
         checkUserId(userId)
-        var ticket = ticketRepo?.findByTicketIdAndUserEntityId(ticketId, userId)
-        if (ticket !== null) {
+        var ticket = checkTicketExists(userId, ticketId)
             var selectedSeat = seatRepo?.findById(selectedSeatId) as Optional<SeatEntity>
             var concertId = ticket.concertEntity?.id
             var selectedConcertSeat = ticketRepo?.findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
@@ -110,20 +115,17 @@ class TicketService {
                     ticketRepo?.save(ticket)
                     return ResponseEntity.ok().body(ticket);
             } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Seat is unavailable"))
-        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseMessage("Ticket ID not found."))
     }
 
     //Change submission status of tickets to false
     fun delete(userId : Int, ticketId : Int): ResponseEntity<*> {
         checkUserId(userId)
-        var ticket = ticketRepo?.findByTicketIdAndUserEntityId(ticketId, userId)
-        if (ticket !== null) {
-            if(ticket.submissionStatus) {
-                ticket.submissionStatus = false
-                ticketRepo?.save(ticket)
-                return ResponseEntity.ok().body(ResponseMessage("Ticket deleted."))
-            } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Ticket is already deleted."));
-        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseMessage("Ticket ID not found."));
+        var ticket = checkTicketExists(userId, ticketId)
+        if(ticket.submissionStatus) {
+            ticket.submissionStatus = false
+            ticketRepo?.save(ticket)
+            return ResponseEntity.ok().body(ResponseMessage("Ticket deleted."))
+        } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Ticket is already deleted."));
     }
 
 }

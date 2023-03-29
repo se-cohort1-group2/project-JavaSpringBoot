@@ -18,6 +18,13 @@ public class GlobalExceptionHandler {
             .body(new ResponseMessage("User not found."));
     }
 
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<?> handleTicketNotFoundException(Exception ex){
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(new ResponseMessage("Ticket not found."));
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<?> handleRuntimeException(Exception ex){
         ex.printStackTrace();
