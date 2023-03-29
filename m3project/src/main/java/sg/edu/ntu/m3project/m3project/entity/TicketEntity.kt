@@ -20,10 +20,10 @@ public class TicketEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var ticketId : Int? = null
 
-    // @ManyToOne
-    // @JoinColumn(name = "seat_id")
-    // private SeatEntity seatEntity;
-
+    @ManyToOne
+    @JoinColumn(name = "seat_id")
+    var seatEntity : SeatEntity? = null
+    
     @ManyToOne
     @JoinColumn(name = "concert_id")
     var concertEntity : ConcertEntity? = null
@@ -37,13 +37,5 @@ public class TicketEntity {
 
     @Column(name = "created_at", updatable = false)
     var createdAt = Timestamp(Date().time)
-
-    // public SeatEntity getSeatEntity() {
-    //     return seatEntity;
-    // }
-
-    // public void setSeatEntity(SeatEntity seatEntity) {
-    //     this.seatEntity = seatEntity;
-    // }
 
 }

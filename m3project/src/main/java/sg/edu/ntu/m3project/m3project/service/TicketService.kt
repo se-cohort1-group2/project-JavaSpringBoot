@@ -60,55 +60,39 @@ class TicketService {
         }
     }
 
-    // // add check for concert ticket quantity
-    // public ResponseEntity<?> add(int userId, List<NewTicket> newTickets) {
+    fun add(userId : Int, newTickets : List<NewTicket>): ResponseEntity<*> {
+        checkUserId(userId)
+        var validSeats = true
+        for (newTicket in newTickets) {
+            var selectedSeat = seatRepo?.findById(newTicket.seatId)
+            var selectedConcert = concertRepo?.findById(newTicket.concertId)
+            var selectedConcertSeat = ticketRepo?.findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
+                newTicket.seatId, 
+                newTicket.concertId, 
+                true)
+            if (selectedConcert!!.isPresent() && selectedSeat !== null && selectedConcertSeat == null) {
+                    continue;
+                } else {
+                    validSeats = false;
+                    break;
+                }
+        }
 
-    //     Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-    //     if (user.isPresent()) {
-
-    //         boolean validSeats = true;
-    //         for (NewTicket newTicket : newTickets) {
-    //             Integer selectedConcertId = newTicket.getConcertId();
-    //             String selectedSeatId = newTicket.getSeatId();
-
-    //             Optional<ConcertEntity> selectedConcert = (Optional<ConcertEntity>) concertRepo
-    //                     .findById(selectedConcertId);
-    //             Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
-    //                     .findById(selectedSeatId);
-    //             Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
-    //                     .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
-    //                             selectedSeatId,
-    //                             selectedConcertId,
-    //                             true);
-
-    //             if (selectedConcert.isPresent() && selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
-    //                 continue;
-    //             } else {
-    //                 validSeats = false;
-    //                 break;
-    //             }
-    //         }
-
-    //         if (validSeats) {
-    //             List<TicketEntity> createdTickets = new ArrayList<TicketEntity>();
-    //             for (NewTicket newTicket : newTickets) {
-    //                 Integer selectedConcertId = newTicket.getConcertId();
-    //                 String selectedSeatId = newTicket.getSeatId();
-    //                 TicketEntity newTicketEntity = new TicketEntity();
-    //                 newTicketEntity.setSubmissionStatus(true);
-    //                 newTicketEntity.setConcertEntity(concertRepo.findById(selectedConcertId).get());
-    //                 newTicketEntity.setUserEntity(userRepo.findById(userId).get());
-    //                 newTicketEntity.setSeatEntity(seatRepo.findById(selectedSeatId).get());
-    //                 ticketRepo.save(newTicketEntity);
-    //                 createdTickets.add(ticketRepo.findById(newTicketEntity.getTicketId()).get());
-    //             }
-    //             return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets);
-
-    //         } else
-    //             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-    //                     .body(new ResponseMessage("Selected concert/seat(s) not available. Please try again."));
-    //     } else throw new UserNotFoundException();
-    // }
+        if (validSeats){
+            var createdTickets = ArrayList<TicketEntity>()
+            for (newTicket in newTickets) {
+                var newTicketEntity = TicketEntity()
+                newTicketEntity.concertEntity = concertRepo!!.findById(newTicket.concertId).get()
+                newTicketEntity.userEntity = userRepo!!.findById(userId).get()
+                newTicketEntity.seatEntity = seatRepo!!.findById(newTicket.seatId).get()
+                newTicketEntity.submissionStatus = true
+                ticketRepo?.save(newTicketEntity)
+                createdTickets.add(ticketRepo!!.findById(newTicketEntity.ticketId!!).get())
+            }
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets);
+        } else return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                            .body(ResponseMessage("Selected concert/seat(s) not available. Please try again."));
+    }
 
     // public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
 

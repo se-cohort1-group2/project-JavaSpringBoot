@@ -10,7 +10,7 @@ import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
 @Repository
 interface TicketRepository : CrudRepository <TicketEntity?, Int?> {
     fun findByUserEntityId(userId : Int?) : List<TicketEntity?>?
-    //add findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus
+    fun findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(seatId : String?, concertId : Int?, submissionStatus : Boolean) : TicketEntity?
     fun findByTicketIdAndUserEntityId(ticketId : Int?, userId : Int?) : TicketEntity?
 }
 

@@ -27,16 +27,14 @@ public class TicketController {
 
     @GetMapping
     fun findAllById(@RequestHeader(value = "user_id", required = false) userId : Int?): ResponseEntity<*>? {
-        return ticketService?.find(userId);
-    }
+        return ticketService?.find(userId)
+        }
 
-//     // Create Ticket (to update to array input for multiple tickets)
-//     @PostMapping
-//     public ResponseEntity<?> createTicket(
-//             @RequestHeader(value = "user_id") int userId,
-//             @RequestBody List<NewTicket> newTickets) {
-//             return ticketService.add(userId, newTickets);
-//     }
+    @PostMapping
+    fun createTickets(@RequestHeader(value = "user_id") userId : Int,
+                @RequestBody newTickets : List<NewTicket> ): ResponseEntity<*>? {
+        return ticketService?.add(userId, newTickets)
+        }
 
 //     @PutMapping("/{ticket_id}") // change selectedSeatId to RequestParam?
 //     public ResponseEntity<?> changeSeat(
