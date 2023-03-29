@@ -165,3 +165,75 @@
     border-left: 2px dashed gray; 
     border-right: 2px solid gray; 
 }
+
+.gridContainer {
+    display: grid; 
+    grid-template-columns: 1fr max-content 1fr; 
+    align-items: center; 
+    column-gap: 120px; 
+}
+
+.gridBoxLeft {
+    justify-self: end; 
+    text-align: left; 
+    font-size: 0.95rem; 
+}
+
+.gridBoxCentre {
+    justify-self: center; 
+}
+
+.gridBoxRight {
+    justify-self: start; 
+    text-align: left; 
+    font-size: 0.85rem; 
+}
+
+.LegendUnavailable {
+    background-color: LightCoral; 
+    display: inline-block; 
+    width: 30px; 
+    height: 25px; 
+    vertical-align: 5px; 
+    margin: 12px 10px 8px 0; 
+}
+
+.LegendAvailable {
+    background-color: LightGray; 
+    display: inline-block; 
+    width: 30px; 
+    height: 25px; 
+    vertical-align: 5px; 
+    margin: 0 10px 8px 0; 
+}
+
+.LegendSelected {
+    background-color: MediumSeaGreen; 
+    display: inline-block; 
+    width: 30px; 
+    height: 25px; 
+    vertical-align: 5px; 
+    margin: 0 10px 8px 0; 
+}
+
+.tooltip {
+    position: relative; 
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden; 
+    position: absolute; 
+    z-index: 1; 
+    white-space: nowrap; 
+    text-align: left; 
+    font-size: 0.85rem; 
+    color: #888; 
+    background-color: #fafafa55; 
+    border: 1px solid #aaa; 
+    border-radius: 3px; 
+    padding: 5px 10px; 
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible; 
+}
