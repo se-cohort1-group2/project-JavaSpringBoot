@@ -120,12 +120,12 @@ function App() {
 
                 <Route path="/admin/users" element={<DefaultBlankPage/>}>
                     <Route index element={<ViewUsers UsersList={UsersList}/>}/>
-                    <Route path=":UserID" element={<ViewByIDUser UsersList={UsersList} getUsers={getUsers}/>}/>
+                    <Route path=":UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
                 </Route>
 
                 <Route path="/admin/concerts" element={<DefaultBlankPage/>}>
                     <Route index element={<ViewConcerts ConcertsList={ConcertsHistoryList}/>}/>
-                    <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList}/>}/>
+                    <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
                 </Route>
 
                 <Route path="/admin/tickets" element={<ViewTickets TicketsList={TicketsList}/>}/>

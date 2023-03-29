@@ -23,7 +23,7 @@ const blankUpdateForm = {
     "password": ""
 }
 
-function DisplayUser({ UsersList, getUsers, displayID }) {
+function DisplayUser({ getUsers, UsersList, displayID }) {
 
     const LoginCtx = useContext(LoginContext); 
 

@@ -19,7 +19,7 @@ function AccountPage({ UsersList, getUsers, TicketsList }) {
         <div className={style.AccountContainer}>
             <div className={style.AccountCard}>
                 <div className={style.AccountHeader}>Your Profile</div>
-                <div className={style.AccountContent}><DisplayUser UsersList={UsersList} getUsers={getUsers} displayID={LoginCtx.userID}/></div>
+                <div className={style.AccountContent}><DisplayUser getUsers={getUsers} UsersList={UsersList} displayID={LoginCtx.userID}/></div>
             </div>
             <div className={style.AccountCard}>
                 <div className={style.AccountHeader}>Your Tickets</div>
