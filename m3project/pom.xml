@@ -15,8 +15,6 @@
 	<description>Project for SCTP SE Module 3</description>
 	<properties>
 		<java.version>17</java.version>
-		<!-- Kotlin version -->
-		<kotlin.version>1.7.22</kotlin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -36,11 +34,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>5.3.13</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -57,61 +50,14 @@
 			<artifactId>reactor-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Kotlin dependencies -->
-		<dependency>
-      		<groupId>com.fasterxml.jackson.module</groupId>
-      		<artifactId>jackson-module-kotlin</artifactId>
-    	</dependency>
-    	<dependency>
-      		<groupId>org.jetbrains.kotlin</groupId>
-      		<artifactId>kotlin-reflect</artifactId>
-    	</dependency>
-    	<dependency>
-      		<groupId>org.jetbrains.kotlin</groupId>
-      		<artifactId>kotlin-stdlib-jdk8</artifactId>
-    	</dependency>
 	</dependencies>
 
 	<build>
-	    <!-- Add source directories -->
-		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
-    	<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- Configure location of main class to run -->
-				<configuration>    
-            		<mainClass>sg.edu.ntu.m3project.m3project.M3projectApplication</mainClass>
-        		</configuration>
 			</plugin>
-			<!-- Kotlin plugins -->
-			<plugin>
-				<groupId>org.jetbrains.kotlin</groupId>
-				<artifactId>kotlin-maven-plugin</artifactId>
-				<version>${kotlin.version}</version>
-				<configuration>
-				<args>
-					<arg>-Xjsr305=strict</arg>
-				</args>
-				<compilerPlugins>
-					<plugin>spring</plugin>
-					<plugin>jpa</plugin>
-				</compilerPlugins>
-				</configuration>
-				<dependencies>
-				<dependency>
-					<groupId>org.jetbrains.kotlin</groupId>
-					<artifactId>kotlin-maven-allopen</artifactId>
-					<version>${kotlin.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.jetbrains.kotlin</groupId>
-					<artifactId>kotlin-maven-noarg</artifactId>
-					<version>${kotlin.version}</version>
-				</dependency>
-				</dependencies>
-      		</plugin>
 		</plugins>
 	</build>
 

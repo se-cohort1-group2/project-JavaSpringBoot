@@ -39,18 +39,17 @@ public class ConcertController {
         return concertService.find("artist", artist.toUpperCase());
     }
 
-    @RequestMapping(value = "/search/{concertId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{concertId}", method = RequestMethod.GET)
     public ResponseEntity<?> findById(@PathVariable int concertId) {
         return concertService.findbyConcertId(concertId);
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<?> create(@RequestHeader("token") String token, @RequestHeader("user-id") int userId,
-            @RequestBody ConcertEntity concert) {
-        return concertService.create(token, userId, concert);
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> create(@RequestHeader("token") String token, @RequestBody ConcertEntity concert) {
+        return concertService.create(token, concert);
     }
 
-    @RequestMapping(value = "/edit/{concertId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{concertId}", method = RequestMethod.PUT)
     public ResponseEntity<?> update(@RequestHeader("user-id") int userId, @RequestBody ConcertEntity concert,
             @PathVariable int concertId) {
         return concertService.update(userId, concert, concertId);
