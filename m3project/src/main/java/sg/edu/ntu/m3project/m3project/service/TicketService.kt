@@ -34,13 +34,14 @@ class TicketService {
     @Autowired
     var seatRepo : SeatRepository? = null;
 
-
+    //Check if user_id is present
     fun checkUserId(userId : Int) {
         var user = userRepo?.findById(userId) as Optional<UserEntity> // change to UserEntity? when userRepo converted to kt
         // change to user !== null when userRepo converted to kt
         if (!user.isPresent()) throw UserNotFoundException()
     }
     
+    //Find all or find all by user_id
     fun find(userId : Int?): ResponseEntity<*> {
         if (userId == null) {
             var tickets = ticketRepo?.findAll() as List<TicketEntity?>
@@ -60,6 +61,7 @@ class TicketService {
         }
     }
 
+    //Add new tickets
     fun add(userId : Int, newTickets : List<NewTicket>): ResponseEntity<*> {
         checkUserId(userId)
         var validSeats = true
@@ -70,14 +72,12 @@ class TicketService {
                 newTicket.seatId, 
                 newTicket.concertId, 
                 true)
-            if (selectedConcert!!.isPresent() && selectedSeat !== null && selectedConcertSeat == null) {
-                    continue;
-                } else {
-                    validSeats = false;
-                    break;
-                }
+            if (selectedConcert!!.isPresent() && selectedSeat!!.isPresent() && selectedConcertSeat == null) 
+                continue
+            else 
+                validSeats = false
+                break
         }
-
         if (validSeats){
             var createdTickets = ArrayList<TicketEntity>()
             for (newTicket in newTickets) {
@@ -89,9 +89,28 @@ class TicketService {
                 ticketRepo?.save(newTicketEntity)
                 createdTickets.add(ticketRepo!!.findById(newTicketEntity.ticketId!!).get())
             }
-                return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets);
+                return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets)
         } else return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .body(ResponseMessage("Selected concert/seat(s) not available. Please try again."));
+                            .body(ResponseMessage("Selected concert/seat(s) not available. Please try again."))
+    }
+
+    //Change seat of specified ticket
+    fun changeSeat(userId : Int, ticketId : Int, selectedSeatId : String): ResponseEntity<*> {
+        checkUserId(userId)
+        var ticket = ticketRepo?.findByTicketIdAndUserEntityId(ticketId, userId)
+        if (ticket !== null) {
+            var selectedSeat = seatRepo?.findById(selectedSeatId) as Optional<SeatEntity>
+            var concertId = ticket.concertEntity?.id
+            var selectedConcertSeat = ticketRepo?.findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
+                selectedSeatId, 
+                concertId, 
+                true)
+            if (selectedSeat.isPresent() && selectedConcertSeat == null){
+                    ticket.seatEntity = seatRepo!!.findById(selectedSeatId).get()
+                    ticketRepo?.save(ticket)
+                    return ResponseEntity.ok().body(ticket);
+            } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Seat is unavailable"))
+        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseMessage("Ticket ID not found."));
     }
 
     // public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
