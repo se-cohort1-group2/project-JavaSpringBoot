@@ -88,10 +88,6 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
             <table className={style.MiniTable}>
                 <tbody>
                     <tr>
-                        <th>User ID:</th>
-                        <td>{user.id}</td>
-                    </tr>
-                    <tr>
                         <th>Name:</th>
                         <td>{user.name}</td>
                     </tr>
@@ -113,10 +109,6 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
             {isEditing && (<form onSubmit={handleSubmit}>
             <table className={style.MiniTable}>
                 <tbody>
-                    <tr>
-                        <th>User ID:</th>
-                        <td>{user.id}</td>
-                    </tr>
                     <tr>
                         <th>Name:</th>
                         <td>

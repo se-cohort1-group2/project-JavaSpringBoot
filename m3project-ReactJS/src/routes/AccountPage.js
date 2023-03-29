@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import LoginContext from "../context/LoginContext"; 
 
 import DisplayUser from "../components/DisplayUser"; 
-import DisplayTicketsUser from "../components/DisplayTicketsUser"; 
+import DisplayAccountTickets from "../components/DisplayAccountTickets"; 
 
 function AccountPage({ UsersList, getUsers, TicketsList }) {
 
@@ -15,16 +15,18 @@ function AccountPage({ UsersList, getUsers, TicketsList }) {
     if (LoginCtx.isLoggedIn) {
     return (
         <>
-        <div className={style.page}>
-            <div className={style.subtitle}>Your Profile</div>
-            <br/>
-            <DisplayUser UsersList={UsersList} getUsers={getUsers} displayID={LoginCtx.userID}/>
-            <br/><br/>
-            <hr/>
-            <div className={style.subtitle}>Your Tickets</div>
-            <br/>
-            <DisplayTicketsUser TicketsList={TicketsList} displayID={LoginCtx.userID}/>
+        <br/><br/>
+        <div className={style.AccountContainer}>
+            <div className={style.AccountCard}>
+                <div className={style.AccountHeader}>Your Profile</div>
+                <div className={style.AccountContent}><DisplayUser UsersList={UsersList} getUsers={getUsers} displayID={LoginCtx.userID}/></div>
+            </div>
+            <div className={style.AccountCard}>
+                <div className={style.AccountHeader}>Your Tickets</div>
+                <div className={style.AccountContent}><DisplayAccountTickets TicketsList={TicketsList} displayID={LoginCtx.userID}/></div>
+            </div>
         </div>
+        <br/><br/>
         </>
     )
     }
