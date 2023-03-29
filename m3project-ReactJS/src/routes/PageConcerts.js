@@ -1,32 +1,14 @@
 import style from "./Page.module.css"; 
 
-import TableConcerts from "../components/TableConcerts"; 
+import DisplayAllConcerts from "../components/DisplayAllConcerts"; 
 
-function PageConcerts({ ConcertsList }) {
-
-    // const [ConcertsList, setConcertsList] = useState([]); 
-
-    /* const getConcerts = async() => {
-        try {
-            const response = await localAPI.get("/concerts")
-            setConcertsList(response.data)
-            console.log(response.data)
-        } catch (error) {
-            console.log(error.message)
-        }
-    } */
-
-    /* useEffect(() => {
-        getConcerts(); 
-        // eslint-disable-next-line
-    }, []) */
+function PageConcerts({ ConcertsList, titleText }) {
 
     return (
         <>
-            <div className={style.page}>
-                <div className={style.title}>View all Concerts</div>
-                {ConcertsList && <TableConcerts list={ConcertsList}/>}
-            </div>
+            <div className={style.subtitle}>{titleText}</div>
+            <br/>
+            {ConcertsList && <DisplayAllConcerts ConcertsList={ConcertsList}/>}
         </>
     )
 }
