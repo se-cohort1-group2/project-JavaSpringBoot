@@ -115,7 +115,7 @@ function App() {
                 <Route path="/concerts" element={<DefaultBlankPage/>}>
                     <Route index element={<PageConcerts ConcertsList={ConcertsList} titleText={"Upcoming Concerts"}/>}/>
                     <Route path="history" element={<PageConcerts ConcertsList={ConcertsHistoryList} titleText={"Past Concerts & Upcoming Concerts"}/>}/>
-                    <Route path=":ConcertID/buy" element={<PageConcertByID ConcertsList={ConcertsHistoryList} TicketsList={TicketsList} SeatsList={SeatsList} getTickets={getTickets}/>}/>
+                    <Route path=":ConcertID/buy" element={<PageConcertByID ConcertsList={ConcertsHistoryList} SeatsList={SeatsList} TicketsList={TicketsList} getTickets={getTickets}/>}/>
                 </Route>
 
                 <Route path="/admin/users" element={<DefaultBlankPage/>}>

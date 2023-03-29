@@ -13,7 +13,7 @@ function formatDate(x) {
     })
 }
 
-function DisplayConcert({ ConcertID, ConcertsList, TicketsList, SeatsList, getTickets }) {
+function DisplayConcert({ ConcertID, ConcertsList, SeatsList, TicketsList, getTickets }) {
 
     // eslint-disable-next-line
     const concert = ConcertsList.find(({ id }) => id == ConcertID); 
@@ -35,7 +35,7 @@ function DisplayConcert({ ConcertID, ConcertsList, TicketsList, SeatsList, getTi
                     </tr>
                 </tbody>
             </table>
-            <DisplayConcertSeats SeatsList={SeatsList} TicketsList={TicketsList} ConcertID={ConcertID} getTickets={getTickets}/>
+            <DisplayConcertSeats ConcertID={ConcertID} SeatsList={SeatsList} TicketsList={TicketsList} getTickets={getTickets}/>
             <br/>
             </>
         }

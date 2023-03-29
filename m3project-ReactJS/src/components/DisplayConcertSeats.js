@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import LoginContext from "../context/LoginContext"; 
 import localAPI from "../api/localAPI"; 
 
-function DisplayConcertSeats({ SeatsList, TicketsList, ConcertID, getTickets }) {
+function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) {
 
     const LoginCtx = useContext(LoginContext); 
 
