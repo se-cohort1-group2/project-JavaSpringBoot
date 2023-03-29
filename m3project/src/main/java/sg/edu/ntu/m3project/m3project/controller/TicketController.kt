@@ -24,19 +24,19 @@ import sg.edu.ntu.m3project.m3project.service.TicketService;
 public class TicketController {
 
     @Autowired
-    var ticketService : TicketService? = null
+    var ticketService = TicketService()
 
     @GetMapping
     fun findAllById(
-        @RequestHeader(value = "user_id", required = false) userId : Int?): ResponseEntity<*>? {
-                return ticketService?.find(userId)
+        @RequestHeader(value = "user_id", required = false) userId : Int?): ResponseEntity<*> {
+                return ticketService.find(userId)
         }
 
     @PostMapping
     fun createTickets(
         @RequestHeader(value = "user_id") userId : Int,
-        @RequestBody newTickets : List<NewTicket> ): ResponseEntity<*>? {
-                return ticketService?.add(userId, newTickets)
+        @RequestBody newTickets : List<NewTicket> ): ResponseEntity<*> {
+                return ticketService.add(userId, newTickets)
         }
 
 
@@ -44,22 +44,14 @@ public class TicketController {
     fun changeSeat(
         @RequestHeader(value = "user_id") userId : Int,
         @PathVariable ticket_id : Int,
-        @RequestBody selectedSeatId : String) : ResponseEntity<*>? {
-                return ticketService?.changeSeat(userId, ticket_id, selectedSeatId)
-
+        @RequestBody selectedSeatId : String) : ResponseEntity<*> {
+                return ticketService.changeSeat(userId, ticket_id, selectedSeatId)
         }
-//     public ResponseEntity<?> changeSeat(
-//             @RequestHeader(value = "user_id") int userId,
-//             @PathVariable int ticket_id,
-//             @RequestBody String selectedSeatId) {
-//             return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
-//     }
 
-//     @PostMapping("/{ticket_id}/delete")
-//     public ResponseEntity<?> deleteTicket(
-//             @RequestHeader(value = "user_id") int userId,
-//             @PathVariable int ticket_id) {
-//             return ticketService.delete(userId, ticket_id);
-//     }
-
+    @PostMapping("/{ticket_id}/delete")
+    fun deleteTicket(
+        @RequestHeader(value = "user_id") userId : Int,
+        @PathVariable ticket_id : Int) : ResponseEntity<*> {
+                return ticketService.delete(userId, ticket_id)
+        }
 }

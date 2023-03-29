@@ -110,54 +110,20 @@ class TicketService {
                     ticketRepo?.save(ticket)
                     return ResponseEntity.ok().body(ticket);
             } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Seat is unavailable"))
+        } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseMessage("Ticket ID not found."))
+    }
+
+    //Change submission status of tickets to false
+    fun delete(userId : Int, ticketId : Int): ResponseEntity<*> {
+        checkUserId(userId)
+        var ticket = ticketRepo?.findByTicketIdAndUserEntityId(ticketId, userId)
+        if (ticket !== null) {
+            if(ticket.submissionStatus) {
+                ticket.submissionStatus = false
+                ticketRepo?.save(ticket)
+                return ResponseEntity.ok().body(ResponseMessage("Ticket deleted."))
+            } else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ResponseMessage("Ticket is already deleted."));
         } else return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ResponseMessage("Ticket ID not found."));
     }
 
-    // public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
-
-    //     Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-    //     if (user.isPresent()) {
-
-    //         Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
-    //                 userId);
-    //         if (ticket.isPresent()) {
-    //             int concertId = ticket.get().getConcertEntity().getId();
-
-    //             Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
-    //                     .findById(selectedSeatId);
-    //             Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
-    //                     .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
-    //                             selectedSeatId,
-    //                             concertId,
-    //                             true);
-
-    //             if (selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
-    //                 ticket.get().setSeatEntity(seatRepo.findById(selectedSeatId).get());
-    //                 ticketRepo.save(ticket.get());
-    //                 return ResponseEntity.ok().body(ticket.get());
-    //             } else
-    //                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-    //                         .body(new ResponseMessage("Seat is unavailable"));
-    //         } else
-    //             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-    //     } else throw new UserNotFoundException();
-    // }
-
-    // public ResponseEntity<?> delete(int userId, int ticketId) {
-    //     Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-    //     if (user.isPresent()) {
-    //         Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
-    //                 userId);
-    //         if (ticket.isPresent()) {
-    //             if (ticket.get().isSubmissionStatus()) {
-    //                 ticket.get().setSubmissionStatus(false);
-    //                 ticketRepo.save(ticket.get());
-    //                 return ResponseEntity.ok().body(new ResponseMessage("Ticket deleted."));
-    //             } else
-    //                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-    //                         .body(new ResponseMessage("Ticket is already deleted."));
-    //         } else
-    //             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-    //     } else throw new UserNotFoundException();
-    // }
 }
