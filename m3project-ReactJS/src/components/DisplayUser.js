@@ -8,12 +8,12 @@ import localAPI from "../api/localAPI";
 import VisibilityOn from "../images/VisibilityOn.svg"; 
 import VisibilityOff from "../images/VisibilityOff.svg"; 
 
-function formatPassword(x) {
-    let maskedPassword = ""; 
-    for (let i = 0; i < x.length; i++) {
-        maskedPassword += "*"; 
+function clearNull(x) {
+    if (x === null) {
+        return ""; 
+    } else {
+        return x; 
     }
-    return maskedPassword; 
 }
 
 const blankUpdateForm = {
@@ -40,10 +40,10 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
 
     const handleEdit = () => {
         setUpdateForm({
-            "name": user.name,
-            "phone": user.phone,
+            "name": clearNull(user.name),
+            "phone": clearNull(user.phone),
             "email": user.email,
-            "password": user.password
+            "password": ""
         })
         setIsEditing(true); 
     }
@@ -90,19 +90,19 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                     </tr>
                     <tr>
                         <th>Name:</th>
-                        <td>{String(user.name)}</td>
+                        <td>{user.name}</td>
                     </tr>
                     <tr>
-                        <th>Phone:</th>
-                        <td>{String(user.phone)}</td>
+                        <th>Phone Number:</th>
+                        <td>{user.phone}</td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>Email Address:</th>
                         <td>{user.email}</td>
                     </tr>
                     <tr>
-                        <th>Password:</th>
-                        <td>{formatPassword(user.password)}</td>
+                        <th></th>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -121,13 +121,13 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                         </td>
                     </tr>
                     <tr>
-                        <th>Phone:</th>
+                        <th>Phone Number:</th>
                         <td>
                             <input value={UpdateForm.phone} name="phone" type="tel" onChange={(e) => handleInput(e, "phone")}/>
                         </td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>Email Address:</th>
                         <td>
                             <input value={UpdateForm.email} name="email" type="email" required onChange={(e) => handleInput(e, "email")}/>
                         </td>
@@ -154,7 +154,11 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                 </tbody>
             </table>
             </form>)}
-            {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button></>}
+                {LoginCtx.isLoggedIn && (
+                <>
+                {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button></>}
+                </>
+                )}
             </>
             }
         </div>

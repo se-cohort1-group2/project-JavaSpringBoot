@@ -48,6 +48,7 @@ function ViewByIDConcert({ ConcertsList }) {
                     </table>
                     </>
                 }
+                <br/>
                 <Link to="/admin/concerts" className={style.BackLink}>
                     <span className={style.BackArrow}>🡄</span>
                     <span className={style.BackText}>&nbsp;Back</span>

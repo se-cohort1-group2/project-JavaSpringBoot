@@ -14,8 +14,8 @@ function TableUsers({ list }) {
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Phone</th>
-                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
                         <th>Admin?</th>
                         <th>Updated Timestamp</th>
                         <th>Created Timestamp</th>
