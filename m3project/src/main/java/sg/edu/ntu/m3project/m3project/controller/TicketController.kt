@@ -25,12 +25,6 @@ public class TicketController {
     @Autowired
     var ticketService : TicketService? = null
 
-    // Get Tickets by All/User ID
-//     @GetMapping
-//     public ResponseEntity<?> findAllById(@RequestHeader(value = "user_id", required = false) Integer userId) {
-//         return ticketService.find(userId);
-//     }
-
     @GetMapping
     fun findAllById(@RequestHeader(value = "user_id", required = false) userId : Int?): ResponseEntity<*>? {
         return ticketService?.find(userId);
