@@ -19,7 +19,7 @@ import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
 @RestController
 @RequestMapping("seats")
-class TestController (val seatService: SeatService){
+class SeatController (val seatService: SeatService){
     
     @ExceptionHandler
     fun handleHttpMessageNotReadableException(e:HttpMessageNotReadableException): ResponseEntity<ResponseMessage> {
