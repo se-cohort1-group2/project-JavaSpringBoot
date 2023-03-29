@@ -22,17 +22,30 @@ function MainPage() {
                     </Link>
 
                     <div className={style.Dropdown}>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/concerts">Concerts</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/concerts">Events</Link>
                         <div className={style.DropdownMenu}>
                         <Link className={style.DropdownLink} to="/concerts">Upcoming Concerts</Link>
                         <Link className={style.DropdownLink} to="/concerts/history">Past Concerts</Link>
                         </div>
                     </div>
 
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/seats">Seats</Link>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/tickets">Tickets</Link>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/users">Users</Link>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/concerts">Concerts</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Venues</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Promotions</Link>
+
+                    <div className={style.Dropdown}>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>-</Link>
+                        <div className={style.DropdownMenu}>
+                        <Link className={style.DropdownLink} to="/admin/users">Users</Link>
+                        <Link className={style.DropdownLink} to="/admin/concerts">Concerts</Link>
+                        <Link className={style.DropdownLink} to="/admin/tickets">Tickets</Link>
+                        <Link className={style.DropdownLink} to="/admin/seats">Seats</Link>
+                        </div>
+                    </div>
+
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/seats">Seats</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/tickets">Tickets</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/users">Users</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/concerts">Concerts</Link> */}
 
                     <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
