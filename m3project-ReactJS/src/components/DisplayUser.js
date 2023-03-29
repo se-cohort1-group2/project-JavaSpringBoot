@@ -70,9 +70,12 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                 headers: {"user-id": LoginCtx.userID}
             }
             const response = await localAPI.put(`/users/${user.id}`, updatedData, config)
-            console.log("Successfully updated!", response.data)
+            console.log("Profile successfully updated!", response.data)
+            window.alert("Profile successfully updated!")
         } catch (error) {
             console.log(error.message)
+            console.log("Sorry, you are not allowed to update this user.")
+            window.alert("Sorry, you are not allowed to update this user.")
         }
     }
 

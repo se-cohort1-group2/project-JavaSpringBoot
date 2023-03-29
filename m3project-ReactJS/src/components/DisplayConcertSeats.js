@@ -63,6 +63,7 @@ function DisplayConcertSeats({ SeatsList, TicketsList, ConcertID, getTickets }) 
             navigate(`/account`); 
         } catch (error) {
             console.log(error.message)
+            console.log("You must be logged in to purchase tickets")
             window.alert("You must be logged in to purchase tickets")
             navigate(`/login`); 
         }
