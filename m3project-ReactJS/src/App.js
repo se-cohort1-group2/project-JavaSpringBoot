@@ -107,7 +107,9 @@ function App() {
         <BrowserRouter>
         <Routes>
 
-            <Route path="*" element={<DefaultErrorPage/>}/>
+            <Route element={<DefaultMainPage/>}>
+                <Route path="*" element={<DefaultErrorPage/>}/>
+            </Route>
 
             <Route path="/" element={<DefaultMainPage/>}>
                 <Route index element={<DefaultHomePage/>}/>
