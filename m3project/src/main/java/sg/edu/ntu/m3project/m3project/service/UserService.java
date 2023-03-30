@@ -20,6 +20,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import sg.edu.ntu.m3project.m3project.repository.UserRepository;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
+import sg.edu.ntu.m3project.m3project.exceptions.UserNotAdminException;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
 @Service
@@ -69,6 +70,13 @@ public class UserService {
         String hashPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
         return user;
+    }
+
+    public void checkAdmin(int userId) {
+        UserEntity user = userRepo.findById(userId).get();
+        if (!user.isAdminStatus()) {
+            throw new UserNotAdminException("User is not admin status.");
+        }
     }
 
     // phoebe

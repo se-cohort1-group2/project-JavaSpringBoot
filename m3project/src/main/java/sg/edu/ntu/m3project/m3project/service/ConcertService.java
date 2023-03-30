@@ -26,9 +26,6 @@ public class ConcertService {
     UserRepository userRepo;
 
     @Autowired
-    UserValidation userValidation;
-
-    @Autowired
     UserService userService;
 
     public ResponseEntity<?> find(String findBy, String searchParam) {
@@ -68,13 +65,6 @@ public class ConcertService {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("No upcoming concerts"));
-
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        // .body(new ResponseMessage("Something went wrong. Please try again later."));
-        // }
-
     }
 
     public ResponseEntity<?> findbyConcertId(int concertId) {
@@ -87,39 +77,16 @@ public class ConcertService {
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Invalid concert id."));
-        // } catch (Exception e) {
-
-        // e.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        // .bodsy(new ResponseMessage("Something went wrong. Please try again later."));
-        // }
     }
 
     public ResponseEntity<?> create(String token, int userId, ConcertEntity concert) {
-        // try {
-        // note: to add check if is Admin
+        userService.checkAdmin(userId);
         ConcertEntity newConcert = concertRepo.save(concert);
         return new ResponseEntity<>(concertRepo.findById(newConcert.getId()), HttpStatus.CREATED);
-        // } catch (AccessDeniedException ade) {
-        // ade.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN)
-        // .body(new ResponseMessage(ade.getMessage()));
-
-        // } catch (IllegalArgumentException iae) {
-        // iae.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        // .body(new ResponseMessage("Invalid inputs received from user."));
-        // } catch (Exception e) {
-
-        // e.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        // .body(new ResponseMessage("Something went wrong. Please try again later."));
-        // }
     }
 
     public ResponseEntity<?> update(int userId, ConcertEntity concert, int concertId) {
-        // try {
-        // note: to add check if is Admin
+        userService.checkAdmin(userId);
         Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
 
         if (optionalConcert.isPresent()) {
@@ -138,22 +105,6 @@ public class ConcertService {
         }
 
         return ResponseEntity.notFound().build();
-
-        // } catch (AccessDeniedException ade) {
-        // ade.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN)
-        // .body(new ResponseMessage(ade.getMessage()));
-
-        // } catch (IllegalArgumentException iae) {
-        // iae.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-        // .body(new ResponseMessage("Invalid inputs received from user."));
-        // } catch (Exception e) {
-
-        // e.printStackTrace();
-        // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        // .body(new ResponseMessage("Something went wrong. Please try again later."));
-        // }
 
     }
 

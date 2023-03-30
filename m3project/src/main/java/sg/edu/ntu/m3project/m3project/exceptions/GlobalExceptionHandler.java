@@ -28,13 +28,6 @@ public class GlobalExceptionHandler {
                 .body(new ResponseMessage("Bad request."));
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handleRuntimeException(Exception ex) {
-        ex.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new ResponseMessage("Something went wrong. Please try again later."));
-    }
-
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<?> handleAccessDeniedException(Exception ex) {
         ex.printStackTrace();
@@ -45,6 +38,20 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleNumberFormatException(Exception ex) {
         ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserNotAdminException.class)
+    public ResponseEntity<?> handleUserNotAdminException(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(new ResponseMessage(ex.getMessage()));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handleRuntimeException(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ResponseMessage("Something went wrong. Please try again later."));
     }
 
     @ExceptionHandler(Exception.class)
