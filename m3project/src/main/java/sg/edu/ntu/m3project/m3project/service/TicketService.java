@@ -36,21 +36,23 @@ public class TicketService {
     @Autowired
     SeatRepository seatRepo;
 
-    //Find all if adminStatus = true
-    public ResponseEntity<?> findAll(Integer userId){
-        UserEntity user = userRepo.findById(userId).get();
-        if (user.isAdminStatus()) {
-            List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
-            if (tickets.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(new ResponseMessage("No ticket history."));
-            } else
-                return ResponseEntity.ok().body(tickets);
-        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Admin status required."));
+    @Autowired
+    UserService userService;
+
+    // Find all if adminStatus = true
+    public ResponseEntity<?> findAll(Integer userId) {
+        userService.checkAdmin(userId);
+
+        List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
+        if (tickets.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseMessage("No ticket history."));
+        } else
+            return ResponseEntity.ok().body(tickets);
     }
 
-    //Find by userId
-    public ResponseEntity<?> findAllById(Integer userId){
+    // Find by userId
+    public ResponseEntity<?> findAllById(Integer userId) {
         List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserEntityId(userId);
         if (tickets.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -59,9 +61,9 @@ public class TicketService {
             return ResponseEntity.ok().body(tickets);
     }
 
-    //Add new tickets
+    // Add new tickets
     public ResponseEntity<?> add(int userId, List<NewTicket> newTickets) {
-        //Check if Ticket array is valid     
+        // Check if Ticket array is valid
         boolean validSeats = true;
         for (NewTicket newTicket : newTickets) {
             Integer selectedConcertId = newTicket.getConcertId();
@@ -84,7 +86,7 @@ public class TicketService {
                 break;
             }
         }
-        //Add tickets to ticketRepo and return created tickets
+        // Add tickets to ticketRepo and return created tickets
         if (validSeats) {
             List<TicketEntity> createdTickets = new ArrayList<TicketEntity>();
             for (NewTicket newTicket : newTickets) {
@@ -104,15 +106,17 @@ public class TicketService {
                     .body(new ResponseMessage("Selected concert/seat(s) not available. Please try again."));
     }
 
-    //Check if ticket exists for user
+    // Check if ticket exists for user
     private TicketEntity checkTicket(int userId, int ticketId) {
-        Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId, userId);
+        Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
+                userId);
         if (ticket.isPresent()) {
             return ticket.get();
-        } else throw new TicketNotFoundException();
+        } else
+            throw new TicketNotFoundException();
     }
 
-    //Change seat of specified ticket
+    // Change seat of specified ticket
     public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
         TicketEntity ticket = checkTicket(userId, ticketId);
         int concertId = ticket.getConcertEntity().getId();
@@ -133,7 +137,7 @@ public class TicketService {
                     .body(new ResponseMessage("Seat is unavailable"));
     }
 
-    //Change submissionStatus to false
+    // Change submissionStatus to false
     public ResponseEntity<?> delete(int userId, int ticketId) {
         TicketEntity ticket = checkTicket(userId, ticketId);
         if (ticket.isSubmissionStatus()) {
@@ -143,7 +147,6 @@ public class TicketService {
         } else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new ResponseMessage("Ticket is already deleted."));
-
 
     }
 }
