@@ -1,15 +1,15 @@
 insert into users (name, phone, email, password, admin_status) values
-('Administrator', '+65 8123 4567', 'admin@mail.com', '$2a$10$Uh1wSkhDdD3dIPTY/15jJ.WOyfIHGrPECbnDKzt3bGSMdR0dc541C', true);
+('Administrator', '+65 8123 4567', 'admin@mail.com', '$2a$10$W5kn6NXJvIfKBUHo7hlg9uRUdxmq67G5I73uR3QEIKHncTcELiCLy', true);
 insert into users (name, email, password) values
-('Phoebe Yong', 'phoebeykq@gmail.com', '$2a$10$fIUuek32p3f4nJJB0St37OsroKLvlul3WB/OCXPdhM.hckV/RkU7m'),
-('Lye Yong Xin', 'yx@gmail.com', '$2a$10$Mosuxgwl.7EDMn466soSROkSaDnTtDXngDEFK0P4QmC6.HCRdw5iG'),
-('Ong Xin Zhi', 'xong002@gmail.com', '$2a$10$6WyisGYRUslEB7EXdPlZUea2A045gcg3Wz8sDPm6GID.eofYoWjba'),
-('Edison Zhuang', 'edison@skillsunion.com', 'edison'),
-('Wong Chen Pang', 'cpwong@skillsunion.com', 'cpwong'),
-('Terence Gaffud', 'terence.gaffud@skillsunion.com', 'terence'),
-('Daniel Goh', 'daniel@mail.com', 'daniel'),
-('Jennifer Du', 'jennifer.du@ntu.edu.sg', 'jennifer'),
-('Jaedon Kwan', 'jaedon.kwan@ntu.edu.sg', 'jaedon');
+('Phoebe Yong', 'phoebeykq@gmail.com', '$2a$10$9XkDhhdJoPdlRbBXXVR4FOIKv2VY8o9zfqyFGHfwDF6HkrpjgPw3W'),
+('Lye Yong Xin', 'yx@gmail.com', '$2a$10$nhwKeKyjJPawtsDzMGhN8e8ffczo4LbuqpYsGttupDBqeheXaovOC'),
+('Ong Xin Zhi', 'xong002@gmail.com', '$2a$10$Em67P98dliYhLN1egLQ0vOIu7SObptVk063cEtY2YIIXK3JgAXUru'),
+('Edison Zhuang', 'edison@skillsunion.com', '$2a$10$3hDlML8JIBb1iY5nc8grrOKKYYVXdPxkILwqLGsvHMXFxMxeN4Guy'),
+('Wong Chen Pang', 'cpwong@skillsunion.com', '$2a$10$aUUBTYgtMkGjnZbotZPGOetxj5lNuIZa1hjdcZUSgHKSV77uoTVtm'),
+('Terence Gaffud', 'terence.gaffud@skillsunion.com', '$2a$10$KHuOyMo8OznRrfcj90X9suwO6sgZ8cglXxLcFpJI5Wj9iuBrMEdMu'),
+('Daniel Goh', 'daniel@mail.com', '$2a$10$oNCNZYJhhIpIXFl4Zslbgeg9JvrwiOEAU0PlrGotil85DSAhNbizS'),
+('Jennifer Du', 'jennifer.du@ntu.edu.sg', '$2a$10$xlI9jWo8HSWMEdeHn1ey3e8hcJ1ub61JTDf06kVNAbPB6imoAQjGS'),
+('Jaedon Kwan', 'jaedon.kwan@ntu.edu.sg', '$2a$10$beQoNUDHjeIvHp99CMrHrOTuhViLV2YmPwmB74qEsnCYiBdIZPn0i');
 
 insert into concerts (artist, concert_date, concert_venue, tickets_available, ticket_price) values
 ('WESTLIFE', '2023-02-16 20:00', 'Singapore Indoor Stadium', 100, 288.99),
