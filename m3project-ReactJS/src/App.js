@@ -21,7 +21,6 @@ import ViewSeats from "./routes/ViewSeats";
 import ViewByIDUser from "./routes/ViewByIDUser"; 
 import ViewByIDConcert from "./routes/ViewByIDConcert"; 
 
-import { LoginContextProvider } from "./context/LoginContext"; 
 import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
@@ -103,7 +102,6 @@ function App() {
 
     return (
         <>
-        <LoginContextProvider>
         <BrowserRouter>
         <Routes>
 
@@ -141,7 +139,6 @@ function App() {
 
         </Routes>
         </BrowserRouter>
-        </LoginContextProvider>
         </>
     )
 }
