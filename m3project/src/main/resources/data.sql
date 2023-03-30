@@ -11,34 +11,40 @@ insert into users (name, email, password) values
 ('Jennifer Du', 'jennifer.du@ntu.edu.sg', 'jennifer'),
 ('Jaedon Kwan', 'jaedon.kwan@ntu.edu.sg', 'jaedon');
 
-insert into concerts (artist, concert_date, tickets_available, ticket_price) values
-('WESTLIFE', '2023-02-16 20:00', 100, 288.99),
-('BACKSTREET BOYS', '2023-02-22 20:00', 100, 288.99),
-('PENTATONIX', '2023-03-06 20:00', 80, 188.99),
-('BLACKPINK', '2023-05-13 19:30', 120, 388.99),
-('NE-YO', '2023-05-22 20:00', 100, 288.99),
-('SHILA AMZAH', '2023-06-03 20:00', 80, 188.99),
-('THE 1975', '2023-07-18 20:00', 100, 288.99),
-('G.E.M.', '2023-08-12 19:00', 90, 288.99),
-('MAYDAY', '2023-12-03 19:30', 100, 188.99),
-('JAY CHOU', '2023-12-17 20:00', 120, 388.99);
+insert into concerts (artist, concert_date, concert_venue, tickets_available, ticket_price) values
+('WESTLIFE', '2023-02-16 20:00', 'Singapore Indoor Stadium', 100, 288.99),
+('BACKSTREET BOYS', '2023-02-22 20:00', 'Singapore Indoor Stadium', 100, 288.99),
+('PENTATONIX', '2023-03-06 20:00', 'The Star Theatre', 80, 188.99),
+('BLACKPINK', '2023-05-13 19:30', 'National Stadium', 120, 388.99),
+('NE-YO', '2023-05-22 20:00', 'The Star Theatre', 100, 288.99),
+('SHILA AMZAH', '2023-06-03 20:00', 'Capitol Theatre', 80, 188.99),
+('THE 1975', '2023-07-18 20:00', 'Capitol Theatre', 100, 288.99),
+('G.E.M.', '2023-08-12 19:00', 'Singapore Indoor Stadium', 90, 288.99),
+('MAYDAY', '2023-12-03 19:30', 'National Stadium', 100, 188.99),
+('JAY CHOU', '2023-12-17 20:00', 'National Stadium', 120, 388.99);
 
 insert into tickets (concert_id, seat_id, user_id, submission_status) values
-(3, 'C1', 2, true),
-(3, 'B1', 7, true),
-(3, 'B2', 8, true),
-(4, 'A1', 2, true),
-(4, 'A2', 2, true),
-(7, 'B1', 4, true),
-(7, 'B2', 4, true),
-(8, 'A1', 3, true),
-(8, 'A2', 3, true),
-(9, 'B1', 9, true),
-(9, 'A1', 3, true),
-(9, 'A2', 3, true),
-(10, 'B1', 5, true),
-(10, 'B2', 6, true),
-(10, 'B3', 10, true);
+(3, 'B5', 2, true),
+(3, 'B6', 2, true),
+(8, 'A5', 3, true),
+(8, 'A6', 3, true),
+(4, 'A5', 2, true),
+(4, 'A6', 2, true),
+(9, 'A5', 3, true),
+(9, 'A6', 3, true),
+(7, 'B5', 4, true),
+(7, 'B6', 4, true),
+(7, 'A6', 8, true),
+(7, 'C5', 7, true),
+(10, 'A5', 10, true),
+(10, 'A6', 10, true),
+(10, 'A3', 9, true),
+(10, 'A4', 9, true),
+(10, 'A7', 6, true),
+(10, 'A8', 6, true),
+(10, 'B5', 5, true),
+(10, 'B6', 5, true),
+(10, 'B7', 5, true);
 
 insert into seats (seat_id, seat_category, venue_hall, ticket_price, concert_type) values
 ('A1', 'A', 'Hall 1', 398, 'concert_type'),

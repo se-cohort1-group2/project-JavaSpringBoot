@@ -14,6 +14,7 @@ create table public.concerts (
     id int auto_increment,
     artist varchar(255),
     concert_date datetime,
+    concert_venue varchar(255),
     tickets_available int,
     ticket_price float,
     updated_at timestamp not null default current_timestamp,

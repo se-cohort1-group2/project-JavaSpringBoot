@@ -1,6 +1,6 @@
 import style from "./Page.module.css"; 
 
-function HomePage() {
+function DefaultHomePage() {
     return (
         <>
             <div className={style.page}>
@@ -11,4 +11,4 @@ function HomePage() {
     )
 }
 
-export default HomePage; 
+export default DefaultHomePage; 

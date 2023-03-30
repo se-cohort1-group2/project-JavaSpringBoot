@@ -5,24 +5,29 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import localAPI from "./api/localAPI"; 
 
-import ErrorPage from "./routes/ErrorPage"; 
-import MainPage from "./routes/MainPage"; 
-import HomePage from "./routes/HomePage"; 
-import BlankPage from "./routes/BlankPage"; 
+import DefaultErrorPage from "./routes/DefaultErrorPage"; 
+import DefaultMainPage from "./routes/DefaultMainPage"; 
+import DefaultHomePage from "./routes/DefaultHomePage"; 
+import DefaultBlankPage from "./routes/DefaultBlankPage"; 
 
 import PageConcerts from "./routes/PageConcerts"; 
 import PageConcertByID from "./routes/PageConcertByID"; 
-import PageSeats from "./routes/PageSeats"; 
-import PageTickets from "./routes/PageTickets"; 
-import PageUsers from "./routes/PageUsers"; 
-import PageUserByID from "./routes/PageUserByID"; 
+
+import ViewUsers from "./routes/ViewUsers"; 
+import ViewConcerts from "./routes/ViewConcerts"; 
+import ViewTickets from "./routes/ViewTickets"; 
+import ViewSeats from "./routes/ViewSeats"; 
+
+import ViewByIDUser from "./routes/ViewByIDUser"; 
+import ViewByIDConcert from "./routes/ViewByIDConcert"; 
 
 import { LoginContextProvider } from "./context/LoginContext"; 
 import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
 import LoginRegisterPage from "./routes/LoginRegisterPage"; 
-import LoginAccountPage from "./routes/LoginAccountPage"; 
+
+import AccountPage from "./routes/AccountPage"; 
 
 function App() {
 
@@ -99,39 +104,43 @@ function App() {
     return (
         <>
         <LoginContextProvider>
-            <BrowserRouter>
-                <Routes>
+        <BrowserRouter>
+        <Routes>
 
-                    <Route path="*" element={<ErrorPage/>}/>
+            <Route path="*" element={<DefaultErrorPage/>}/>
 
-                    <Route path="/" element={<MainPage/>}>
-                        <Route index element={<HomePage/>}/>
+            <Route path="/" element={<DefaultMainPage/>}>
+                <Route index element={<DefaultHomePage/>}/>
 
-                        <Route path="/concerts" element={<BlankPage/>}>
-                            <Route index element={<PageConcerts ConcertsList={ConcertsList}/>}/>
-                            <Route path="history" element={<PageConcerts ConcertsList={ConcertsHistoryList}/>}/>
-                            <Route path=":ConcertID" element={<PageConcertByID ConcertsList={ConcertsHistoryList}/>}/>
-                        </Route>
+                <Route path="/concerts" element={<DefaultBlankPage/>}>
+                    <Route index element={<PageConcerts ConcertsList={ConcertsList} titleText={"Upcoming Concerts"}/>}/>
+                    <Route path="history" element={<PageConcerts ConcertsList={ConcertsHistoryList} titleText={"Past Concerts & Upcoming Concerts"}/>}/>
+                    <Route path=":ConcertID/buy" element={<PageConcertByID ConcertsList={ConcertsHistoryList} SeatsList={SeatsList} TicketsList={TicketsList} getTickets={getTickets}/>}/>
+                </Route>
 
-                        <Route path="/seats" element={<PageSeats SeatsList={SeatsList}/>}/>
+                <Route path="/admin/users" element={<DefaultBlankPage/>}>
+                    <Route index element={<ViewUsers UsersList={UsersList}/>}/>
+                    <Route path=":UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
+                </Route>
 
-                        <Route path="/tickets" element={<PageTickets TicketsList={TicketsList}/>}/>
+                <Route path="/admin/concerts" element={<DefaultBlankPage/>}>
+                    <Route index element={<ViewConcerts ConcertsList={ConcertsHistoryList}/>}/>
+                    <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
+                </Route>
 
-                        <Route path="/users" element={<BlankPage/>}>
-                            <Route index element={<PageUsers UsersList={UsersList}/>}/>
-                            <Route path=":UserID" element={<PageUserByID UsersList={UsersList} getUsers={getUsers}/>}/>
-                        </Route>
+                <Route path="/admin/tickets" element={<ViewTickets TicketsList={TicketsList}/>}/>
+                <Route path="/admin/seats" element={<ViewSeats SeatsList={SeatsList}/>}/>
 
-                        <Route path="/login" element={<BlankPage/>}>
-                            <Route index element={<LoginPage UsersList={UsersList}/>}/>
-                            <Route path="register" element={<LoginRegisterPage/>}/>
-                        </Route>
+                <Route path="/login" element={<DefaultBlankPage/>}>
+                    <Route index element={<LoginPage UsersList={UsersList}/>}/>
+                    <Route path="register" element={<LoginRegisterPage UsersList={UsersList} getUsers={getUsers}/>}/>
+                </Route>
 
-                        <Route path="/account" element={<LoginAccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>
-                    </Route>
+                <Route path="/account" element={<AccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>
+            </Route>
 
-                </Routes>
-            </BrowserRouter>
+        </Routes>
+        </BrowserRouter>
         </LoginContextProvider>
         </>
     )

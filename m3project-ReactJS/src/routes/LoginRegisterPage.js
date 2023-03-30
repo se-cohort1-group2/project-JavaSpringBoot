@@ -16,7 +16,7 @@ const blankRegisterForm = {
     password: "",
 }
 
-function LoginRegisterPage() {
+function LoginRegisterPage({ UsersList, getUsers }) {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -44,13 +44,20 @@ function LoginRegisterPage() {
     }
 
     const createUser = async (RegisterData) => {
+        const user = UsersList.find(({ email }) => email === RegisterForm.email); 
         try {
-            const response = await localAPI.post(`/users/`, RegisterData)
-            console.log("Successfully created!", response.data)
-            window.alert("Account successfully created!"); 
+            const response = await localAPI.post(`/users/register`, RegisterData)
+            console.log("Account successfully created for '" + RegisterForm.email + "'.", response.data)
+            window.alert("Account successfully created for '" + RegisterForm.email + "'.")
+            window.alert("You will now be redirected to the login page.")
+            getUsers(); 
             navigate("/login"); 
         } catch (error) {
             console.log(error.message)
+            if (typeof user === "object") {
+                console.log("Sorry, a user with this email already exists.")
+                window.alert("Sorry, a user with this email already exists.")
+            }
         }
     }
 
@@ -107,7 +114,7 @@ function LoginRegisterPage() {
     if (LoginCtx.isLoggedIn) {
     return (
         <>
-        <Navigate to={`/users/${LoginCtx.userID}`} replace={true}/>
+        <Navigate to={`/account`} replace={true}/>
         </>
     )
     }

@@ -34,41 +34,44 @@ public class UserService {
     SecureRandom bCryptSR = new SecureRandom();
     BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, bCryptSR);
 
-    //yongxin
+    // yongxin
     public Map<String, String> generateToken(UserEntity user) {
         String jwtToken = Jwts.builder()
-                .setSubject(user.getEmail())
+                .setSubject(user.getId().toString())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + 864000000)) // 10 days
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
         Map<String, String> jwtTokenGen = new HashMap<>();
         jwtTokenGen.put("token", jwtToken);
+        jwtTokenGen.put("user-id", user.getId().toString());
         return jwtTokenGen;
     }
 
-    //yongxin
-    public String checkToken(String token) throws AccessDeniedException {
-        try {
-            String email = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getSubject();
-            return email;
-        } catch (Exception e) {
-            throw new AccessDeniedException("Invalid token");
+    // yongxin
+    public String checkToken(String token, Integer userId) throws AccessDeniedException {
+        String id = Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+
+        if (userId != Integer.parseInt(id)) {
+            throw new AccessDeniedException("Userid and token does not match");
         }
+
+        return id;
+
     }
 
-    //yongxin
+    // yongxin
     public UserEntity hashPassword(UserEntity user) {
         String hashPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
         return user;
     }
 
-    //phoebe
+    // phoebe
     public ResponseEntity<?> findAll() {
         try {
             List<UserEntity> users = (List<UserEntity>) userRepo.findAll();
@@ -80,7 +83,7 @@ public class UserService {
         }
     }
 
-    //phoebe
+    // phoebe
     public ResponseEntity<?> findById(int id) {
         try {
             Optional<UserEntity> userByID = userRepo.findById(id);
@@ -97,7 +100,7 @@ public class UserService {
         }
     }
 
-    //phoebe
+    // phoebe
     public ResponseEntity<?> update(int id, UserEntity user, int userID) {
         try {
             Optional<UserEntity> userToBeUpdated = userRepo.findById(id);
@@ -137,15 +140,14 @@ public class UserService {
         }
     }
 
-    //phoebe
+    // phoebe
     public ResponseEntity<?> create(UserEntity user) {
         try {
             if (userRepo.existsByEmail(user.getEmail())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ResponseMessage("Sorry, a user with this email already exists."));
             }
-            UserEntity hashedUser = hashPassword(user);
-            UserEntity createNewUser = userRepo.save(user);
+            UserEntity createNewUser = userRepo.save(hashPassword(user));
             return new ResponseEntity<>(userRepo.findById(createNewUser.getId()), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -154,20 +156,20 @@ public class UserService {
         }
     }
 
-    //yongxin
+    // yongxin
     public UserEntity getUserForAuth(String email, String password) throws AccessDeniedException {
         Optional<UserEntity> optionalUser = userRepo.findByEmail(email);
         if (!optionalUser.isPresent()) {
-            throw new AccessDeniedException("User not found, please try a different email.");
+            throw new AccessDeniedException("User account not found, please try a different email.");
         }
         UserEntity foundUser = optionalUser.get();
         if (!bCryptPasswordEncoder.matches(password, foundUser.getPassword())) {
-            throw new AccessDeniedException("Wrong password for '" + email + "'. Please try again.");
+            throw new AccessDeniedException("Incorrect password for '" + email + "'. Please try again.");
         }
         return foundUser;
     }
 
-    //yongxin
+    // yongxin
     public ResponseEntity<?> login(UserEntity user) {
         try {
             if (user.getEmail() == null || user.getPassword() == null) {

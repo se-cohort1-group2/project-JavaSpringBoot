@@ -1,4 +1,4 @@
-import style from "./MainPage.module.css"; 
+import style from "./DefaultMainPage.module.css"; 
 
 import { Link, Outlet } from "react-router-dom"; 
 import { useContext } from "react"; 
@@ -8,7 +8,7 @@ import LoginContext from "../context/LoginContext";
 import HomeIcon from "../images/OutlinedHomeIcon.svg"; 
 import UserIcon from "../images/OutlinedUserIcon.svg"; 
 
-function MainPage() {
+function DefaultMainPage() {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -22,16 +22,30 @@ function MainPage() {
                     </Link>
 
                     <div className={style.Dropdown}>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/concerts">Concerts</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/concerts">Events</Link>
                         <div className={style.DropdownMenu}>
                         <Link className={style.DropdownLink} to="/concerts">Upcoming Concerts</Link>
                         <Link className={style.DropdownLink} to="/concerts/history">Past Concerts</Link>
                         </div>
                     </div>
 
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/seats">Seats</Link>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/tickets">Tickets</Link>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/users">Users</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Venues</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Promotions</Link>
+
+                    <div className={style.Dropdown}>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>-</Link>
+                        <div className={style.DropdownMenu}>
+                        <Link className={style.DropdownLink} to="/admin/users">Users</Link>
+                        <Link className={style.DropdownLink} to="/admin/concerts">Concerts</Link>
+                        <Link className={style.DropdownLink} to="/admin/tickets">Tickets</Link>
+                        <Link className={style.DropdownLink} to="/admin/seats">Seats</Link>
+                        </div>
+                    </div>
+
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/seats">Seats</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/tickets">Tickets</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/users">Users</Link> */}
+                    {/* <Link className={`${style.NavBtn} ${style.LinkBtn}`} to="/admin/concerts">Concerts</Link> */}
 
                     <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
@@ -51,4 +65,4 @@ function MainPage() {
     )
 }
 
-export default MainPage; 
+export default DefaultMainPage; 

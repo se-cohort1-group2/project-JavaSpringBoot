@@ -2,7 +2,7 @@ import style from "./Page.module.css";
 
 import { Link } from "react-router-dom"; 
 
-function ErrorPage() {
+function DefaultErrorPage() {
     return (
         <>
             <div style={{textAlign: "center", margin: "50px 0 0 0"}}>
@@ -17,4 +17,4 @@ function ErrorPage() {
     )
 }
 
-export default ErrorPage; 
+export default DefaultErrorPage; 

@@ -8,9 +8,7 @@ function TableSeats({ list }) {
                     <tr>
                         <th>Seat No.</th>
                         <th>Category</th>
-                        <th>Venue</th>
-                        <th>Ticket Price</th>
-                        <th>Concert Type</th>
+                        <th>Category Ticket Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -18,9 +16,7 @@ function TableSeats({ list }) {
                     <tr key={item.seatId}>
                         <td>{item.seatId}</td>
                         <td>{item.seatCategory}</td>
-                        <td>{item.venueHall}</td>
                         <td>S${item.ticketPrice}</td>
-                        <td>{item.concertType}</td>
                     </tr>
                     ))}
                 </tbody>

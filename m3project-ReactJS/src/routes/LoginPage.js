@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { Link, Navigate } from "react-router-dom"; 
 
 import LoginContext from "../context/LoginContext"; 
+import localAPI from "../api/localAPI"; 
 
 import VisibilityOn from "../images/VisibilityOn.svg"; 
 import VisibilityOff from "../images/VisibilityOff.svg"; 
@@ -33,20 +34,26 @@ function LoginPage({ UsersList }) {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); 
-        console.log("-----", LoginForm)
+        await loginUser(LoginForm); 
+    }
 
+    const loginUser = async (LoginData) => {
         const user = UsersList.find(({ email }) => email === LoginForm.email); 
-        if (typeof user === "object") {
-            if (LoginForm.password === user.password) {
-                LoginCtx.handleLogin(true, user.id); 
-                console.log("Successfully logged in as '" + user.email + "'.")
+        try {
+            const response = await localAPI.post(`/users/login`, LoginData)
+            console.log("Successfully logged in as '" + user.email + "'.", response.data)
+            LoginCtx.handleLogin(true, user.id, response.data.token); 
+        } catch (error) {
+            console.log(error.message)
+            if (typeof user !== "object") {
+                console.log("User account not found, please try a different email.")
+                window.alert("User account not found, please try a different email.")
             } else {
-                console.log("Wrong password for '" + user.email + "'. Please try again.")
+                console.log("Incorrect password for '" + user.email + "'. Please try again.")
+                window.alert("Incorrect password for '" + user.email + "'. Please try again.")
             }
-        } else {
-            console.log("User not found, please try a different email.")
         }
     }
 

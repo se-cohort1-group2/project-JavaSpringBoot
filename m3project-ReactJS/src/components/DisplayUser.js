@@ -8,12 +8,12 @@ import localAPI from "../api/localAPI";
 import VisibilityOn from "../images/VisibilityOn.svg"; 
 import VisibilityOff from "../images/VisibilityOff.svg"; 
 
-function formatPassword(x) {
-    let maskedPassword = ""; 
-    for (let i = 0; i < x.length; i++) {
-        maskedPassword += "*"; 
+function clearNull(x) {
+    if (x === null) {
+        return ""; 
+    } else {
+        return x; 
     }
-    return maskedPassword; 
 }
 
 const blankUpdateForm = {
@@ -23,7 +23,7 @@ const blankUpdateForm = {
     "password": ""
 }
 
-function DisplayUser({ UsersList, getUsers, displayID }) {
+function DisplayUser({ getUsers, UsersList, displayID }) {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -40,10 +40,10 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
 
     const handleEdit = () => {
         setUpdateForm({
-            "name": user.name,
-            "phone": user.phone,
+            "name": clearNull(user.name),
+            "phone": clearNull(user.phone),
             "email": user.email,
-            "password": user.password
+            "password": ""
         })
         setIsEditing(true); 
     }
@@ -70,9 +70,12 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                 headers: {"user-id": LoginCtx.userID}
             }
             const response = await localAPI.put(`/users/${user.id}`, updatedData, config)
-            console.log("Successfully updated!", response.data)
+            console.log("Profile successfully updated!", response.data)
+            window.alert("Profile successfully updated!")
         } catch (error) {
             console.log(error.message)
+            console.log("Sorry, you are not allowed to update this user.")
+            window.alert("Sorry, you are not allowed to update this user.")
         }
     }
 
@@ -85,24 +88,20 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
             <table className={style.MiniTable}>
                 <tbody>
                     <tr>
-                        <th>User ID:</th>
-                        <td>{user.id}</td>
-                    </tr>
-                    <tr>
                         <th>Name:</th>
-                        <td>{String(user.name)}</td>
+                        <td>{user.name}</td>
                     </tr>
                     <tr>
-                        <th>Phone:</th>
-                        <td>{String(user.phone)}</td>
+                        <th>Phone Number:</th>
+                        <td>{user.phone}</td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>Email Address:</th>
                         <td>{user.email}</td>
                     </tr>
                     <tr>
-                        <th>Password:</th>
-                        <td>{formatPassword(user.password)}</td>
+                        <th></th>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -111,23 +110,19 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
             <table className={style.MiniTable}>
                 <tbody>
                     <tr>
-                        <th>User ID:</th>
-                        <td>{user.id}</td>
-                    </tr>
-                    <tr>
                         <th>Name:</th>
                         <td>
                             <input value={UpdateForm.name} name="name" type="text" onChange={(e) => handleInput(e, "name")}/>
                         </td>
                     </tr>
                     <tr>
-                        <th>Phone:</th>
+                        <th>Phone Number:</th>
                         <td>
                             <input value={UpdateForm.phone} name="phone" type="tel" onChange={(e) => handleInput(e, "phone")}/>
                         </td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>Email Address:</th>
                         <td>
                             <input value={UpdateForm.email} name="email" type="email" required onChange={(e) => handleInput(e, "email")}/>
                         </td>
@@ -154,7 +149,11 @@ function DisplayUser({ UsersList, getUsers, displayID }) {
                 </tbody>
             </table>
             </form>)}
-            {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button></>}
+                {LoginCtx.isLoggedIn && (
+                <>
+                {isEditing ? <></> : <><button onClick={() => handleEdit()}>Edit user profile</button></>}
+                </>
+                )}
             </>
             }
         </div>
