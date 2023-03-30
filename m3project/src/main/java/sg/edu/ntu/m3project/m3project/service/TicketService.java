@@ -13,7 +13,7 @@ import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 import sg.edu.ntu.m3project.m3project.entity.SeatEntity;
 import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
 import sg.edu.ntu.m3project.m3project.entity.UserEntity;
-import sg.edu.ntu.m3project.m3project.exceptions.UserNotFoundException;
+import sg.edu.ntu.m3project.m3project.exceptions.TicketNotFoundException;
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 import sg.edu.ntu.m3project.m3project.repository.ConcertRepository;
@@ -36,7 +36,7 @@ public class TicketService {
     @Autowired
     SeatRepository seatRepo;
 
-    //Find all if admin
+    //Find all if adminStatus = true
     public ResponseEntity<?> findAll(Integer userId){
         UserEntity user = userRepo.findById(userId).get();
         if (user.isAdminStatus()) {
@@ -59,101 +59,91 @@ public class TicketService {
             return ResponseEntity.ok().body(tickets);
     }
 
-    // add check for concert ticket quantity
+    //Add new tickets
     public ResponseEntity<?> add(int userId, List<NewTicket> newTickets) {
+        //Check if Ticket array is valid     
+        boolean validSeats = true;
+        for (NewTicket newTicket : newTickets) {
+            Integer selectedConcertId = newTicket.getConcertId();
+            String selectedSeatId = newTicket.getSeatId();
 
-        Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-        if (user.isPresent()) {
+            Optional<ConcertEntity> selectedConcert = (Optional<ConcertEntity>) concertRepo
+                    .findById(selectedConcertId);
+            Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
+                    .findById(selectedSeatId);
+            Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
+                    .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
+                            selectedSeatId,
+                            selectedConcertId,
+                            true);
 
-            boolean validSeats = true;
+            if (selectedConcert.isPresent() && selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
+                continue;
+            } else {
+                validSeats = false;
+                break;
+            }
+        }
+        //Add tickets to ticketRepo and return created tickets
+        if (validSeats) {
+            List<TicketEntity> createdTickets = new ArrayList<TicketEntity>();
             for (NewTicket newTicket : newTickets) {
                 Integer selectedConcertId = newTicket.getConcertId();
                 String selectedSeatId = newTicket.getSeatId();
-
-                Optional<ConcertEntity> selectedConcert = (Optional<ConcertEntity>) concertRepo
-                        .findById(selectedConcertId);
-                Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
-                        .findById(selectedSeatId);
-                Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
-                        .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
-                                selectedSeatId,
-                                selectedConcertId,
-                                true);
-
-                if (selectedConcert.isPresent() && selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
-                    continue;
-                } else {
-                    validSeats = false;
-                    break;
-                }
+                TicketEntity newTicketEntity = new TicketEntity();
+                newTicketEntity.setSubmissionStatus(true);
+                newTicketEntity.setConcertEntity(concertRepo.findById(selectedConcertId).get());
+                newTicketEntity.setUserEntity(userRepo.findById(userId).get());
+                newTicketEntity.setSeatEntity(seatRepo.findById(selectedSeatId).get());
+                ticketRepo.save(newTicketEntity);
+                createdTickets.add(ticketRepo.findById(newTicketEntity.getTicketId()).get());
             }
-
-            if (validSeats) {
-                List<TicketEntity> createdTickets = new ArrayList<TicketEntity>();
-                for (NewTicket newTicket : newTickets) {
-                    Integer selectedConcertId = newTicket.getConcertId();
-                    String selectedSeatId = newTicket.getSeatId();
-                    TicketEntity newTicketEntity = new TicketEntity();
-                    newTicketEntity.setSubmissionStatus(true);
-                    newTicketEntity.setConcertEntity(concertRepo.findById(selectedConcertId).get());
-                    newTicketEntity.setUserEntity(userRepo.findById(userId).get());
-                    newTicketEntity.setSeatEntity(seatRepo.findById(selectedSeatId).get());
-                    ticketRepo.save(newTicketEntity);
-                    createdTickets.add(ticketRepo.findById(newTicketEntity.getTicketId()).get());
-                }
-                return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets);
-
-            } else
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new ResponseMessage("Selected concert/seat(s) not available. Please try again."));
-        } else throw new UserNotFoundException();
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTickets);
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseMessage("Selected concert/seat(s) not available. Please try again."));
     }
 
+    //Check if ticket exists for user
+    private TicketEntity checkTicket(int userId, int ticketId) {
+        Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId, userId);
+        if (ticket.isPresent()) {
+            return ticket.get();
+        } else throw new TicketNotFoundException();
+    }
+
+    //Change seat of specified ticket
     public ResponseEntity<?> changeSeat(int userId, int ticketId, String selectedSeatId) {
+        TicketEntity ticket = checkTicket(userId, ticketId);
+        int concertId = ticket.getConcertEntity().getId();
+        Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
+                .findById(selectedSeatId);
+        Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
+                .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
+                        selectedSeatId,
+                        concertId,
+                        true);
 
-        Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-        if (user.isPresent()) {
-
-            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
-                    userId);
-            if (ticket.isPresent()) {
-                int concertId = ticket.get().getConcertEntity().getId();
-
-                Optional<SeatEntity> selectedSeat = (Optional<SeatEntity>) seatRepo
-                        .findById(selectedSeatId);
-                Optional<TicketEntity> selectedConcertSeat = (Optional<TicketEntity>) ticketRepo
-                        .findBySeatEntitySeatIdAndConcertEntityIdAndSubmissionStatus(
-                                selectedSeatId,
-                                concertId,
-                                true);
-
-                if (selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
-                    ticket.get().setSeatEntity(seatRepo.findById(selectedSeatId).get());
-                    ticketRepo.save(ticket.get());
-                    return ResponseEntity.ok().body(ticket.get());
-                } else
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .body(new ResponseMessage("Seat is unavailable"));
-            } else
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-        } else throw new UserNotFoundException();
+        if (selectedSeat.isPresent() && !selectedConcertSeat.isPresent()) {
+            ticket.setSeatEntity(seatRepo.findById(selectedSeatId).get());
+            ticketRepo.save(ticket);
+            return ResponseEntity.ok().body(ticket);
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseMessage("Seat is unavailable"));
     }
 
+    //Change submissionStatus to false
     public ResponseEntity<?> delete(int userId, int ticketId) {
-        Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-        if (user.isPresent()) {
-            Optional<TicketEntity> ticket = (Optional<TicketEntity>) ticketRepo.findByTicketIdAndUserEntityId(ticketId,
-                    userId);
-            if (ticket.isPresent()) {
-                if (ticket.get().isSubmissionStatus()) {
-                    ticket.get().setSubmissionStatus(false);
-                    ticketRepo.save(ticket.get());
-                    return ResponseEntity.ok().body(new ResponseMessage("Ticket deleted."));
-                } else
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                            .body(new ResponseMessage("Ticket is already deleted."));
-            } else
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseMessage("Ticket ID not found."));
-        } else throw new UserNotFoundException();
+        TicketEntity ticket = checkTicket(userId, ticketId);
+        if (ticket.isSubmissionStatus()) {
+            ticket.setSubmissionStatus(false);
+            ticketRepo.save(ticket);
+            return ResponseEntity.ok().body(new ResponseMessage("Ticket deleted."));
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ResponseMessage("Ticket is already deleted."));
+
+
     }
 }

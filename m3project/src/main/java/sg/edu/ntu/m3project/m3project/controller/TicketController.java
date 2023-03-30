@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
@@ -37,7 +38,7 @@ public class TicketController {
                 return ticketService.findAllById(userId);
         }
 
-        // Create Ticket (to update to array input for multiple tickets)
+        // Create Tickets
         @PostMapping
         public ResponseEntity<?> createTicket(
                         @RequestHeader(value = "user-id") int userId,
@@ -45,19 +46,21 @@ public class TicketController {
                 return ticketService.add(userId, newTickets);
         }
 
-        @PutMapping("/{ticket_id}") // change selectedSeatId to RequestParam?
+        // Change Seat
+        @PutMapping("/{ticket-id}")
         public ResponseEntity<?> changeSeat(
                         @RequestHeader(value = "user-id") int userId,
-                        @PathVariable int ticket_id,
-                        @RequestBody String selectedSeatId) {
-                return ticketService.changeSeat(userId, ticket_id, selectedSeatId);
+                        @PathVariable(value = "ticket-id") int ticketId,
+                        @RequestParam String seat) {
+                return ticketService.changeSeat(userId, ticketId, seat);
         }
 
-        @PostMapping("/{ticket_id}/delete")
+        // Delete ticket
+        @PutMapping("/{ticket-id}/delete")
         public ResponseEntity<?> deleteTicket(
                         @RequestHeader(value = "user-id") int userId,
-                        @PathVariable int ticket_id) {
-                return ticketService.delete(userId, ticket_id);
+                        @PathVariable(value = "ticket-id") int ticketId) {
+                return ticketService.delete(userId, ticketId);
         }
 
 }

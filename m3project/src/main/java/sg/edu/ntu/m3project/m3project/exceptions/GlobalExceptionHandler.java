@@ -10,15 +10,23 @@ import java.nio.file.AccessDeniedException;
 import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConversionException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<?> handleUserNotFoundException(Exception ex) {
+    @ExceptionHandler(TicketNotFoundException.class)
+    public ResponseEntity<?> handleTicketNotFoundException(Exception ex) {
         ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ResponseMessage("User not found."));
+                .body(new ResponseMessage("Ticket not found."));
+    }
+
+    @ExceptionHandler(HttpMessageConversionException.class)
+    public ResponseEntity<?> handleHttpMessageConversionException(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ResponseMessage("Bad request."));
     }
 
     @ExceptionHandler(RuntimeException.class)
