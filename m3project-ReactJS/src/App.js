@@ -3,6 +3,7 @@ import "./App.css";
 import { useContext, useState, useEffect } from "react"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 
+import LoginContext from "./context/LoginContext"; 
 import localAPI from "./api/localAPI"; 
 
 import DefaultErrorPage from "./routes/DefaultErrorPage"; 
@@ -20,8 +21,6 @@ import ViewSeats from "./routes/ViewSeats";
 
 import ViewByIDUser from "./routes/ViewByIDUser"; 
 import ViewByIDConcert from "./routes/ViewByIDConcert"; 
-
-import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
 import LoginRegisterPage from "./routes/LoginRegisterPage"; 
@@ -120,7 +119,9 @@ function App() {
         <BrowserRouter>
         <Routes>
 
-            <Route path="*" element={<DefaultErrorPage/>}/>
+            <Route element={<DefaultMainPage/>}>
+                <Route path="*" element={<DefaultErrorPage/>}/>
+            </Route>
 
             <Route path="/" element={<DefaultMainPage/>}>
                 <Route index element={<DefaultHomePage/>}/>
@@ -145,8 +146,8 @@ function App() {
                 <Route path="/admin/seats" element={<ViewSeats getSeats={getSeats} SeatsList={SeatsList}/>}/>
 
                 <Route path="/login" element={<DefaultBlankPage/>}>
-                    <Route index element={<LoginPage UsersList={UsersList}/>}/>
-                    <Route path="register" element={<LoginRegisterPage UsersList={UsersList} getUsers={getUsers}/>}/>
+                    <Route index element={<LoginPage/>}/>
+                    <Route path="register" element={<LoginRegisterPage/>}/>
                 </Route>
 
                 <Route path="/account" element={<AccountPage getUsers={getUsers} UsersList={UsersList} getTickets={getTickets} TicketsList={TicketsList}/>}/>

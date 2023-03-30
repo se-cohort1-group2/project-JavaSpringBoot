@@ -44,7 +44,7 @@ function DisplayAccountTickets({ TicketsList, displayID }) {
                         <td>
                             Cat {item.seatEntity.seatCategory}
                             <br/>
-                            S${item.seatEntity.ticketPrice}
+                            ${item.seatEntity.ticketPrice}
                         </td>
                     </tr>
                     ))}
