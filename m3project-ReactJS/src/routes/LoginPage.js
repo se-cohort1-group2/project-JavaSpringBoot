@@ -14,7 +14,7 @@ const blankLoginForm = {
     password: "",
 }
 
-function LoginPage({ UsersList }) {
+function LoginPage() {
 
     const LoginCtx = useContext(LoginContext); 
 
@@ -40,20 +40,14 @@ function LoginPage({ UsersList }) {
     }
 
     const loginUser = async (LoginData) => {
-        const user = UsersList.find(({ email }) => email === LoginForm.email); 
         try {
             const response = await localAPI.post(`/users/login`, LoginData)
-            console.log("Successfully logged in as '" + user.email + "'.", response.data)
-            LoginCtx.handleLogin(true, user.id, response.data.token); 
+            console.log("Successfully logged in!", response.data)
+            LoginCtx.handleLogin(true, response.data.userID, response.data.token); 
         } catch (error) {
             console.log(error.message)
-            if (typeof user !== "object") {
-                console.log("User account not found, please try a different email.")
-                window.alert("User account not found, please try a different email.")
-            } else {
-                console.log("Incorrect password for '" + user.email + "'. Please try again.")
-                window.alert("Incorrect password for '" + user.email + "'. Please try again.")
-            }
+            console.log("Incorrect email or password, please try again.")
+            window.alert("Incorrect email or password, please try again.")
         }
     }
 
