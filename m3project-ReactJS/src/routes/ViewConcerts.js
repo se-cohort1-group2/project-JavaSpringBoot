@@ -1,8 +1,15 @@
 import style from "./Page.module.css"; 
 
+import { useEffect } from "react"; 
+
 import TableConcerts from "../components/TableConcerts"; 
 
-function ViewConcerts({ ConcertsList }) {
+function ViewConcerts({ getConcertsHistory, ConcertsList }) {
+
+    useEffect(() => {
+        getConcertsHistory(); 
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>

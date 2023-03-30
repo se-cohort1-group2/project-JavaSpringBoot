@@ -132,17 +132,17 @@ function App() {
                 </Route>
 
                 <Route path="/admin/users" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewUsers UsersList={UsersList}/>}/>
+                    <Route index element={<ViewUsers getUsers={getUsers} UsersList={UsersList}/>}/>
                     <Route path=":UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
                 </Route>
 
                 <Route path="/admin/concerts" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewConcerts ConcertsList={ConcertsHistoryList}/>}/>
+                    <Route index element={<ViewConcerts getConcertsHistory={getConcertsHistory} ConcertsList={ConcertsHistoryList}/>}/>
                     <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
                 </Route>
 
-                <Route path="/admin/tickets" element={<ViewTickets TicketsList={TicketsList}/>}/>
-                <Route path="/admin/seats" element={<ViewSeats SeatsList={SeatsList}/>}/>
+                <Route path="/admin/tickets" element={<ViewTickets getTickets={getTickets} TicketsList={TicketsList}/>}/>
+                <Route path="/admin/seats" element={<ViewSeats getSeats={getSeats} SeatsList={SeatsList}/>}/>
 
                 <Route path="/login" element={<DefaultBlankPage/>}>
                     <Route index element={<LoginPage UsersList={UsersList}/>}/>

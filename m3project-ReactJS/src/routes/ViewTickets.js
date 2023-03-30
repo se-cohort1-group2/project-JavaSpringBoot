@@ -1,8 +1,15 @@
 import style from "./Page.module.css"; 
 
+import { useEffect } from "react"; 
+
 import TableTickets from "../components/TableTickets"; 
 
-function ViewTickets({ TicketsList }) {
+function ViewTickets({ getTickets, TicketsList }) {
+
+    useEffect(() => {
+        getTickets(); 
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>

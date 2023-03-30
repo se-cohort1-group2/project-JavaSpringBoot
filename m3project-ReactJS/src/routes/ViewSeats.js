@@ -1,8 +1,15 @@
 import style from "./Page.module.css"; 
 
+import { useEffect } from "react"; 
+
 import TableSeats from "../components/TableSeats"; 
 
-function ViewSeats({ SeatsList }) {
+function ViewSeats({ getSeats, SeatsList }) {
+
+    useEffect(() => {
+        getSeats(); 
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>

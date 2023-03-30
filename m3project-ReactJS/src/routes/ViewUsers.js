@@ -1,8 +1,15 @@
 import style from "./Page.module.css"; 
 
+import { useEffect } from "react"; 
+
 import TableUsers from "../components/TableUsers"; 
 
-function ViewUsers({ UsersList }) {
+function ViewUsers({ getUsers, UsersList }) {
+
+    useEffect(() => {
+        getUsers(); 
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <>
