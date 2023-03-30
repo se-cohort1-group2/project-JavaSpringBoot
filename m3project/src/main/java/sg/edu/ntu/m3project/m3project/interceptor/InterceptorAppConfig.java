@@ -13,8 +13,6 @@ public class InterceptorAppConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // TODO Auto-generated method stub
-        // WebMvcConfigurer.super.addInterceptors(registry);
         registry.addInterceptor(interceptor)
                 .excludePathPatterns("/**/login",
                         "/**/register",

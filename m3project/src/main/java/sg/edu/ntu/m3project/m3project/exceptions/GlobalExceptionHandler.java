@@ -7,7 +7,6 @@ import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;
 
 import java.nio.file.AccessDeniedException;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -38,5 +37,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleNumberFormatException(Exception ex) {
         ex.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(ex.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<?> handleException(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(new ResponseMessage("Something went wrong. Please try again later."));
     }
 }
