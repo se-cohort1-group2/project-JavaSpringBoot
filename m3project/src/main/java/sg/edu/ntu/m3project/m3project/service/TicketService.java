@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import sg.edu.ntu.m3project.m3project.entity.ConcertEntity;
 import sg.edu.ntu.m3project.m3project.entity.SeatEntity;
 import sg.edu.ntu.m3project.m3project.entity.TicketEntity;
-import sg.edu.ntu.m3project.m3project.entity.UserEntity;
 import sg.edu.ntu.m3project.m3project.exceptions.TicketNotFoundException;
 import sg.edu.ntu.m3project.m3project.helper.NewTicket;
 import sg.edu.ntu.m3project.m3project.helper.ResponseMessage;

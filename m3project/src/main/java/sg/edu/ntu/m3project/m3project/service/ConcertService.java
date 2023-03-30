@@ -29,7 +29,6 @@ public class ConcertService {
     UserService userService;
 
     public ResponseEntity<?> find(String findBy, String searchParam) {
-        // try {
 
         List<ConcertEntity> currentConcertList;
 
@@ -68,7 +67,7 @@ public class ConcertService {
     }
 
     public ResponseEntity<?> findbyConcertId(int concertId) {
-        // try {
+
         Optional<ConcertEntity> optionalConcert = concertRepo.findById(concertId);
 
         if (optionalConcert.isPresent()) {

@@ -1,7 +1,6 @@
 package sg.edu.ntu.m3project.m3project.entity;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -42,6 +41,7 @@ public class ConcertEntity {
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -49,6 +49,7 @@ public class ConcertEntity {
     public String getArtist() {
         return artist;
     }
+
     public void setArtist(String artist) {
         this.artist = artist;
     }
@@ -56,6 +57,7 @@ public class ConcertEntity {
     public Timestamp getConcertDate() {
         return concertDate;
     }
+
     public void setConcertDate(Timestamp concertDate) {
         this.concertDate = concertDate;
     }
@@ -63,6 +65,7 @@ public class ConcertEntity {
     public String getConcertVenue() {
         return concertVenue;
     }
+
     public void setConcertVenue(String concertVenue) {
         this.concertVenue = concertVenue;
     }
@@ -70,6 +73,7 @@ public class ConcertEntity {
     public Integer getTicketsAvailable() {
         return ticketsAvailable;
     }
+
     public void setTicketsAvailable(Integer ticketsAvailable) {
         this.ticketsAvailable = ticketsAvailable;
     }
@@ -77,6 +81,7 @@ public class ConcertEntity {
     public float getTicketPrice() {
         return ticketPrice;
     }
+
     public void setTicketPrice(float ticketPrice) {
         this.ticketPrice = ticketPrice;
     }
@@ -84,6 +89,7 @@ public class ConcertEntity {
     public Timestamp getUpdatedAt() {
         return updatedAt;
     }
+
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
@@ -91,6 +97,7 @@ public class ConcertEntity {
     public Timestamp getCreatedAt() {
         return createdAt;
     }
+
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
