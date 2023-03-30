@@ -132,18 +132,15 @@ function App() {
                     <Route path=":ConcertID/buy" element={<PageConcertByID ConcertsList={ConcertsHistoryList} SeatsList={SeatsList} TicketsList={TicketsList} getTickets={getTickets}/>}/>
                 </Route>
 
-                <Route path="/admin/users" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewUsers getUsers={getUsers} UsersList={UsersList}/>}/>
-                    <Route path=":UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
+                <Route path="/admin" element={<DefaultBlankPage/>}>
+                    <Route path="users" element={<ViewUsers getUsers={getUsers} UsersList={UsersList}/>}/>
+                    <Route path="concerts" element={<ViewConcerts getConcertsHistory={getConcertsHistory} ConcertsList={ConcertsHistoryList}/>}/>
+                    <Route path="tickets" element={<ViewTickets getTickets={getTickets} TicketsList={TicketsList}/>}/>
+                    <Route path="seats" element={<ViewSeats getSeats={getSeats} SeatsList={SeatsList}/>}/>
+                    <Route index element={<DefaultErrorPage/>}/>
+                    <Route path="users/:UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
+                    <Route path="concerts/:ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
                 </Route>
-
-                <Route path="/admin/concerts" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewConcerts getConcertsHistory={getConcertsHistory} ConcertsList={ConcertsHistoryList}/>}/>
-                    <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
-                </Route>
-
-                <Route path="/admin/tickets" element={<ViewTickets getTickets={getTickets} TicketsList={TicketsList}/>}/>
-                <Route path="/admin/seats" element={<ViewSeats getSeats={getSeats} SeatsList={SeatsList}/>}/>
 
                 <Route path="/login" element={<DefaultBlankPage/>}>
                     <Route index element={<LoginPage/>}/>
