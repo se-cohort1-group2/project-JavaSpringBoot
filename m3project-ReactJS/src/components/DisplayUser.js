@@ -67,7 +67,10 @@ function DisplayUser({ getUsers, UsersList, displayID }) {
     const updateUser = async (updatedData) => {
         try {
             const config = {
-                headers: {"user-id": LoginCtx.userID}
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
             }
             const response = await localAPI.put(`/users/${user.id}`, updatedData, config)
             console.log("Profile successfully updated!", response.data)
