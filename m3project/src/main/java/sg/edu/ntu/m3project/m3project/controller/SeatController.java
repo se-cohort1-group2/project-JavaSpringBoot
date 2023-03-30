@@ -30,6 +30,4 @@ public class SeatController {
         }
     }
 
-    // add create, put, delete
-
 }
