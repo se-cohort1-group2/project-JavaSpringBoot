@@ -25,10 +25,16 @@ public class TicketController {
         @Autowired
         TicketService ticketService;
 
-        // Get Tickets by All/User ID
+        // Get all Tickets
+        @GetMapping("/all")
+        public ResponseEntity<?> findAll(@RequestHeader(value = "user-id") Integer userId) {
+                return ticketService.findAll(userId);
+        }
+
+        // Get Tickets by User ID
         @GetMapping
-        public ResponseEntity<?> findAllById(@RequestHeader(value = "user-id", required = false) Integer userId) {
-                return ticketService.find(userId);
+        public ResponseEntity<?> findAllById(@RequestHeader(value = "user-id") Integer userId) {
+                return ticketService.findAllById(userId);
         }
 
         // Create Ticket (to update to array input for multiple tickets)

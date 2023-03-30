@@ -36,25 +36,27 @@ public class TicketService {
     @Autowired
     SeatRepository seatRepo;
 
-    public ResponseEntity<?> find(Integer userId){
-        if (userId == null) {
+    //Find all if admin
+    public ResponseEntity<?> findAll(Integer userId){
+        UserEntity user = userRepo.findById(userId).get();
+        if (user.isAdminStatus()) {
             List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
             if (tickets.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(new ResponseMessage("No ticket history."));
             } else
                 return ResponseEntity.ok().body(tickets);
-        } else {
-            Optional<UserEntity> user = (Optional<UserEntity>) userRepo.findById(userId);
-            if (user.isPresent()) {
-                List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserEntityId(userId);
-                if (tickets.isEmpty()) {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                            .body(new ResponseMessage("No ticket history for user: " + userId));
-                } else
-                    return ResponseEntity.ok().body(tickets);
-            } else throw new UserNotFoundException();
-        }
+        } else return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ResponseMessage("Admin status required."));
+    }
+
+    //Find by userId
+    public ResponseEntity<?> findAllById(Integer userId){
+        List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findByUserEntityId(userId);
+        if (tickets.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new ResponseMessage("No ticket history for user: " + userId));
+        } else
+            return ResponseEntity.ok().body(tickets);
     }
 
     // add check for concert ticket quantity
