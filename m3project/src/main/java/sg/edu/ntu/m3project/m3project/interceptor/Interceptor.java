@@ -25,6 +25,15 @@ public class Interceptor implements HandlerInterceptor {
             Object handler)
             throws Exception {
 
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+        if (request.getMethod().equals("OPTIONS")) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return false;
+        }
+
         String token = request.getHeader("token");
         String userId_str = request.getHeader("user-id");
         if (token == null || userId_str == null) {
