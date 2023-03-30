@@ -45,7 +45,7 @@ public class UserService {
                 .compact();
         Map<String, String> jwtTokenGen = new HashMap<>();
         jwtTokenGen.put("token", jwtToken);
-        jwtTokenGen.put("user-id", user.getId().toString());
+        jwtTokenGen.put("userID", user.getId().toString());
         return jwtTokenGen;
     }
 
