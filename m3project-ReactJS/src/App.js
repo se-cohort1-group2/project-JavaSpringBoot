@@ -147,7 +147,7 @@ function App() {
                     <Route path="register" element={<LoginRegisterPage/>}/>
                 </Route>
 
-                <Route path="/account" element={<AccountPage getUsers={getUsers} UsersList={UsersList} getTickets={getTickets} TicketsList={TicketsList}/>}/>
+                <Route path="/account" element={<AccountPage getUsers={getUsers} UsersList={UsersList} getTickets={getTickets} TicketsList={TicketsList} getSeats={getSeats}/>}/>
             </Route>
 
         </Routes>

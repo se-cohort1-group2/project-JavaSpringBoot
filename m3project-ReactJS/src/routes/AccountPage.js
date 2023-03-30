@@ -8,13 +8,14 @@ import LoginContext from "../context/LoginContext";
 import DisplayUser from "../components/DisplayUser"; 
 import DisplayAccountTickets from "../components/DisplayAccountTickets"; 
 
-function AccountPage({ getUsers, UsersList, getTickets, TicketsList }) {
+function AccountPage({ getUsers, UsersList, getTickets, TicketsList, getSeats }) {
 
     const LoginCtx = useContext(LoginContext); 
 
     useEffect(() => {
         getUsers(); 
         getTickets(); 
+        getSeats(); 
         // eslint-disable-next-line
     }, [])
 
