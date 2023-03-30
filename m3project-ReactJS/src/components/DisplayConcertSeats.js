@@ -1,7 +1,7 @@
 import style from "./Table.module.css"; 
 
 import { useContext, useState } from "react"; 
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate, Link } from "react-router-dom"; 
 
 import LoginContext from "../context/LoginContext"; 
 import localAPI from "../api/localAPI"; 
@@ -55,17 +55,22 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
     const PurchaseTickets = async (PurchaseData) => {
         try {
             const config = {
-                headers: {"user_id": LoginCtx.userID}
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
             }
             const response = await localAPI.post(`/tickets`, PurchaseData, config)
             console.log("Purchase successful!", response.data)
             window.alert("Purchase successful!")
+            window.alert("You will now be redirected to your account page.")
             navigate(`/account`); 
         } catch (error) {
             console.log(error.message)
-            console.log("You must be logged in to purchase tickets")
-            window.alert("You must be logged in to purchase tickets")
-            navigate(`/login`); 
+            console.log("Unable to purchase tickets, selected seat(s) not available.")
+            window.alert("Unable to purchase tickets, selected seat(s) not available.")
+            window.alert("You will now be redirected back to the events page.")
+            navigate(`/concerts`); 
         }
     }
 
@@ -74,10 +79,12 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             await PurchaseTickets(SelectedSeats); 
             getTickets(); 
         } else {
+            console.log("No seats selected")
             window.alert("No seats selected")
         }
     }
 
+    if (LoginCtx.isLoggedIn) {
     return (
         <>
             <div className={style.stage}>STAGE</div>
@@ -98,7 +105,7 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             <table className={style.SelectedSeats}>
                 <tbody>
                     <tr>
-                        <td>You have selected the following seats: </td>
+                        <td>You have selected the following seat(s): </td>
                         {SelectedSeats && SelectedSeats.map((z) => (
                         <td key={z.seat_id} className={style.SelectedSeat}>{z.seat_id}</td>
                         ))}
@@ -112,6 +119,19 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             }
         </>
     )
+    }
+
+    if (!LoginCtx.isLoggedIn) {
+    return (
+        <>
+            <br/><br/>
+            <Link to="/login">
+                <button className={style.PurchaseBtn}>Login to buy tickets</button>
+            </Link>
+            <br/><br/>
+        </>
+    )
+    }
 }
 
 export default DisplayConcertSeats; 
