@@ -1,6 +1,6 @@
 import style from "./Page.module.css"; 
 
-import { useContext } from "react"; 
+import { useContext, useEffect } from "react"; 
 import { Link } from "react-router-dom"; 
 
 import LoginContext from "../context/LoginContext"; 
@@ -8,9 +8,15 @@ import LoginContext from "../context/LoginContext";
 import DisplayUser from "../components/DisplayUser"; 
 import DisplayAccountTickets from "../components/DisplayAccountTickets"; 
 
-function AccountPage({ UsersList, getUsers, TicketsList }) {
+function AccountPage({ getUsers, UsersList, getTickets, TicketsList }) {
 
     const LoginCtx = useContext(LoginContext); 
+
+    useEffect(() => {
+        getUsers(); 
+        getTickets(); 
+        // eslint-disable-next-line
+    }, [])
 
     if (LoginCtx.isLoggedIn) {
     return (

@@ -149,7 +149,7 @@ function App() {
                     <Route path="register" element={<LoginRegisterPage UsersList={UsersList} getUsers={getUsers}/>}/>
                 </Route>
 
-                <Route path="/account" element={<AccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>
+                <Route path="/account" element={<AccountPage getUsers={getUsers} UsersList={UsersList} getTickets={getTickets} TicketsList={TicketsList}/>}/>
             </Route>
 
         </Routes>
