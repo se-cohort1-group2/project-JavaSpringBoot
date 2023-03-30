@@ -60,7 +60,13 @@ function App() {
 
     const getSeats = async() => {
         try {
-            const response = await localAPI.get("/seats")
+            const config = {
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
+            }
+            const response = await localAPI.get("/seats", config)
             setSeatsList(response.data)
             console.log("SeatsList", response.data)
         } catch (error) {
@@ -70,7 +76,13 @@ function App() {
 
     const getTickets = async() => {
         try {
-            const response = await localAPI.get("/tickets")
+            const config = {
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
+            }
+            const response = await localAPI.get("/tickets", config)
             setTicketsList(response.data)
             console.log("TicketsList", response.data)
         } catch (error) {
@@ -81,7 +93,10 @@ function App() {
     const getUsers = async() => {
         try {
             const config = {
-                headers: {"user-id": LoginCtx.userID}
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
             }
             const response = await localAPI.get("/users", config)
             setUsersList(response.data)
