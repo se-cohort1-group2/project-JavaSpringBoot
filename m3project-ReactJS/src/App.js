@@ -81,7 +81,8 @@ function App() {
                     "token": LoginCtx.token
                 }
             }
-            const response = await localAPI.get("/tickets", config)
+            const response = await localAPI.get("/tickets/all", config)
+            /* const response = await localAPI.get("/tickets", config) */
             setTicketsList(response.data)
             console.log("TicketsList", response.data)
         } catch (error) {

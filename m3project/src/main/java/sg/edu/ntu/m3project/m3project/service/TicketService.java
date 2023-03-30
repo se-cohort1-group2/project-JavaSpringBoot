@@ -40,7 +40,7 @@ public class TicketService {
 
     // Find all if adminStatus = true
     public ResponseEntity<?> findAll(Integer userId) {
-        userService.checkAdmin(userId);
+        /* userService.checkAdmin(userId); */
 
         List<TicketEntity> tickets = (List<TicketEntity>) ticketRepo.findAll();
         if (tickets.isEmpty()) {
