@@ -27,7 +27,8 @@ public class Interceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With");
+        response.setHeader("Access-Control-Allow-Headers",
+                "Origin, user-id, X-Requested-With, Content-Type, Accept, token");
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
             return false;
