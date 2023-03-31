@@ -32,8 +32,11 @@ function DefaultMainPage() {
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Venues</Link>
                     <Link className={`${style.NavBtn} ${style.LinkBtn}`}>Promotions</Link>
 
+                    {/* eslint-disable-next-line */}
+                    {LoginCtx.userID == 1 &&
+                    <>
                     <div className={style.Dropdown}>
-                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>-</Link>
+                    <Link className={`${style.NavBtn} ${style.LinkBtn}`}>(Admin Portal)</Link>
                         <div className={style.DropdownMenu}>
                         <Link className={style.DropdownLink} to="/admin/users">Users</Link>
                         <Link className={style.DropdownLink} to="/admin/concerts">Concerts</Link>
@@ -41,6 +44,8 @@ function DefaultMainPage() {
                         <Link className={style.DropdownLink} to="/admin/seats">Seats</Link>
                         </div>
                     </div>
+                    </>
+                    }
 
                     <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
