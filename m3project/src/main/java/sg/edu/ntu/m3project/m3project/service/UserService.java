@@ -58,7 +58,7 @@ public class UserService {
                 .getSubject();
 
         if (userId != Integer.parseInt(id)) {
-            throw new AccessDeniedException("Userid and token does not match");
+            throw new AccessDeniedException("user-id and token do not match");
         }
 
         return id;
@@ -75,7 +75,7 @@ public class UserService {
     public void checkAdmin(int userId) {
         UserEntity user = userRepo.findById(userId).get();
         if (!user.isAdminStatus()) {
-            throw new UserNotAdminException("User is not admin status.");
+            throw new UserNotAdminException("User does not have admin status.");
         }
     }
 
@@ -151,6 +151,10 @@ public class UserService {
     // phoebe
     public ResponseEntity<?> create(UserEntity user) {
         try {
+            if (user.getEmail() == null || user.getPassword() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ResponseMessage("Email and/or password cannot be empty."));
+            }
             if (userRepo.existsByEmail(user.getEmail())) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(new ResponseMessage("Sorry, a user with this email already exists."));
@@ -182,7 +186,7 @@ public class UserService {
         try {
             if (user.getEmail() == null || user.getPassword() == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body(new ResponseMessage("Email or password is empty."));
+                        .body(new ResponseMessage("Email and/or password cannot be empty."));
             }
             UserEntity selectedUser = this.getUserForAuth(user.getEmail(), user.getPassword());
             return new ResponseEntity<>(this.generateToken(selectedUser), HttpStatus.OK);

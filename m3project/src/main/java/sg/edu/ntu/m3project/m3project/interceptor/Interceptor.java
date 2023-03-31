@@ -28,7 +28,7 @@ public class Interceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers",
-                "Origin, user-id, X-Requested-With, Content-Type, Accept, token");
+                "Origin, X-Requested-With, Content-Type, Accept, user-id, token");
         if (request.getMethod().equals("OPTIONS")) {
             response.setStatus(HttpServletResponse.SC_OK);
             return false;
@@ -37,7 +37,7 @@ public class Interceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
         String userId_str = request.getHeader("user-id");
         if (token == null || userId_str == null) {
-            throw new AccessDeniedException("There is no user token and/or userid.");
+            throw new AccessDeniedException("missing user-id and/or token");
         }
 
         try {
@@ -48,7 +48,7 @@ public class Interceptor implements HandlerInterceptor {
             userService.checkToken(token, userId);
 
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("user-id is not numeric.");
+            throw new NumberFormatException("user-id is not numeric");
         } catch (Exception e) {
             throw e;
         }
