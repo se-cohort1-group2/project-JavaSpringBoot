@@ -83,12 +83,12 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             <div className={style.gridContainer}>
 
                 <div className={style.gridBoxLeft}>
-                    {/* <br/><br/><br/><br/>Ticket Prices<br/>
+                    <br/><br/><br/><br/>Ticket Prices:<br/>
                     {newArray.map((i, index) => (
-                    <div key={index} className={style.LegendTicketPricing}>
+                    <div key={index}>
                         Category {i[0].seatCategory} - ${i[0].ticketPrice}
                     </div>
-                    ))} */}
+                    ))}
                 </div>
 
                 <div className={style.gridBoxCentre}>
@@ -101,7 +101,6 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
                                 <td key={x.seatId} className={style.tooltip}>
                                     {checkIfAvailable(x.seatId)}
                                     <br/>
-                                    <span id></span>
                                     <span className={style.tooltiptext}>
                                         Category {x.seatCategory}
                                         <br/>
@@ -130,7 +129,7 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             <table className={style.SelectedSeats}>
                 <tbody>
                     <tr>
-                        <td>You have selected the following seats: </td>
+                        <td>You have selected the following seat(s): </td>
                         {SelectedSeats && SelectedSeats.map((z) => (
                         <td key={z.seat_id} className={style.SelectedSeat}>{z.seat_id}</td>
                         ))}
