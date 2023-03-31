@@ -87,18 +87,49 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
     if (LoginCtx.isLoggedIn) {
     return (
         <>
-            <div className={style.stage}>STAGE</div>
-            <table className={style.SeatsTable}>
-                <tbody>
-                    {newArray.map((i) => (
-                    <tr key={i.seatCategory}>
-                        {i.map((x) => (
-                        <td key={x.seatId}>{checkIfAvailable(x.seatId)}</td>
-                        ))}
-                    </tr>
+            <div className={style.gridContainer}>
+
+                <div className={style.gridBoxLeft}>
+                    <br/><br/><br/><br/>Ticket Prices:<br/>
+                    {newArray.map((i, index) => (
+                    <div key={index}>
+                        Category {i[0].seatCategory} - ${i[0].ticketPrice}
+                    </div>
                     ))}
-                </tbody>
-            </table>
+                </div>
+
+                <div className={style.gridBoxCentre}>
+                    <div className={style.stage}>STAGE</div>
+                    <table className={style.SeatsTable}>
+                        <tbody>
+                            {newArray.map((i, index) => (
+                            <tr key={index}>
+                                {i.map((x) => (
+                                <td key={x.seatId} className={style.tooltip}>
+                                    {checkIfAvailable(x.seatId)}
+                                    {/* <br/>
+                                    <span className={style.tooltiptext}>
+                                        Category {x.seatCategory}
+                                        <br/>
+                                        ${x.ticketPrice}
+                                    </span> */}
+                                </td>
+                                ))}
+                            </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className={style.gridBoxRight}>
+                    <br/><br/><br/><br/><br/>Legend<br/>
+                    <div className={style.LegendUnavailable}>&nbsp;</div>Seat Unavailable<br/>
+                    <div className={style.LegendAvailable}>&nbsp;</div>Seat Available<br/>
+                    <div className={style.LegendSelected}>&nbsp;</div>Your Selected Seat<br/>
+                </div>
+
+            </div>
+
             <br/>
             {SelectedSeats.length > 0 &&
             <>
