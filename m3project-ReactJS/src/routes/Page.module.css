@@ -95,3 +95,59 @@ hr {
     padding: 35px 0 0px 0; 
     min-height: 190px; 
 }
+
+.SearchOuterArea {
+    font-size: 1.05rem; 
+}
+
+.SearchArea {
+    display: inline-block; 
+    position: relative; 
+}
+
+.SearchInput {
+    font-size: 1rem; 
+    padding: 8px 12px; 
+    border: 1px solid #bbb; 
+    border-radius: 5px; 
+}
+
+.SearchInput:hover {
+    border: 1px solid #999; 
+}
+
+.SearchInput:focus {
+    outline: none; 
+    border: 1px solid #999; 
+}
+
+.SearchResults {
+    position: absolute; 
+    width: 100%; 
+}
+
+.SearchResultsTable {
+    width: 100%; 
+    background-color: white; 
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+    text-align: left; 
+    border-collapse: collapse; 
+}
+
+.SearchResultsTable td {
+    padding: 8px 12px; 
+    border: 1px solid #ddd; 
+}
+
+.SearchedResult {
+    text-decoration: none; 
+    color: black; 
+}
+
+.SearchedResult:hover {
+    color: #0266dd; 
+}
+
+.SearchedResult:hover::after {
+    content: " 🡆"; 
+}
