@@ -16,7 +16,7 @@ const blankRegisterForm = {
     password: "",
 }
 
-function LoginRegisterPage({ UsersList, getUsers }) {
+function LoginRegisterPage({ getUsers, UsersList }) {
 
     const LoginCtx = useContext(LoginContext); 
 

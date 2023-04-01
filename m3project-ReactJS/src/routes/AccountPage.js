@@ -8,7 +8,7 @@ import LoginContext from "../context/LoginContext";
 import DisplayUser from "../components/DisplayUser"; 
 import DisplayAccountTickets from "../components/DisplayAccountTickets"; 
 
-function AccountPage({ UsersList, getUsers, TicketsList }) {
+function AccountPage({ getUsers, UsersList, TicketsList }) {
 
     const LoginCtx = useContext(LoginContext); 
 

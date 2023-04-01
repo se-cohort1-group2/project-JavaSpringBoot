@@ -3,6 +3,7 @@ import "./App.css";
 import { useContext, useState, useEffect } from "react"; 
 import { BrowserRouter, Routes, Route } from "react-router-dom"; 
 
+import LoginContext from "./context/LoginContext"; 
 import localAPI from "./api/localAPI"; 
 
 import DefaultErrorPage from "./routes/DefaultErrorPage"; 
@@ -20,9 +21,6 @@ import ViewSeats from "./routes/ViewSeats";
 
 import ViewByIDUser from "./routes/ViewByIDUser"; 
 import ViewByIDConcert from "./routes/ViewByIDConcert"; 
-
-import { LoginContextProvider } from "./context/LoginContext"; 
-import LoginContext from "./context/LoginContext"; 
 
 import LoginPage from "./routes/LoginPage"; 
 import LoginRegisterPage from "./routes/LoginRegisterPage"; 
@@ -61,7 +59,13 @@ function App() {
 
     const getSeats = async() => {
         try {
-            const response = await localAPI.get("/seats")
+            const config = {
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
+            }
+            const response = await localAPI.get("/seats", config)
             setSeatsList(response.data)
             console.log("SeatsList", response.data)
         } catch (error) {
@@ -71,7 +75,14 @@ function App() {
 
     const getTickets = async() => {
         try {
-            const response = await localAPI.get("/tickets")
+            const config = {
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
+            }
+            /* const response = await localAPI.get("/tickets/all", config) */
+            const response = await localAPI.get("/tickets", config)
             setTicketsList(response.data)
             console.log("TicketsList", response.data)
         } catch (error) {
@@ -82,7 +93,10 @@ function App() {
     const getUsers = async() => {
         try {
             const config = {
-                headers: {"user-id": LoginCtx.userID}
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
             }
             const response = await localAPI.get("/users", config)
             setUsersList(response.data)
@@ -103,7 +117,6 @@ function App() {
 
     return (
         <>
-        <LoginContextProvider>
         <BrowserRouter>
         <Routes>
 
@@ -120,30 +133,26 @@ function App() {
                     <Route path=":ConcertID/buy" element={<PageConcertByID ConcertsList={ConcertsHistoryList} SeatsList={SeatsList} TicketsList={TicketsList} getTickets={getTickets}/>}/>
                 </Route>
 
-                <Route path="/admin/users" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewUsers UsersList={UsersList}/>}/>
-                    <Route path=":UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
+                <Route path="/admin" element={<DefaultBlankPage/>}>
+                    <Route path="users" element={<ViewUsers UsersList={UsersList}/>}/>
+                    <Route path="concerts" element={<ViewConcerts ConcertsList={ConcertsHistoryList}/>}/>
+                    <Route path="tickets" element={<ViewTickets TicketsList={TicketsList}/>}/>
+                    <Route path="seats" element={<ViewSeats SeatsList={SeatsList}/>}/>
+                    <Route index element={<DefaultErrorPage/>}/>
+                    <Route path="users/:UserID" element={<ViewByIDUser getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
+                    <Route path="concerts/:ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
                 </Route>
-
-                <Route path="/admin/concerts" element={<DefaultBlankPage/>}>
-                    <Route index element={<ViewConcerts ConcertsList={ConcertsHistoryList}/>}/>
-                    <Route path=":ConcertID" element={<ViewByIDConcert ConcertsList={ConcertsHistoryList} TicketsList={TicketsList}/>}/>
-                </Route>
-
-                <Route path="/admin/tickets" element={<ViewTickets TicketsList={TicketsList}/>}/>
-                <Route path="/admin/seats" element={<ViewSeats SeatsList={SeatsList}/>}/>
 
                 <Route path="/login" element={<DefaultBlankPage/>}>
                     <Route index element={<LoginPage UsersList={UsersList}/>}/>
-                    <Route path="register" element={<LoginRegisterPage UsersList={UsersList} getUsers={getUsers}/>}/>
+                    <Route path="register" element={<LoginRegisterPage getUsers={getUsers} UsersList={UsersList}/>}/>
                 </Route>
 
-                <Route path="/account" element={<AccountPage UsersList={UsersList} getUsers={getUsers} TicketsList={TicketsList}/>}/>
+                <Route path="/account" element={<AccountPage getUsers={getUsers} UsersList={UsersList} TicketsList={TicketsList}/>}/>
             </Route>
 
         </Routes>
         </BrowserRouter>
-        </LoginContextProvider>
         </>
     )
 }
