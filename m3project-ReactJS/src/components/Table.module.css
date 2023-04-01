@@ -228,10 +228,12 @@
     text-align: left; 
     font-size: 0.85rem; 
     color: #888; 
-    background-color: #fafafa55; 
+    background-color: #fafafaaa; 
     border: 1px solid #aaa; 
     border-radius: 3px; 
-    padding: 5px 10px; 
+    padding: 2px 5px; 
+    top: 35px; 
+    left: 45px; 
 }
 
 .tooltip:hover .tooltiptext {

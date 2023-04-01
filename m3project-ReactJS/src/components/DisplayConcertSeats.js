@@ -55,16 +55,21 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
     const PurchaseTickets = async (PurchaseData) => {
         try {
             const config = {
-                headers: {"user_id": LoginCtx.userID}
+                headers: {
+                    "user-id": LoginCtx.userID, 
+                    "token": LoginCtx.token
+                }
             }
             const response = await localAPI.post(`/tickets`, PurchaseData, config)
             console.log("Purchase successful!", response.data)
             window.alert("Purchase successful!")
+            window.alert("You will now be redirected to your account page.")
             navigate(`/account`); 
         } catch (error) {
             console.log(error.message)
             console.log("You must be logged in to purchase tickets")
             window.alert("You must be logged in to purchase tickets")
+            window.alert("You will now be redirected to the login page.")
             navigate(`/login`); 
         }
     }
@@ -74,6 +79,7 @@ function DisplayConcertSeats({ ConcertID, SeatsList, TicketsList, getTickets }) 
             await PurchaseTickets(SelectedSeats); 
             getTickets(); 
         } else {
+            console.log("No seats selected")
             window.alert("No seats selected")
         }
     }
