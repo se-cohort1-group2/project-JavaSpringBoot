@@ -12,6 +12,14 @@ function DefaultMainPage() {
 
     const LoginCtx = useContext(LoginContext); 
 
+    const handleLogout = () => {
+        if (LoginCtx.isLoggedIn) {
+            LoginCtx.handleLogin(false, "", "")
+        } else {
+            
+        }
+    }
+
     return (
         <>
             <div className={style.MainContainer}>
@@ -47,6 +55,7 @@ function DefaultMainPage() {
                     </>
                     }
 
+                    <div className={style.RightDropdown}>
                     <Link className={`${style.LoginArea}`} to="/login">
                         <img className={style.UserIcon} alt="UserIcon" src={UserIcon}/>
                         <span className={style.LoginText}>
@@ -54,6 +63,15 @@ function DefaultMainPage() {
                             {LoginCtx.isLoggedIn && <>Account</>}
                         </span>
                     </Link>
+                        {LoginCtx.isLoggedIn &&
+                        <>
+                        <div className={style.RightDropdownMenuLink}>
+                            <span onClick={handleLogout}>Logout</span>
+                        </div>
+                        </>
+                        }
+                    </div>
+
                 </nav>
 
                 <div className={style.OutletContainer}>

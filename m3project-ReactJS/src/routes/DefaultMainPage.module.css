@@ -85,6 +85,10 @@
     display: block; 
 }
 
+.Dropdown:hover .LinkBtn {
+    background-color: #0855bb; 
+}
+
 .DropdownLink {
     display: block; 
     text-decoration: none; 
@@ -96,4 +100,35 @@
 
 .DropdownLink:hover {
     background-color: #eee; 
+}
+
+.RightDropdown {
+    display: inline-block; 
+}
+
+.RightDropdownMenuLink {
+    display: none; 
+    position: absolute; 
+    z-index: 1; 
+    background-color: white; 
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2); 
+    font-family: "Poppins", sans-serif; 
+    font-size: 18px; 
+    cursor: pointer; 
+    top: 84px; 
+    right: 120px; 
+    margin: -15px -30px 0 0; 
+    padding: 18px 60px 18px 46px; 
+}
+
+.RightDropdown:hover .RightDropdownMenuLink {
+    display: block; 
+}
+
+.RightDropdown:hover .LoginArea {
+    background-color: #0855bb; 
+}
+
+.RightDropdownMenuLink:hover {
+    background-color: #f5f5f5; 
 }
